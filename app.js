@@ -1,17 +1,17 @@
-(function (){
-    var app = angular.module('Vnb', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
+(function() {
+    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate']);
 
     app.config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-        .state('notice', {
-            url: '/:board/:corner/:notice',
-            template: '<test></test>',
-            resolve: {
-                setState : ['NetworkService', '$stateParams', function (NetworkService, $stateParams) {
-                    return NetworkService.setState($stateParams);
-                }]
-            }
-        });
+            .state('notice', {
+                url: '/:board/:corner/:notice',
+                template: '<test></test>',
+                resolve: {
+                    setState: ['NetworkService', '$stateParams', function(NetworkService, $stateParams) {
+                        return NetworkService.setState($stateParams);
+                    }]
+                }
+            });
         /* Add New States Above */
         $urlRouterProvider.otherwise('/home');
 
@@ -32,4 +32,3 @@
 
     });
 })();
-
