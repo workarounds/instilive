@@ -10,6 +10,11 @@
 
 <body>
 
+    <!--div "sidebar"></div-->
+    <div ui-view="main"></div>
+    <test></test>
+
+
     <!-- Livereload script for development only (stripped during dist build) -->
     <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
 
@@ -32,14 +37,12 @@
     <script src="app.js"></script>
     <script src="services/NetworkService.js"></script>
     <script src="test/test.js"></script>
-    <script src="facebook.js"></script>
+    <!-- script src="facebook.js"></script -->
+    <script src="home/HomeController.js"></script>
+    <script src="sidebar/SidebarController.js"></script>
+    <script src="home/HomeNavController.js"></script>
 
     <!-- Add New Component JS Above -->
-
-    <test></test>
-    <button class="btn btn-primary" onClick="fblogin();">Login</button>
-    <button class="btn btn-primary" onClick="check();">check login</button>
-
 </body>
 
 </html>
