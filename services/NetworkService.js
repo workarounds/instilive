@@ -36,6 +36,7 @@
 				currentState.board = stateParams.board;
 				currentState.corner = stateParams.corner;
 				currentState.notice = stateParams.notice;
+				console.log('setState');
 			}
 		};
 	}]);
