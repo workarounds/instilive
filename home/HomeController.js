@@ -1,8 +1,8 @@
 (function () {
     var app = angular.module('Vnb');
-    app.controller('HomeController', ['NetworkService', '$scope', 
-        function (NetworkService, $scope) {
+    app.controller('HomeController', ['StateService', '$scope', 
+        function (StateService, $scope) {
             this.title = "Home";
-            this.state = NetworkService.getState();
+            this.state = StateService.getState();
         }]);
 })();

@@ -3,10 +3,9 @@
 
     app.config(function($stateProvider, $urlRouterProvider) {
         var commonResolve = {
-            setStateFunc: ['NetworkService', '$stateParams',
-                function(NetworkService, $stateParams) {
-                    console.log('resolve');
-                    return NetworkService.setState($stateParams);
+            setStateFunc: ['StateService', '$stateParams',
+                function(StateService, $stateParams) {
+                    return StateService.setState($stateParams);
                 }
             ]
         };

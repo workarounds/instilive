@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('Vnb');
-    app.controller('HomeNavController', ['NetworkService', function (NetworkService) {
+    app.controller('HomeNavController', ['StateService', function (StateService) {
             this.title = "Home Nav";
-            this.state = NetworkService.getState();
+            this.state = StateService.getState();
         }]);
 })();

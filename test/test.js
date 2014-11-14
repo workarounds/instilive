@@ -1,17 +1,17 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('testCtrl', ['NetworkService', function(NetworkService) {
+    app.controller('testCtrl', ['StateService', 'NetworkService', function(StateService, NetworkService) {
         var testCtrl = this;
         this.result = "Init";
-        NetworkService.getData().then(
-            function(data) {
-                testCtrl.result = "This is the data :" + data;
-            },
-            function(err) {
-                testCtrl.result = "Error : " + err;
-            }
-        );
-        this.state = NetworkService.getState();
+        // NetworkService.getData().then(
+        //     function(data) {
+        //         testCtrl.result = "This is the data :" + data;
+        //     },
+        //     function(err) {
+        //         testCtrl.result = "Error : " + err;
+        //     }
+        // );
+        this.result = StateService.getState();
     }]);
 
     app.directive('test', [function() {
