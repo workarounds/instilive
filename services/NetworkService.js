@@ -5,8 +5,8 @@
             getData: function(state) {
                 var q = $q.defer();
 
-                //var url = StateService.getAjaxUrl(state);
-                var request = $http.jsonp('http://localhost/vnb/corners/getCorner.json?id=2&callback=JSON_CALLBACK');
+                var url = StateService.getAjaxUrl(state);
+                var request = $http.jsonp(url);
                 var data;
                 var err = "Unkown Error";
 

@@ -11,6 +11,14 @@
             },
             getState: function() {
                 return currentState;
+            },
+            getAjaxUrl: function(state){
+                if(!state) {state = currentState;}
+
+                //based on state construct the URL for ajax call
+                
+                //for now returning a dummy
+                return 'http://localhost/vnb/corners/getCorner.json?id=2&callback=JSON_CALLBACK';
             }
         };
     }]);
