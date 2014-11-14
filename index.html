@@ -28,16 +28,15 @@
 
   <!-- Main App JS -->
   <script src="app.js"></script>
+  <script src="services/NetworkService.js"></script>
+  <script src="test/test.js"></script>
+  <script src="facebook.js"></script>
+  
   <!-- Add New Component JS Above -->
 
-  <div>
-    <div id="content" class="container">
-      <div class="row">
-        <div ui-view>
-        </div>
-      </div>
-    </div>
-  </div>
+  <test></test>
+  <button class="btn btn-primary" onClick="fblogin();">Login</button>
+  <button class="btn btn-primary" onClick="check();">check login</button>
 
 </body>
 </html>
