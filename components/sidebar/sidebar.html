@@ -1,9 +1,11 @@
 <h1>Sidebar</h1>
 <ul>
-    <li ng-repeat="board in sidebarCtrl.boards">
-        <a ui-sref="board({board: board.tag})">{{board.title}}</a>
-    </li>
-</ul>
-<ul>
-	<li ng-repeat="corner in sidebarCtrl.corners"></li>
+	<li ng-repeat="board in sidebarCtrl.boards">
+		<vnb-link data="board"></vng-link>
+		<ul>
+			<li ng-repeat="corner in board.corners">
+				<vnb-link data="corner"></vnb-link>
+			</li>
+		</ul>
+	</li>
 </ul>

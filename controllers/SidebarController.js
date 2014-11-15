@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('Vnb-sidebar');
+    var app = angular.module('Vnb');
     app.controller('SidebarController', ['NetworkService', function(NetworkService) {
         var sidebarCtrl = this;
         var populateSidebar = function(boards) {
