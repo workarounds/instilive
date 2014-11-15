@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate']);
+    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link']);
 
     app.config(function($stateProvider, $urlRouterProvider) {
         var commonResolve = {
@@ -15,11 +15,11 @@
                 url: '/home',
                 views: {
                     "main@": {
-                        templateUrl: '/home/home.html',
+                        templateUrl: 'components/home/home.html',
                         controller: 'HomeController as homeCtrl'
                     },
                     "rightnav@home": {
-                        templateUrl: '/home/rightnav.html',
+                        templateUrl: 'components/home/rightnav.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
@@ -29,11 +29,11 @@
                 url: '/:corner',
                 views: {
                     "main@": {
-                        templateUrl: '/home/home.html',
+                        templateUrl: 'components/home/home.html',
                         controller: 'HomeController as homeCtrl'
                     },
                     "rightnav@home": {
-                        templateUrl: '/home/rightnav.html',
+                        templateUrl: 'components/home/rightnav.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
@@ -43,11 +43,11 @@
                 url: '/:board/all',
                 views: {
                     "main@": {
-                        templateUrl: '/home/home.html',
+                        templateUrl: 'components/home/home.html',
                         controller: 'HomeController as homeCtrl'
                     },
                     "rightnav@home": {
-                        templateUrl: '/home/rightnav.html',
+                        templateUrl: 'components/home/rightnav.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },

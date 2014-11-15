@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('Vnb-sidebar');
+    var app = angular.module('Vnb');
 
     app.directive('sidebar', [function() {
         // Runs during compile
@@ -13,7 +13,7 @@
             // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
             restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
             // template: '<p>{{sidebarCtrl.boards}}</p>',
-            templateUrl: 'sidebar/sidebar.html',
+            templateUrl: 'components/sidebar/sidebar.html',
             // replace: true,
             // transclude: true,
             // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
