@@ -53,6 +53,20 @@
                 },
                 resolve: commonResolve
             })
+            .state('boardCorner', {
+                url: '/:board/:corner',
+                views: {
+                    "main@": {
+                        templateUrl: 'components/home/home.html',
+                        controller: 'HomeController as homeCtrl'
+                    },
+                    "rightnav@home": {
+                        templateUrl: 'components/home/rightnav.html',
+                        controller: 'HomeNavController as rightnavCtrl'
+                    }
+                },
+                resolve: commonResolve
+            })
             .state('notice', {
                 url: '/:board/:corner/:notice',
                 template: '<test></test>',

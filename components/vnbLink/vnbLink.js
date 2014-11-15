@@ -8,7 +8,7 @@
                 link: "=data"
             },
             restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-            template: '<a ui-sref="link.tag">link.title</a>',
+            template: '<a href="#/{{link.tag}}">{{link.title}}</a>',
             // link: function($scope, iElm, iAttrs, controller) {
 
             // }
