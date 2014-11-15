@@ -1,0 +1,42 @@
+{
+  "boards": [
+    {
+      "id": 1,
+      "title": "Inter IIT",
+      "corner_id": 1,
+      "corners": [
+        {
+          "id": 1,
+          "tag": "Swimming",
+          "title": "Swimming"
+        },
+        {
+          "id": 2,
+          "tag": "Cricket",
+          "title": "Cricket"
+        },
+        {
+          "id": 3,
+          "tag": "Badminton",
+          "title": "Badminton"
+        },
+        {
+          "id": 4,
+          "tag": "Tennis",
+          "title": "Tennis"
+        },
+        {
+          "id": 5,
+          "tag": "Athletics",
+          "title": "Athletics"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Places in Mumbai",
+      "corner_id": 17,
+      "corners": []
+    }
+  ]
+}
