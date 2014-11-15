@@ -9,10 +9,10 @@
 </head>
 
 <body>
-
+    
     <sidebar></sidebar>
     <div ui-view="main"></div>
-    <notice></notice>
+    <notice data="{type: 'event'}"></notice>
 
 
     <!-- Livereload script for development only (stripped during dist build) -->
@@ -43,6 +43,7 @@
     <script src="controllers/HomeNavController.js"></script>
     <script src="services/StateService.js"></script>
     <script src="components/sidebar/sidebar.js"></script>
+    <script src="components/notice/notice.js"></script>
     <script src="components/vnbLink/vnbLink.js"></script>
     <!-- Add New Component JS Above -->
 </body>

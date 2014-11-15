@@ -1,5 +1,16 @@
 <div>
-    <{{notice.type}}>
-    
-    </{{notice.type}}>
+	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
+	<ul>
+		<li>likes</li>
+		<li>comments</li>
+		<li>share</li>
+		<li>report</li>
+		<li>posted on</li>
+		<li>user</li>
+	</ul>
+	<ul>
+		<li ng-repeat="corner in notice.data.corners">
+			<vnb-link data="corner"></vnb-link>
+		</li>
+	</ul>
 </div>

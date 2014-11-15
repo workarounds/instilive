@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link']);
+    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link', 'vnb.notice']);
 
     app.config(function($stateProvider, $urlRouterProvider) {
         var commonResolve = {
