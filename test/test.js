@@ -1,16 +1,29 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('testCtrl', ['StateService', 'NetworkService', function(StateService, NetworkService) {
+    app.controller('testCtrl', ['$http', function($http) {
         var testCtrl = this;
-        this.result = "Init";
-        NetworkService.getData().then(
-            function(data) {
-                testCtrl.result = "This is the data :" + data;
-            },
-            function(err) {
-                testCtrl.result = "Error : " + err;
-            }
-        );
+        $http.get('data/notice.json').success(function(data) {
+            testCtrl.result = data;
+        });
+        testCtrl.postData = function() {
+            $http({
+                url: 'http://localhost/vnb/admins/createNotice',
+                method: "POST",
+                data: testCtrl.result,
+            }).success(function(data) {
+                console.log(data);
+            });
+        };
+        testCtrl.login = function() {
+            $http.get('http://localhost/vnb/users/login.json').success(function(data) {
+                console.log(data);
+            });
+        };
+        testCtrl.getSomeData = function() {
+            $http.get('http://localhost/vnb/corners/add').success(function(data) {
+                console.log(data);
+            });
+        };
         //this.result = StateService.getState();
     }]);
 
@@ -25,4 +38,6 @@
 
         return directive;
     }]);
+    
+    
 })();

@@ -1,7 +1,9 @@
 (function() {
     var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link', 'vnb.notice']);
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
         var commonResolve = {
             setStateFunc: ['StateService', '$stateParams',
                 function(StateService, $stateParams) {
