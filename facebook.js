@@ -42,6 +42,42 @@ function fblogin() {
     });
 }
 
+function getData(uid, accessToken) {
+    $.ajax({
+            type: 'GET',
+            url:'http://localhost/vnb/api/admins/index',
+            headers:{
+                uid: uid,
+                accessToken: accessToken
+            },
+            success: function(data){
+                console.log(data);
+            },
+            crossDomain: true
+        }
+    );
+}
+
+function fbLogin() {
+    var uid;
+    var accessToken;
+    FB.getLoginStatus(function(response) {
+        if(response.status=="connected") {
+            uid = response.authResponse.userID;
+            accessToken = response.authResponse.accessToken;
+            getData(uid, accessToken);
+        } else {
+            FB.login(function(result) {
+                if(result.authResponse) {
+                    uid = response.authResponse.userID;
+                    accessToken = response.authResponse.accessToken;
+                    getData(uid, accessToken);
+                }
+            }, {scope: 'email'});
+        }
+    });
+}
+
 function check() {
     var url = 'http://localhost/vnb/corners/test.json';
     $.ajax({

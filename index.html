@@ -10,13 +10,13 @@
 
 <body>
     <script src="facebook.js"></script>
-    <sidebar></sidebar>
+    <!--<sidebar></sidebar>-->
     <div ui-view="main"></div>
-    <notice data="{type: 'event'}"></notice>
+    <!--<notice data="{type: 'event'}"></notice>-->
     <div ng-controller="testCtrl as testCtrl">
     <test></test>
     <button class="btn btn-primary" ng-click="testCtrl.postData()">Post</button>
-    <button class="btn btn-primary" onclick="fblogin()">Login</button>
+    <button class="btn btn-primary" onclick="fbLogin()">Login</button>
     <button class="btn btn-primary" ng-click="testCtrl.getSomeData()">Get</button>
     <button class="btn btn-primary" onclick="check()">Check</button>
     </div>
@@ -52,7 +52,7 @@
     <script src="components/sidebar/sidebar.js"></script>
     <script src="components/notice/notice.js"></script>
     <script src="components/vnbLink/vnbLink.js"></script>
-    
+
     <!-- Add New Component JS Above -->
 </body>
 
