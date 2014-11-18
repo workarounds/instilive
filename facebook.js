@@ -9,6 +9,7 @@ window.fbAsyncInit = function() {
     });
 
     // Additional initialization code here
+    angular.bootstrap(document, ['Vnb']);
 };
 
 // Load the SDK Asynchronously
@@ -45,7 +46,7 @@ function fblogin() {
 function getData(uid, accessToken) {
     $.ajax({
             type: 'GET',
-            url:'http://localhost/vnb/api/admins/index',
+            url:'http://localhost/vnb/api/admins',
             headers:{
                 uid: uid,
                 accessToken: accessToken
@@ -79,7 +80,7 @@ function fbLogin() {
 }
 
 function check() {
-    var url = 'http://localhost/vnb/corners/test.json';
+    var url = 'http://localhost/vnb/corners/test';
     $.ajax({
         type: "JSONP",
         url: url,

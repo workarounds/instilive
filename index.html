@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="Vnb">
+<html>
 
 <head>
     <title></title>
@@ -9,7 +9,6 @@
 </head>
 
 <body>
-    <script src="facebook.js"></script>
     <!--<sidebar></sidebar>-->
     <div ui-view="main"></div>
     <!--<notice data="{type: 'event'}"></notice>-->
@@ -43,6 +42,7 @@
     <!-- Main App JS -->
     <script src="app.js"></script>
     <script src="services/NetworkService.js"></script>
+    <script src="services/VnbHttpInterceptor.js"></script>
     <script src="test/test.js"></script>
     <!-- script src="facebook.js"></script -->
     <script src="controllers/HomeController.js"></script>
@@ -54,6 +54,10 @@
     <script src="components/vnbLink/vnbLink.js"></script>
 
     <!-- Add New Component JS Above -->
+
+    <!--IMPORTANT:This script should be the placed below angular.js for loading-->
+    <script src="facebook.js"></script>
+
 </body>
 
 </html>

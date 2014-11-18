@@ -3,6 +3,7 @@
 
     app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         $httpProvider.defaults.useXDomain = true;
+        $httpProvider.interceptors.push('VnbHttpInterceptor');
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         var commonResolve = {
             setStateFunc: ['StateService', '$stateParams',

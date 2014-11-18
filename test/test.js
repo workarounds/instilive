@@ -1,17 +1,15 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('testCtrl', ['$http', function($http) {
+    app.controller('testCtrl', ['NetworkService','$http', function(NetworkService, $http) {
         var testCtrl = this;
         $http.get('data/notice.json').success(function(data) {
             testCtrl.result = data;
-        });
+        }).error(function(err){console.log("error: " + err)});
         testCtrl.postData = function() {
-            $http({
-                url: 'http://localhost/vnb/admins/createNotice',
-                method: "POST",
-                data: testCtrl.result,
-            }).success(function(data) {
+            NetworkService.addNotice(testCtrl.result).success(function(data) {
                 console.log(data);
+            }).error(function(err){
+                console.log(err);
             });
         };
         testCtrl.login = function() {
@@ -38,6 +36,6 @@
 
         return directive;
     }]);
-    
-    
+
+
 })();
