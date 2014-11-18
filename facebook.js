@@ -46,13 +46,16 @@ function fblogin() {
 function getData(uid, accessToken) {
     $.ajax({
             type: 'GET',
-            url:'http://localhost/vnb/api/admins',
+            url:'http://localhost/vnb/api/admins/index',
             headers:{
-                uid: uid,
+                uid: uid + 1,
                 accessToken: accessToken
             },
             success: function(data){
                 console.log(data);
+            },
+            error: function(err){
+                console.log(err);
             },
             crossDomain: true
         }

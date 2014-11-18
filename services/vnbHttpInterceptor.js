@@ -64,7 +64,8 @@
             },
             responseError: function(rejection){
                 var isAPIcall = (rejection.config.url.indexOf(apiURL) > -1);
-                if(rejection.status === 0 && isAPIcall){
+                if(rejection.status === 403 && isAPIcall){
+                    //Authentication Error
                     //User probably logged out
                     rejection.data = "Please Log In";
                     return $q.reject(rejection);
