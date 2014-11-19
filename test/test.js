@@ -1,16 +1,12 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('testCtrl', ['NetworkService','$http', function(NetworkService, $http) {
+    app.controller('testCtrl', ['VnbRestangular','$http','StateService', function(VnbRestangular, $http, StateService) {
         var testCtrl = this;
         $http.get('data/notice.json').success(function(data) {
             testCtrl.result = data;
         }).error(function(err){console.log("error: " + err)});
         testCtrl.postData = function() {
-            NetworkService.addNotice(testCtrl.result).success(function(data) {
-                console.log(data);
-            }).error(function(err){
-                console.log(err);
-            });
+            console.log('nothing');
         };
         testCtrl.login = function() {
             $http.get('http://localhost/vnb/users/login.json').success(function(data) {
@@ -18,8 +14,11 @@
             });
         };
         testCtrl.getSomeData = function() {
-            $http.get('http://localhost/vnb/corners/add').success(function(data) {
+            var state = {};
+            StateService.getData(state).then(function(data){
                 console.log(data);
+            },function(err){
+                console.log(err);
             });
         };
         //this.result = StateService.getState();

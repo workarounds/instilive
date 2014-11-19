@@ -1,5 +1,5 @@
 (function() {
-    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link', 'vnb.notice']);
+    var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link', 'vnb.notice', 'restangular']);
 
     app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         $httpProvider.defaults.useXDomain = true;

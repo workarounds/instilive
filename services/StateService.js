@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module('Vnb');
 
-    app.factory('StateService', [function() {
+    app.factory('StateService', ['$q','VnbRestangular', function($q,VnbRestangular) {
         var currentState = {};
         return {
             setState: function($stateParams) {
@@ -12,18 +12,29 @@
             getState: function() {
                 return currentState;
             },
-            /*
-            return : suffix of the ajax URL to get the notices for the current state or the state provided. 
-             */
-            getAjaxUrl: function(state) {
+            getData: function(state) {
                 if (!state) {
                     state = currentState;
                 }
 
+                err = {data:"Network error"};
+                var result = $q.reject(err);
                 //based on state construct the URL for ajax call
+                if(state.notice){
+                    var notice = VnbRestangular.one('notices', state.notice);
+                    result = notice.customGET();
+                }
+                else if(state.corner){
+                    var corner = VnbRestangular.all('corners');
+                    result = corner.customGET('', {tag:state.corner});
+                }
+                else if(state.board){
+                    var board = VnbRestangular.all('boards');
+                    result = board.customGET('', {tag:state.board});
+                }
 
                 //for now returning a dummy
-                return '/corners/getCorner.json?id=2';
+                return result;
             }
         };
     }]);
