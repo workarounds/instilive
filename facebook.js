@@ -48,7 +48,7 @@ function getData(uid, accessToken) {
             type: 'GET',
             url:'http://localhost/vnb/api/admins/index',
             headers:{
-                uid: uid + 1,
+                uid: uid,
                 accessToken: accessToken
             },
             success: function(data){

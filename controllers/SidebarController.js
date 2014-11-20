@@ -1,6 +1,6 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('SidebarController', ['NetworkService', function(NetworkService) {
+    app.controller('SidebarController', ['VnbRestangular', function(VnbRestangular) {
         var sidebarCtrl = this;
         var populateSidebar = function(boards) {
             for (var bTag in boards) {
@@ -21,13 +21,13 @@
         };
 
         var loadSidebar = function() {
-            var request = NetworkService.getSidebar();
-
-            request.then(
-                function(response) {
-                    populateSidebar(response.data.boards);
+            VnbRestangular.all('boards').customGET('sidebar').then(
+                function(data) {
+                    console.log(data);
+                    populateSidebar(data.boards);
                 },
                 function(err) {
+                    console.log(err);
                     showError(err);
                 }
             );

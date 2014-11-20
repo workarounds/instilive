@@ -26,11 +26,14 @@
                 }
                 else if(state.corner){
                     var corner = VnbRestangular.all('corners');
-                    result = corner.customGET('', {tag:state.corner});
+                    result = corner.customGET('index', {tag:state.corner});
                 }
                 else if(state.board){
                     var board = VnbRestangular.all('boards');
-                    result = board.customGET('', {tag:state.board});
+                    result = board.customGET('index', {tag:state.board});
+                }
+                else{
+                    
                 }
 
                 //for now returning a dummy

@@ -2,9 +2,7 @@
     var app = angular.module('Vnb');
     app.controller('testCtrl', ['VnbRestangular','$http','StateService', function(VnbRestangular, $http, StateService) {
         var testCtrl = this;
-        $http.get('data/notice.json').success(function(data) {
-            testCtrl.result = data;
-        }).error(function(err){console.log("error: " + err)});
+
         testCtrl.postData = function() {
             console.log('nothing');
         };
@@ -14,14 +12,14 @@
             });
         };
         testCtrl.getSomeData = function() {
-            var state = {};
+            var state = {board:"interIIT"};
             StateService.getData(state).then(function(data){
                 console.log(data);
             },function(err){
                 console.log(err);
             });
         };
-        //this.result = StateService.getState();
+        this.result = StateService.getState();
     }]);
 
     app.directive('test', [function() {
