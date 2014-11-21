@@ -22,18 +22,24 @@
                 //based on state construct the URL for ajax call
                 if(state.notice){
                     var notice = VnbRestangular.one('notices', state.notice);
-                    result = notice.customGET();
+                    VnbRestangular.setJsonp(true);
+                    result = notice.get();
+                    VnbRestangular.setJsonp(false);
                 }
                 else if(state.corner){
                     var corner = VnbRestangular.all('corners');
+                    VnbRestangular.setJsonp(true);
                     result = corner.customGET('index', {tag:state.corner});
+                    VnbRestangular.setJsonp(false);
                 }
                 else if(state.board){
                     var board = VnbRestangular.all('boards');
-                    result = board.customGET('index', {tag:state.board});
+                    VnbRestangular.setJsonp(true);
+                    result = board.customGET('index', {tag:state.board, sort:'r'});
+                    VnbRestangular.setJsonp(false);
                 }
                 else{
-                    
+
                 }
 
                 //for now returning a dummy

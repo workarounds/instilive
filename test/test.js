@@ -4,7 +4,7 @@
         var testCtrl = this;
 
         testCtrl.postData = function() {
-            console.log('nothing');
+            
         };
         testCtrl.login = function() {
             $http.get('http://localhost/vnb/users/login.json').success(function(data) {
@@ -12,7 +12,7 @@
             });
         };
         testCtrl.getSomeData = function() {
-            var state = {board:"interIIT"};
+            var state = {board:"interIIT", corner:"swimming", notice:2};
             StateService.getData(state).then(function(data){
                 console.log(data);
             },function(err){

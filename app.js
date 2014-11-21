@@ -1,7 +1,7 @@
 (function() {
     var app = angular.module('Vnb', ['ui.bootstrap', 'ui.utils', 'ui.router', 'ngAnimate', 'vnb.link', 'vnb.notice', 'restangular']);
 
-    app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.interceptors.push('VnbHttpInterceptor');
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
