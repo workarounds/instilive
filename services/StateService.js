@@ -17,7 +17,7 @@
                     state = currentState;
                 }
 
-                err = {data:"Network error"};
+                var err = {data:"Network error"};
                 var result = $q.reject(err);
                 //based on state construct the URL for ajax call
                 if(state.notice){

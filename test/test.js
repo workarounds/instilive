@@ -7,7 +7,7 @@
             //VnbRestangular.all('notices').post({notice:''});
             var notice = {
                 notice: testCtrl.result
-            }
+            };
             VnbRestangular.all('notices').customPOST(notice, 'edit').then(
                 function(data){
                     console.log('Successfully added notice');
