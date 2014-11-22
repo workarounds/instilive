@@ -8,55 +8,115 @@
     <link href="app.less" type="text/css" rel="stylesheet/less">
 </head>
 
-<body>
-    <sidebar></sidebar>
-    <div ui-view="main"></div>
-    <!--<notice data="{type: 'event'}"></notice>-->
-    <div ng-controller="testCtrl as testCtrl">
-    <test></test>
-    <button class="btn btn-primary" ng-click="testCtrl.postData()">Post</button>
-    <button class="btn btn-primary" onclick="fbLogin()">Login</button>
-    <button class="btn btn-primary" ng-click="testCtrl.getSomeData()">Get</button>
-    <button class="btn btn-primary" onclick="check()">Check</button>
+<body ng-controller="MainController as mainCtrl">
+<!-- start page-wrapper -->
+<div id="page-wrapper" ng-class="{'active': mainCtrl.toggle}">
+    <!-- start sidebar-wrapper -->
+    <div id="sidebar-wrapper">
+        <sidebar></sidebar>
     </div>
+    <!-- end sidebar-wrapper -->
+
+    <!-- start content-wrapper -->
+    <div id="content-wrapper">
+        <!-- start page-content -->
+        <div class="page-content">
+            <!-- start header -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="meta" ng-click="mainCtrl.toggleSidebar()" style="cursor: pointer">
+                        <div class="page">
+                            VNB
+                        </div>
+                        <div class="breadcrumb-links">
+                            {{mainCtrl.state.board}} / {{mainCtrl.state.corner}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end header -->
+
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            Notices
+                        </div>
+                        <div class="widget-body medium">
+                            <!-- start ui-view for main -->
+                            <section ui-view="main">
+
+                            </section>
+                            <!-- end ui-view for main -->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 hidden-xs hidden-sm">
+                    <div class="widget">
+                        <div class="widget-header">
+                            Filters
+                        </div>
+                        <div class="widget-body medium">
+                            <!-- start ui-view for rightnav -->
+                            <section ui-view="rightnav">
+
+                            </section>
+                            <!-- end ui-view for rightnav -->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end page-content -->
+    </div>
+    <!-- end content-wrapper -->
+
+</div>
+<!-- end page-wrapper-->
 
 
-    <!-- Livereload script for development only (stripped during dist build) -->
-    <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
+<!-- Livereload script for development only (stripped during dist build) -->
+<script src="http://localhost:35729/livereload.js" data-concat="false"></script>
 
-    <!-- JS from Bower Components -->
-    <script src="bower_components/less.js/dist/less-1.6.2.js" data-concat="false"></script>
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
-    <script src="bower_components/restangular/src/restangular.js"></script>
-    <!-- Add New Bower Component JS Above -->
+<!-- JS from Bower Components -->
+<script src="bower_components/less.js/dist/less-1.6.2.js" data-concat="false"></script>
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+<script src="bower_components/restangular/src/restangular.js"></script>
+<!-- Add New Bower Component JS Above -->
 
 
-    <!-- Main App JS -->
-    <script src="app.js"></script>
-    <script src="services/VnbRestangular.js"></script>
-    <script src="services/VnbHttpInterceptor.js"></script>
-    <script src="test/test.js"></script>
-    <script src="controllers/HomeController.js"></script>
-    <script src="controllers/SidebarController.js"></script>
-    <script src="controllers/HomeNavController.js"></script>
-    <script src="services/StateService.js"></script>
-    <script src="components/sidebar/sidebar.js"></script>
-    <script src="components/notice/notice.js"></script>
-    <script src="components/vnbLink/vnbLink.js"></script>
+<!-- Main App JS -->
+<script src="app.js"></script>
+<script src="services/VnbRestangular.js"></script>
+<script src="services/VnbHttpInterceptor.js"></script>
+<script src="test/test.js"></script>
+<script src="controllers/HomeController.js"></script>
+<script src="controllers/MainController.js"></script>
+<script src="controllers/SidebarController.js"></script>
+<script src="controllers/HomeNavController.js"></script>
+<script src="services/StateService.js"></script>
+<script src="components/sidebar/sidebar.js"></script>
+<script src="components/notice/notice.js"></script>
+<script src="components/vnbLink/vnbLink.js"></script>
 
-    <!-- Add New Component JS Above -->
+<!-- Add New Component JS Above -->
 
-    <!--IMPORTANT:This script should be the placed below angular.js for loading-->
-    <script src="facebook.js"></script>
+<!--IMPORTANT:This script should be the placed below angular.js for loading-->
+<script src="facebook.js"></script>
 
 </body>
 

@@ -1,11 +1,35 @@
-<h1>Sidebar</h1>
-<ul>
-    <li ng-repeat="board in sidebarCtrl.boards">
-        <vnb-link data="board"></vnb-link>
-        <ul ng-show="board.corners">
-            <li ng-repeat="corner in board.corners">
-                <vnb-link data="corner"></vnb-link>
-            </li>
-        </ul>
+<ul class="sidebar">
+    <li class="sidebar-main">
+        <a href="#">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+        </a>
     </li>
+
+    <div ng-repeat="board in sidebarCtrl.boards">
+    <li class="sidebar-title">
+        <vnb-link data="board"></vnb-link>
+    </li>
+    <li ng-repeat="corner in board.corners" class="sidebar-list">
+        <vnb-link data="corner"></vnb-link>
+    </li>
+    </div>
 </ul>
+
+<div class="sidebar-footer">
+    <div class="col-xs-4">
+        <a href="https://github.com/" target="_blank">
+            Github
+        </a>
+    </div>
+    <div class="col-xs-4">
+        <a href="http://workarounds.in" target="_blank">
+            About
+        </a>
+    </div>
+    <div class="col-xs-4">
+        <a href="#">
+            Support
+        </a>
+    </div>
+</div>
