@@ -39,6 +39,15 @@
                 },
                 resolve: commonResolve
             })
+            .state('admin', {
+                url:'/admin',
+                views: {
+                    "main@": {
+                        templateUrl: 'admin/create-notice.html',
+                        controller: 'AdminController as adminCtrl'
+                    }
+                }
+            })
             .state('corner', {
                 url: '/:corner',
                 views: {
@@ -85,7 +94,8 @@
                 url: '/:board/:corner/:notice',
                 template: '<test></test>',
                 resolve: commonResolve
-            });
+            })
+            ;
         /* Add New States Above */
         $urlRouterProvider.otherwise('/home');
 
