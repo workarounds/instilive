@@ -4,26 +4,32 @@
         '$cookieStore',
         'StateService',
         function ($cookieStore, StateService) {
-
+            var mainCtrl = this;
             // initializing toggled value from cookies
             if (angular.isDefined($cookieStore.get('toggle'))) {
                 if ($cookieStore.get('toggle') == false) {
-                    this.toggle = false;
+                    mainCtrl.toggle = false;
                 }
                 else {
-                    this.toggle = true;
+                    mainCtrl.toggle = true;
                 }
             };
+            mainCtrl.toggleFilter = true;
 
             // function to toggle sidebar
-            this.toggleSidebar = function () {
-                this.toggle = !this.toggle;
+            mainCtrl.toggleSidebar = function () {
+                mainCtrl.toggle = !mainCtrl.toggle;
 
-                $cookieStore.put('toggle', this.toggle);
+                $cookieStore.put('toggle', mainCtrl.toggle);
+            };
+
+            // function to toggle filter
+            mainCtrl.toggleFilterFunction = function() {
+                mainCtrl.toggleFilter = !mainCtrl.toggleFilter;
             };
 
             // getting the state for header
-            this.state = StateService.getState();
+            mainCtrl.state = StateService.getState();
         }
     ]);
 })();

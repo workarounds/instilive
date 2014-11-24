@@ -2,6 +2,7 @@
     var app = angular.module('Vnb');
     app.controller('SidebarController', ['VnbRestangular', function(VnbRestangular) {
         var sidebarCtrl = this;
+        sidebarCtrl.currentBoardId = 1;
         var populateSidebar = function(boards) {
             for (var bTag in boards) {
                 boards[bTag].tag = bTag + "/all";
@@ -31,12 +32,18 @@
                     showError(err);
                 }
             );
-        };
+        }
+
+        sidebarCtrl.updateCurrentBoardId = function(boardId) {
+            sidebarCtrl.currentBoardId = boardId;
+        }
 
         //Initilise all data bound vars
         sidebarCtrl.boards = [];
         sidebarCtrl.error = false;
         sidebarCtrl.errorMsg = "";
+
+
 
         loadSidebar();
     }]);
