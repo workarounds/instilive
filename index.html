@@ -33,9 +33,34 @@
                         </div>
                     </div>
                 </div>
+                <button class="fa fa-filter pull-right hidden-lg hidden-md"
+                     ng-click="mainCtrl.toggleFilterFunction()"
+                     style="cursor: pointer">
+
+                </button>
             </div>
             <!-- end header -->
 
+            <!-- start small screen filter -->
+            <div class="filter-container hidden-lg hidden-md"
+                 ng-class="{'open-filter': mainCtrl.toggleFilter}">
+                <div class="widget">
+                    <div class="widget-header">
+                        Filters
+                    </div>
+                    <div class="widget-body">
+                        <!-- start ui-view for rightnav -->
+                        <section ui-view="smallrightnav">
+
+                        </section>
+                        <!-- end ui-view for rightnav -->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end small screen filter -->
+
+            <!-- start main body -->
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <div class="widget">
@@ -70,6 +95,7 @@
                 </div>
 
             </div>
+            <!-- end main body -->
         </div>
         <!-- end page-content -->
     </div>

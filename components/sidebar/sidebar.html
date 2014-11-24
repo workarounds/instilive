@@ -6,13 +6,18 @@
         </a>
     </li>
 
-    <div ng-repeat="board in sidebarCtrl.boards">
-    <li class="sidebar-title">
-        <vnb-link data="board"></vnb-link>
-    </li>
-    <li ng-repeat="corner in board.corners" class="sidebar-list">
-        <vnb-link data="corner"></vnb-link>
-    </li>
+    <div ng-repeat="board in sidebarCtrl.boards"
+        ng-click="sidebarCtrl.updateCurrentBoardId(board.id)"
+        class="sidebar-board">
+        <li class="sidebar-title">
+            <vnb-link data="board"></vnb-link>
+        </li>
+        <div ng-class="{'hide-corners': sidebarCtrl.currentBoardId != board.id}"
+             class="sidebar-corners">
+            <li ng-repeat="corner in board.corners" class="sidebar-list">
+                <vnb-link data="corner"></vnb-link>
+            </li>
+        </div>
     </div>
 </ul>
 
