@@ -10,7 +10,7 @@
             from: new Date(),
             to:new Date(),
             title:'',
-            desc:'',
+            content:'',
             venue:'',
             data:{},
             start_time:'',
@@ -23,11 +23,7 @@
             {name:'IIT Kanpur', tag:'IITKanpur'},
             {name:'Football', tag:'football'}
         ];
-        var getSqlDateTime = function(date){
-            var string = date.toJSON();
-            string = string.replace('T', ' ');
-            return string.substr(0,19);
-        };
+
 
         $scope.notice = notice;
         $scope.corners = corners;
@@ -76,14 +72,14 @@
             };
             data.notice.data.title = data.notice.title;
             data.notice.data.venue = data.notice.venue;
-            data.notice.data.desc = data.notice.desc;
+            data.notice.data.content = data.notice.content;
 
-            for(var corner in $scope.selected){
-                data.notice.corners.push($scope.selected[corner].tag);
+            for(var index in $scope.selected){
+                data.notice.corners.push($scope.selected[index].tag);
             }
 
             data.notice.start_time = parseInt(data.notice.from.getTime()/1000);
-            data.notice.end_time = parseInt(data.notice.to.getTime()/1000)
+            data.notice.end_time = parseInt(data.notice.to.getTime()/1000);
 
             console.log(data);
             var request = VnbRestangular.all('notices');

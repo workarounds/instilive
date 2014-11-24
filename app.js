@@ -66,8 +66,7 @@
                 url: '/:board/all',
                 views: {
                     "main@": {
-                        templateUrl: 'components/home/home.html',
-                        controller: 'HomeController as homeCtrl'
+                        templateUrl: 'components/board/board.html'
                     },
                     "rightnav@home": {
                         templateUrl: 'components/home/rightnav.html',
