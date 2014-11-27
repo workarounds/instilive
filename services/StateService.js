@@ -4,6 +4,23 @@
     app.factory('StateService', ['$q','VnbRestangular', function($q,VnbRestangular) {
         var currentState = {};
         return {
+            fbLogin: function(){
+                var deferred = $q.defer();
+                FB.getLoginStatus(function(response) {
+                    if(response.status=="connected") {
+                        deferred.resolve();
+                    } else {
+                        FB.login(function(result) {
+                            if(result.authResponse) {
+                                deferred.resolve();
+                            } else{
+                                deferred.reject('could npt login');
+                            }
+                        }, {scope: 'email'});
+                    }
+                });
+                return deferred.promise;
+            },
             setState: function($stateParams) {
                 currentState.board = $stateParams.board;
                 currentState.corner = $stateParams.corner;

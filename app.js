@@ -15,6 +15,7 @@
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.interceptors.push('VnbHttpInterceptor');
+        RestangularProvider.setDefaultRequestParams('jsonp', {callback: 'JSON_CALLBACK'});
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
         var commonResolve = {
             setStateFunc: ['StateService', '$stateParams',

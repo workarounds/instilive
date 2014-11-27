@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.controller('NoticesController', ['StateService',function (StateService) {
+    app.controller('NoticesController', ['StateService','$scope',function (StateService, $scope) {
         //intialize
         var noticesCtrl = this;
         noticesCtrl.notices = [];

@@ -1,13 +1,13 @@
 <div>
 	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
-	<ul>
-		<li>likes</li>
-		<li>comments</li>
-		<li>share</li>
-		<li>report</li>
-		<li>posted on</li>
-		<li>user</li>
-	</ul>
+    <a href="" ng-click="getLikes()">likes</a>
+    <button
+        class="btn"
+        ng-click="postLike()"><i class="glyphicon glyphicon-thumbs-up"></i></button>
+    <form class="form-inline" ng-submit="postComment()">
+        <input type="text" class="form-control" ng-model="comment"/>
+        <!--<input type="submit" value="Comment"/>-->
+    </form>
 	<ul>
 		<li ng-repeat="corner in notice.data.corners">
 			<vnb-link data="corner"></vnb-link>
