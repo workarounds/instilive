@@ -1,13 +1,45 @@
-<div>
+<div class="card notice">
+    <span class="pull-right text-muted">
+        <div class="dropdown">
+            <a href class="dropdown-toggle">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href ng-click="editNotice()">Edit</a>
+                </li>
+            </ul>
+        </div>
+    </span>
 	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
-    <a href="" ng-click="getLikes()">likes</a>
-    <button
-        class="btn"
-        ng-click="postLike()"><i class="glyphicon glyphicon-thumbs-up"></i></button>
-    <form class="form-inline" ng-submit="postComment()">
-        <input type="text" class="form-control" ng-model="comment"/>
-        <!--<input type="submit" value="Comment"/>-->
-    </form>
+
+    <ul class="list-inline">
+        <li><a href="" ng-click="getLikes()">{{notice.like_count}}
+            likes</a></li>
+        <li><a href="" >{{notice.comment_count}} comments</a></li>
+        <li><span class="text-muted font-thin font-small">{{notice
+            .ago}}</span></li>
+    </ul>
+
+    <ul class="list-inline">
+        <li>
+            <button
+                class="btn btn-default"
+                ng-click="postLike()"><i class="fa fa-heart"></i>
+            </button>
+        </li>
+        <li>
+            <button
+                class="btn btn-default"><i class="fa fa-comment"></i>
+            </button>
+        </li>
+        <li>
+            <button class="btn btn-default">
+                <i class="fa fa-share"></i>
+            </button>
+
+        </li>
+    </ul>
 	<ul>
 		<li ng-repeat="corner in notice.data.corners">
 			<vnb-link data="corner"></vnb-link>

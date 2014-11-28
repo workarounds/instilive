@@ -1,9 +1,8 @@
 (function () {
     var app = angular.module('Vnb');
-    app.controller('AdminController', ['VnbRestangular', '$scope', function(VnbRestangular, $scope){
+    app.controller('AdminController', ['VnbRestangular','StateService', '$scope', function(VnbRestangular, StateService, $scope){
         var adminCtrl = this;
         var notice = {
-            id:19,
             type: "event",
             visible:true,
             corners:[],
@@ -16,17 +15,46 @@
             start_time:'',
             end_time:''
         };
-        var corners = [
-            {name:'Swimming', tag:'swimming'},
-            {name:'Cricket', tag:'cricket'},
-            {name:'IIT Bombay', tag:'IITBombay'},
-            {name:'IIT Kanpur', tag:'IITKanpur'},
-            {name:'Football', tag:'football'}
-        ];
 
+        var extractCorners = function(userData){
+            var corners = [
+                {name:'Swimming', tag:'swimming'},
+                {name:'Cricket', tag:'cricket'},
+                {name:'IIT Bombay', tag:'IITBombay'},
+                {name:'IIT Kanpur', tag:'IITKanpur'},
+                {name:'Football', tag:'football'}
+            ];
+            console.log('extracting corners from');
+            console.log(userData);
+            return corners;
+        };
 
-        $scope.notice = notice;
-        $scope.corners = corners;
+        var setUserData = function(data) {
+            $scope.positions = data.positions.post_positions;
+            $scope.position = $scope.positions[0];
+            $scope.changePos();
+            console.log('positions set');
+            console.log(data);
+        };
+
+        $scope.changePos = function(){
+            $scope.corners = $scope.position.corners;
+            $scope.selected = [];
+        };
+
+        if(!$scope.notice) {
+            $scope.notice = notice;
+        }
+
+        StateService.fbLogin().then(
+            function() {
+                StateService.getUserData().then(
+                    setUserData,
+                    console.log
+                );
+            },
+            console.log
+        );
         $scope.selected = [];
         $scope.currentTag = '';
         $scope.format = "dd/MM/yyyy";
@@ -66,16 +94,29 @@
             }
         };
 
+        adminCtrl.test = function(){
+            VnbRestangular.setJsonp(false);
+            VnbRestangular.all('users').get('index').then(
+                function(data){
+                    console.log(data);
+                },
+                function(err){
+                    console.log(err.data);
+                }
+            );
+        };
+
         adminCtrl.add = function(){
             var data = {
                 notice: $scope.notice
             };
+            data.notice.position_id = $scope.position.id;
             data.notice.data.title = data.notice.title;
             data.notice.data.venue = data.notice.venue;
             data.notice.data.content = data.notice.content;
 
-            for(var index in $scope.selected){
-                data.notice.corners.push($scope.selected[index].tag);
+            for(var i= 0; i < $scope.selected.length; i++){
+                data.notice.corners.push($scope.selected[i]);
             }
 
             data.notice.start_time = parseInt(data.notice.from.getTime()/1000);
@@ -103,7 +144,7 @@
                     }
                 );
             }
-        }
+        };
 
 
     }]);

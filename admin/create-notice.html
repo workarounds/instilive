@@ -1,23 +1,44 @@
 <div>
-    <form name="form" novalidate>
-        <div class="row">
-            <div class="col-md-6">
-                <label>Title</label>
-                <input class="form-control" type="text"
-                       ng-model="notice.title" required/>
+    <form name="form" class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">
+                Title
+            </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                       id="title" ng-model="notice.title"
+                       placeholder="Swimming Finals" required>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <label>Venue</label>
-                <input class="form-control" type="text"
-                       ng-model="notice.venue" required/>
+        <div class="form-group">
+            <label for="venue" class="col-sm-2 control-label">
+                Venue
+            </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control"
+                       id="venue" ng-model="notice.venue"
+                       placeholder="New Swimming Pool" required>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-8">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="postas">
+                Post as
+            </label>
+
+            <div class="col-sm-8">
+                <select id="postas" ng-model="position"
+                        class="form-control"
+                        ng-change="changePos()"
+                        ng-options="pos.name for pos in positions"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+            </label>
+            <div class="col-sm-8">
                 <span class="badge"
                       style="cursor:pointer; margin: 4px;"
                       ng-repeat="corner in selected"
@@ -26,69 +47,85 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <label>Corners</label>
-                <input class="form-control" ng-model="currentTag"
+        <div class="form-group">
+            <label for="corners" class="col-sm-2 control-label">
+                Corners
+            </label>
+            <div class="col-sm-8">
+                <input id="corners" class="form-control" ng-model="currentTag"
                        ng-required="!selected"
+                       placeholder="swimming"
                        typeahead="tag.name for tag in corners | filter:{name:$viewValue}"
                        typeahead-on-select="adminCtrl.onTagSelect($item, $model, $label)"/>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <lable>From</lable>
-                <input type="text" class="form-control"
-                       style="margin-top: 12px;"
+
+        <div class="form-group">
+            <label for="from"
+                   style="margin-top: 34px;"
+                   class="col-sm-2 control-label">
+                From
+            </label>
+            <div class="col-sm-4">
+                <input type="text" id="from" class="form-control"
+                       style="margin-top: 34px;"
                        datepicker-popup="{{format}}"
                        ng-model="notice.from" is-open="fromOpen"
                        ng-required="true" close-text="Close"
                        ng-change="adminCtrl.adjustToDate()"
                     />
             </div>
-
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <timepicker ng-model="notice.from"
-                            ng-change="adminCtrl.adjustToDate()"
-                    ></timepicker>
+                            ng-change="adminCtrl.adjustToDate()">
+                </timepicker>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <lable>To</lable>
-                <input type="text" class="form-control"
-                       style="margin-top: 12px;"
+        <div class="form-group">
+            <label for="to"
+                   style="margin-top: 34px;"
+                   class="col-sm-2 control-label">
+                To
+            </label>
+            <div class="col-sm-4">
+                <input type="text" id="to" class="form-control"
+                       style="margin-top: 34px;"
                        datepicker-popup="{{format}}"
                        ng-model="notice.to" is-open="toOpen"
                        ng-required="true" close-text="Close"
                        ng-change="adminCtrl.adjustFromDate()"
                     />
             </div>
-
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 <timepicker ng-model="notice.to"
                             ng-change="adminCtrl.adjustFromDate()">
-                            </timepicker>
+                </timepicker>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-8">
-                <label>Description</label>
-                <textarea
-                class="form-control" required
-                ng-model="notice.content"></textarea></div>
+
+        <div class="form-group">
+            <label for="desc" class="col-sm-2 control-label">
+                Description
+            </label>
+            <div class="col-sm-8">
+                <textarea class="form-control"
+                       id="desc" ng-model="notice.content"
+                       placeholder="The final event of Inter IIT" required>
+                </textarea>
+            </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-            <input class="submit btn btn-primary"
-                               type="button"
-                               ng-disabled="!((selected.length>0) && form.$valid)"
-                               ng-click="adminCtrl.add()"
-                               value="Add"/></div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <input class="submit btn btn-primary"
+                       type="button"
+                       ng-disabled="!((selected.length>0) && form.$valid)"
+                       ng-click="adminCtrl.add()"
+                       value="Add"/>
+            </div>
         </div>
 
     </form>

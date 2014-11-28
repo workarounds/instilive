@@ -1,6 +1,6 @@
 (function() {
     var app = angular.module('Vnb');
-    app.controller('SidebarController', ['VnbRestangular', function(VnbRestangular) {
+    app.controller('SidebarController', ['StateService', function(StateService) {
         var sidebarCtrl = this;
         sidebarCtrl.currentBoardId = 1;
         var populateSidebar = function(boards) {
@@ -22,7 +22,8 @@
         };
 
         var loadSidebar = function() {
-            VnbRestangular.all('boards').customGET('sidebar').then(
+            var request = StateService.getSidebar();
+            request.then(
                 function(data) {
                     console.log(data);
                     populateSidebar(data.boards);
@@ -32,11 +33,22 @@
                     showError(err);
                 }
             );
-        }
+        };
 
         sidebarCtrl.updateCurrentBoardId = function(boardId) {
             sidebarCtrl.currentBoardId = boardId;
-        }
+        };
+
+        sidebarCtrl.login = function() {
+            StateService.fbLogin().then(
+                function(){
+                    console.log('Yo logged in');
+                },
+                function(err){
+                    console.log(err);
+                }
+            );
+        };
 
         //Initilise all data bound vars
         sidebarCtrl.boards = [];

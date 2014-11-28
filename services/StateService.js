@@ -3,23 +3,45 @@
 
     app.factory('StateService', ['$q','VnbRestangular', function($q,VnbRestangular) {
         var currentState = {};
+        var userDetails = false;
+
+        var fetchUserData = function() {
+            var deferred = $q.defer();
+            VnbRestangular.setJsonp(false);
+            VnbRestangular.all('users').get('index').then(
+                function(data){
+                    userDetails = data;
+                    deferred.resolve(data);
+                },
+                function(err){
+                    deferred.reject(err);
+                }
+            );
+            return deferred.promise;
+        };
+
+        var facebookLogin = function(){
+            var deferred = $q.defer();
+            FB.getLoginStatus(function(response) {
+                if(response.status==="connected") {
+                    deferred.resolve();
+                    if(!userDetails) {fetchUserData();}
+                } else {
+                    FB.login(function(result) {
+                        if(result.authResponse) {
+                            deferred.resolve();
+                            fetchUserData();
+                        } else{
+                            deferred.reject('could not login');
+                        }
+                    }, {scope: 'email'});
+                }
+            });
+            return deferred.promise;
+        };
         return {
             fbLogin: function(){
-                var deferred = $q.defer();
-                FB.getLoginStatus(function(response) {
-                    if(response.status=="connected") {
-                        deferred.resolve();
-                    } else {
-                        FB.login(function(result) {
-                            if(result.authResponse) {
-                                deferred.resolve();
-                            } else{
-                                deferred.reject('could npt login');
-                            }
-                        }, {scope: 'email'});
-                    }
-                });
-                return deferred.promise;
+                return facebookLogin();
             },
             setState: function($stateParams) {
                 currentState.board = $stateParams.board;
@@ -61,6 +83,23 @@
 
                 //for now returning a dummy
                 return result;
+            },
+            getSidebar: function(){
+                return VnbRestangular.all('boards').customGET('sidebar');
+            },
+            getUserData: function(forceRefresh){
+                var deferred = $q.defer();
+                if(!userDetails || forceRefresh){
+                    fetchUserData().then(
+                        function(data){
+                            deferred.resolve(data);
+                        },
+                        function(err){
+                            deferred.reject(err);
+                        }
+                    );
+                }
+                return deferred.promise;
             }
         };
     }]);

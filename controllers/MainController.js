@@ -7,13 +7,13 @@
             var mainCtrl = this;
             // initializing toggled value from cookies
             if (angular.isDefined($cookieStore.get('toggle'))) {
-                if ($cookieStore.get('toggle') == false) {
+                if ($cookieStore.get('toggle') === false) {
                     mainCtrl.toggle = false;
                 }
                 else {
                     mainCtrl.toggle = true;
                 }
-            };
+            }
             mainCtrl.toggleFilter = true;
 
             // function to toggle sidebar
