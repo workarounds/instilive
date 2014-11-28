@@ -49,6 +49,15 @@
                     }
                 }
             })
+            .state('manage', {
+                url: '/manage',
+                views: {
+                    "main@": {
+                        templateUrl: 'manage/manage-aliases.html',
+                        controller: 'ManageController as manageCtrl'
+                    }
+                }
+            })
             .state('corner', {
                 url: '/:corner',
                 views: {
