@@ -1,7 +1,16 @@
-<h1> {{notice.data.title}} </h1>
+<h4> {{notice.data.title}} </h4>
 <img src="{{notice.data.img_url}}" ng-show="notice.data.img" />
-<p>{{notice.data.desc}}</p>
-<p>{{notice.start_time}}</p>
-<p>{{notice.end_time}}</p>
-<p>{{notice.data.venue}}</p>
-<p>{{notice.data.contact}}</p>
+<ul class="list-inline">
+    <li>
+        <span class="event-info">
+            <i class="fa fa-clock-o"></i>
+            <small>
+                {{notice.from | date:'h:mm a, MMM d'}}
+                <small class="text-muted">{{notice.duration}}</small>
+            </small>
+        </span>
+    </li>
+    <li><span class="event-info"><i class="fa fa-map-marker"></i>
+        <small>{{notice.data.venue}}</small></span></li>
+</ul>
+<p>{{notice.data.content}}</p>
