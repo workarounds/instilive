@@ -74,7 +74,7 @@
                 else if(state.board){
                     var board = VnbRestangular.all('boards');
                     VnbRestangular.setJsonp(true);
-                    result = board.customGET('index', {tag:state.board, sort:'r'});
+                    result = board.customGET('index', {tag:state.board});
                     VnbRestangular.setJsonp(false);
                 }
                 else{
