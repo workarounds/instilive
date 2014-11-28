@@ -20,11 +20,11 @@
         return Math.floor(diff/MS_PER_HOUR) + "h";
     }
 
-    var controller = ['$scope','VnbRestangular','StateService',function($scope, VnbRestangular, StateService){
+    var controller = ['$scope','VnbRestangular','StateService',
+        function($scope, VnbRestangular, StateService){
         //Initialise
         $scope.comment = '';
         var created = getDate($scope.notice.created);
-        var now = new Date();
         $scope.notice.ago = getAgo(created);
         if($scope.notice.start_time){
             var from = getDate($scope.notice.start_time);
