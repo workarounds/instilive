@@ -12,8 +12,7 @@
         <li class="sidebar-title">
             <vnb-link data="board"></vnb-link>
         </li>
-        <div ng-class="{'hide-corners': sidebarCtrl.currentBoardId != board.id}"
-             class="sidebar-corners">
+        <div collapse="sidebarCtrl.currentBoardId != board.id">
             <li ng-repeat="corner in board.corners" class="sidebar-list">
                 <vnb-link data="corner"></vnb-link>
             </li>
