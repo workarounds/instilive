@@ -99,6 +99,9 @@
                         }
                     );
                 }
+                else{
+                    deferred.resolve(userDetails);
+                }
                 return deferred.promise;
             }
         };

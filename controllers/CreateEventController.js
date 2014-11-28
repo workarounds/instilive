@@ -1,38 +1,35 @@
 (function () {
     var app = angular.module('Vnb');
-    app.controller('AdminController',
+    app.controller('CreateEventController',
         [
             'VnbRestangular',
             'StateService',
             '$scope',
-            function (VnbRestangular, StateService, $scope) {
-                var adminCtrl = this;
-                var notice = {
-                    type: "event",
-                    visible: true,
-                    corners: [],
-                    from: new Date(),
-                    to: new Date(),
-                    title: '',
-                    content: '',
-                    venue: '',
-                    data: {},
-                    start_time: '',
-                    end_time: ''
-                };
+            '$modalInstance',
+            'noticeData',
+            function (VnbRestangular, StateService, $scope, $modalInstance, noticeData) {
+                var createEventCtrl = this;
+                console.log(noticeData);
+                if(!noticeData) {
+                    var emptyNotice = {
+                        type: "event",
+                        visible: true,
+                        corners: [],
+                        from: new Date(),
+                        to: new Date(),
+                        data: {
+                            title: 'Yo',
+                            content: '',
+                            venue: ''
+                        },
+                        start_time: '',
+                        end_time: ''
+                    };
+                    $scope.notice = emptyNotice;
 
-                var extractCorners = function (userData) {
-                    var corners = [
-                        {name: 'Swimming', tag: 'swimming'},
-                        {name: 'Cricket', tag: 'cricket'},
-                        {name: 'IIT Bombay', tag: 'IITBombay'},
-                        {name: 'IIT Kanpur', tag: 'IITKanpur'},
-                        {name: 'Football', tag: 'football'}
-                    ];
-                    console.log('extracting corners from');
-                    console.log(userData);
-                    return corners;
-                };
+                } else {
+                    $scope.notice = noticeData;
+                }
 
                 var setUserData = function (data) {
                     $scope.positions = data.positions.post_positions;
@@ -41,25 +38,19 @@
                     console.log('positions set');
                     console.log(data);
                 };
+                StateService.getUserData().then(
+                    setUserData,
+                    console.log
+                );
+
 
                 $scope.changePos = function () {
                     $scope.corners = $scope.position.corners;
                     $scope.selected = [];
                 };
 
-                if (!$scope.notice) {
-                    $scope.notice = notice;
-                }
 
-                StateService.fbLogin().then(
-                    function () {
-                        StateService.getUserData().then(
-                            setUserData,
-                            console.log
-                        );
-                    },
-                    console.log
-                );
+
                 $scope.selected = [];
                 $scope.currentTag = '';
                 $scope.format = "dd/MM/yyyy";
@@ -70,19 +61,19 @@
 
                     $scope[opened] = true;
                 };
-                adminCtrl.onTagSelect = function (item) {
+                createEventCtrl.onTagSelect = function (item) {
                     $scope.selected.push(item);
                     var index = $scope.corners.indexOf(item);
                     $scope.corners.splice(index, 1);
                     $scope.currentTag = '';
                 };
-                adminCtrl.onTagRemove = function (index) {
+                createEventCtrl.onTagRemove = function (index) {
                     var tag = $scope.selected[index];
                     $scope.selected.splice(index, 1);
                     $scope.corners.push(tag);
                 };
 
-                adminCtrl.adjustToDate = function () {
+                createEventCtrl.adjustToDate = function () {
                     var to = $scope.notice.to;
                     var from = $scope.notice.from;
                     if (to < from) {
@@ -90,7 +81,7 @@
                     }
                 };
 
-                adminCtrl.adjustFromDate = function () {
+                createEventCtrl.adjustFromDate = function () {
                     var to = $scope.notice.to;
                     var from = $scope.notice.from;
 
@@ -99,7 +90,7 @@
                     }
                 };
 
-                adminCtrl.test = function () {
+                createEventCtrl.test = function () {
                     VnbRestangular.setJsonp(false);
                     VnbRestangular.all('users').get('index').then(
                         function (data) {
@@ -111,14 +102,11 @@
                     );
                 };
 
-                adminCtrl.add = function () {
+                createEventCtrl.add = function () {
                     var data = {
                         notice: $scope.notice
                     };
                     data.notice.position_id = $scope.position.id;
-                    data.notice.data.title = data.notice.title;
-                    data.notice.data.venue = data.notice.venue;
-                    data.notice.data.content = data.notice.content;
 
                     for (var i = 0; i < $scope.selected.length; i++) {
                         data.notice.corners.push($scope.selected[i]);
@@ -149,8 +137,8 @@
                             }
                         );
                     }
+                    $modalInstance.close();
                 };
-
 
             }]);
 })();
