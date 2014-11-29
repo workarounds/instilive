@@ -4,14 +4,15 @@
     var uid = 0, accessToken = "";
     var isLoggedIn = function(){
         var loggedIn = false;
-
-        FB.getLoginStatus(function(response) {
-            if (response.status == "connected") {
-                uid = response.authResponse.userID;
-                accessToken = response.authResponse.accessToken;
-                loggedIn = true;
-            }
-        });
+        if(FB_LOADED) {
+            FB.getLoginStatus(function (response) {
+                if (response.status == "connected") {
+                    uid = response.authResponse.userID;
+                    accessToken = response.authResponse.accessToken;
+                    loggedIn = true;
+                }
+            });
+        }
         return loggedIn;
     };
     var getAuthHeaders= function(){

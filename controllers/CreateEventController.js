@@ -94,7 +94,7 @@
                     var index = $scope.corners.indexOf(item);
                     $scope.corners.splice(index, 1);
                     console.log("on tag select running");
-                    $scope.currentTag = '';
+                    $scope.currentTag = "Useless";
                     console.log($scope.currentTag);
                 };
                 createEventCtrl.onTagRemove = function (index) {

@@ -1,15 +1,18 @@
+var FB_LOADED = false;
 window.fbAsyncInit = function() {
     FB.init({
         appId: 261775467279599, // App ID
-        // channelURL: '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-        status: true, // check login status
+        channelURL: '/channel.html', // Channel File
+        status: false, // check login status
         cookie: true, // enable cookies to allow the server to access the session
         oauth: true, // enable OAuth 2.0
         xfbml: true // parse XFBML
     });
 
+    FB_LOADED = true;
+    $(document).trigger('FB_LOADED');
     // Additional initialization code here
-    angular.bootstrap(document, ['Vnb']);
+    // angular.bootstrap(document, ['Vnb']);
 };
 
 // Load the SDK Asynchronously
