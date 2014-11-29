@@ -109,8 +109,7 @@
 
     });
 
-    app.run(function ($rootScope) {
-
+    app.run(function ($rootScope, $window) {
         $rootScope.safeApply = function (fn) {
             var phase = $rootScope.$$phase;
             if (phase === '$apply' || phase === '$digest') {

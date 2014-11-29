@@ -36,7 +36,9 @@
             }
 
             $scope.notice.corners = JSON.parse($scope.notice.corners);
-
+            if(!$scope.notice.data.img_url){
+                $scope.notice.data.img_url = '';
+            }
 
             $scope.postLike = function () {
                 var sendlike = function () {
@@ -63,9 +65,7 @@
 
                 StateService.fbLogin().then(
                     sendlike,
-                    function () {
-                        console.log('not logged in');
-                    }
+                    console.log
                 );
             };
 
