@@ -10,7 +10,7 @@
             function (VnbRestangular, StateService, $scope, $modalInstance, noticeData) {
                 var createEventCtrl = this;
                 console.log(noticeData);
-                if(!noticeData) {
+                if (!noticeData) {
                     var emptyNotice = {
                         type: "event",
                         visible: true,
@@ -32,23 +32,51 @@
                 }
 
                 var setUserData = function (data) {
-                    $scope.positions = data.positions.post_positions;
-                    $scope.position = $scope.positions[0];
-                    $scope.changePos();
-                    console.log('positions set');
                     console.log(data);
+                    $scope.positions = data.positions.post_positions;
+                    $scope.initPos();
                 };
                 StateService.getUserData().then(
                     setUserData,
                     console.log
                 );
 
+                $scope.initPos = function () {
+                    if ($scope.notice.position_id) {
+                        for (var tempPositionId in $scope.positions) {
+                            console.log(tempPositionId);
+                            var tempPosition = $scope.positions[tempPositionId];
+                            if (tempPosition['id'] == $scope.notice.position_id) {
+                                $scope.position = tempPosition;
+                                initSelection();
+                                break;
+                            }
+                        }
+                    } else {
+                        $scope.position = $scope.positions[0];
+                        $scope.changePos();
+                    }
+                }
+
+                var initSelection = function () {
+                    $scope.corners = $scope.position.corners;
+                    $scope.selected = $scope.notice.corners;
+                    for (var selectedCornerId in $scope.selected) {
+                        var selectedCorner = $scope.selected[selectedCornerId];
+                        for (var scopeCornerId in $scope.corners) {
+                            var scopeCorner = $scope.corners[scopeCornerId];
+                            if (scopeCorner.tag == selectedCorner.tag) {
+                                $scope.corners.splice(scopeCornerId, 1);
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 $scope.changePos = function () {
                     $scope.corners = $scope.position.corners;
                     $scope.selected = [];
                 };
-
 
 
                 $scope.selected = [];
@@ -65,7 +93,9 @@
                     $scope.selected.push(item);
                     var index = $scope.corners.indexOf(item);
                     $scope.corners.splice(index, 1);
+                    console.log("on tag select running");
                     $scope.currentTag = '';
+                    console.log($scope.currentTag);
                 };
                 createEventCtrl.onTagRemove = function (index) {
                     var tag = $scope.selected[index];

@@ -31,9 +31,9 @@
                         <div class="page">
                             VNB
                         </div>
-                        <div class="breadcrumb-links">
-                            {{mainCtrl.state.board}} /
-                            {{mainCtrl.state.corner}}
+                        <div class="breadcrumb-links"
+                            ng-bind-template="{{mainCtrl.state.board}} / {{mainCtrl.state.corner}}"
+                        >
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <!-- start main body -->
             <div class="row-fluid">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary" ng-click="mainCtrl.openEventModal()">Post event</button>
+                    <button class="btn btn-primary" ng-click="mainCtrl.openEventModal()"> Post Event </button>
                     <section ui-view="main">
 
                     </section>
@@ -99,7 +99,7 @@
         <!-- end page-content -->
     </div>
     <!-- end content-wrapper -->
-
+    <div id="fb-root"></div>
 </div>
 <!-- end page-wrapper-->
 

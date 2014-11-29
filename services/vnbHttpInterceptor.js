@@ -1,6 +1,6 @@
 (function(){
     var app = angular.module('Vnb');
-    var apiURL = "http://localhost/vnb/api/";
+    var apiURL = "/api/";
     var uid = 0, accessToken = "";
     var isLoggedIn = function(){
         var loggedIn = false;
