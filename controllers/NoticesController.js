@@ -1,25 +1,55 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.controller('NoticesController', ['StateService','$scope',function (StateService, $scope) {
+    app.controller('NoticesController', ['StateService', '$scope', function (StateService, $scope) {
         //intialize
         var noticesCtrl = this;
+        var emptyUser = {
+            facebook_id: 0,
+            id: 0,
+            name: 'anon',
+            username: 'anon',
+            gender: 'unknown',
+            likes: []
+        };
         noticesCtrl.notices = [];
 
         //get the data
         StateService.getData().then(
-            function(data){
+            function (data) {
                 console.log(data);
                 var notices = data.Notice;
-                for(var i in notices){
+                for (var i in notices) {
                     notices[i].data = JSON.parse(notices[i].data);
                 }
                 noticesCtrl.notices = notices;
             },
-            function(err){
+            console.log
+        );
+
+        StateService.getUserData().then(
+            function (data) {
+                $scope.user = data;
+                console.log("got the user data in NoticeController");
+                console.log(data);
+            },
+            function (err) {
+                $scope.user= emptyUser;
+                console.log("failed to get user data");
+                console.log(noticesCtrl.user);
                 console.log(err);
             }
         );
+
+        $scope.$on(
+            'userDataEvent',
+            function(event, data) {
+                $scope.user = data;
+                console.log("updated user in NoticesController");
+            }
+        );
+
+
 
 
     }]);
