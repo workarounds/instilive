@@ -18,7 +18,7 @@
                         from: new Date(),
                         to: new Date(),
                         data: {
-                            title: 'Yo',
+                            title: '',
                             content: '',
                             venue: ''
                         },
