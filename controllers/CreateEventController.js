@@ -18,7 +18,7 @@
                         from: new Date(),
                         to: new Date(),
                         data: {
-                            title: 'Yo',
+                            title: '',
                             content: '',
                             venue: ''
                         },
@@ -71,7 +71,7 @@
                             }
                         }
                     }
-                }
+                };
 
                 $scope.changePos = function () {
                     $scope.corners = $scope.position.corners;
@@ -80,7 +80,7 @@
 
 
                 $scope.selected = [];
-                $scope.currentTag = '';
+                createEventCtrl.currentTag = '';
                 $scope.format = "dd/MM/yyyy";
 
                 $scope.open = function ($event, opened) {
@@ -92,10 +92,8 @@
                 createEventCtrl.onTagSelect = function (item) {
                     $scope.selected.push(item);
                     var index = $scope.corners.indexOf(item);
-                    $scope.corners.splice(index, 1);
-                    console.log("on tag select running");
-                    $scope.currentTag = "Useless";
-                    console.log($scope.currentTag);
+                    $scope.corners.splice(index,1);
+                    createEventCtrl.currentTag = '';
                 };
                 createEventCtrl.onTagRemove = function (index) {
                     var tag = $scope.selected[index];
