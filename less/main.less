@@ -1,21 +1,22 @@
 /* Fonts */
 @font-face {
-  //font-family: 'Helvetica';
-  // src: url('../../fonts/montserrat-regular-webfont.eot');
-  // src: url('../../fonts/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),
-  //     url('../../fonts/montserrat-regular-webfont.woff') format('woff'),
-  //     url('../../fonts/montserrat-regular-webfont.ttf') format('truetype'),
-  //     url('../../fonts/montserrat-regular-webfont.svg#montserratregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    //font-family: 'Helvetica';
+    // src: url('../../fonts/montserrat-regular-webfont.eot');
+    // src: url('../../fonts/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    //     url('../../fonts/montserrat-regular-webfont.woff') format('woff'),
+    //     url('../../fonts/montserrat-regular-webfont.ttf') format('truetype'),
+    //     url('../../fonts/montserrat-regular-webfont.svg#montserratregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-//    @font-face {
-//      font-family: 'Montserrat';
-//      src: url('../../fonts/montserrat-regular-webfont.svg') format('svg');
-//    }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    //    @font-face {
+    //      font-family: 'Montserrat';
+    //      src: url('../../fonts/montserrat-regular-webfont.svg') format('svg');
+    //    }
     select {
-      font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
     }
 }
 
@@ -23,25 +24,31 @@
 html {
     overflow-y: scroll;
 }
+
 body {
     background: #f3f3f3;
-//    font-family: "Montserrat";
+    //    font-family: "Montserrat";
     color: #333333 !important;
 }
+
 .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
+
 .row > div {
     margin-bottom: 15px;
 }
+
 .alerts-container .alert:last-child {
     margin-bottom: 0;
 }
+
 #page-wrapper {
     padding-left: 0px;
     height: 100%
 }
+
 #sidebar-wrapper {
     margin-left: -@sidebarWidth;
     left: 0px;
@@ -50,24 +57,54 @@ body {
     height: 100%;
     z-index: 999;
 }
+
 #page-wrapper, #sidebar-wrapper {
     transition: all .4s ease 0s;
 }
+
 .green {
     background: #23ae89 !important;
 }
+
 .blue {
     background: #2361ae !important;
 }
+
 .orange {
     background: #d3a938 !important;
 }
+
 .red {
     background: #ae2323 !important;
 }
+
 .form-group .help-block.form-group-inline-message {
     padding-top: 5px;
 }
+
 div.input-mask {
     padding-top: 7px;
+}
+
+.FAB {
+    color:white;
+    width:48px;
+    height:48px;
+    position: fixed;
+    right: 48px;
+    bottom: 48px;
+    z-index: 2000;
+    border-radius: 50%;
+    background: #db8400;
+    .box-shadow(2px 2px 5px #777);
+    border:none !important;
+    outline:none !important;
+    font-size: 18px;
+    //transition: all .25s ease 0s;
+}
+
+.FAB:active, .FAB:hover, .FAB:focus{
+    outline:none !important;
+    .box-shadow(2px 2px 10px #888);
+    //transition: all .4s ease 0s;
 }

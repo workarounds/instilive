@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.factory('StateService', ['$q', 'VnbRestangular', function ($q, VnbRestangular) {
+    app.factory('StateService', ['$rootScope', '$q', 'VnbRestangular', function ($rootScope, $q, VnbRestangular) {
         var currentState = {};
         var userDetails = false;
 
@@ -120,6 +120,7 @@
                     function(){
                         fetchUserData().then(
                             function (data) {
+                                $rootScope.$broadcast('userDataEvent', data);
                                 deferred.resolve(data);
                                 console.log(data);
                             },
@@ -129,7 +130,10 @@
                             }
                         )
                     },
-                    console.log
+                    function (err) {
+                        deferred.reject(err);
+                        console.log(err);
+                    }
                 );
             }
             else {
@@ -141,7 +145,7 @@
         $(document).bind('FB_LOADED', function(){
             stateService.getUserData();
             if(!FB_LOADED){console.log('FB_LOADED = false');}
-            else{
+            else {
                 console.log('FB_LOADED = true');
             }
         });

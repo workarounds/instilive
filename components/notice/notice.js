@@ -43,6 +43,7 @@
             $scope.postLike = function () {
                 var sendlike = function () {
                     //TODO: change the like button to "Liked"
+                    toggleLike();
                     VnbRestangular.all('notices')
                         .customPOST({id: $scope.notice.id}, 'like')
                         .then(
@@ -58,10 +59,20 @@
                         },
                         function (err) {
                             //TODO: change the like button back to "Like"
+                            toggleLike();
                             console.log(err.data);
                         }
                     );
                 };
+
+                var toggleLike = function () {
+                    var noticeIndex = $scope.user.likes.indexOf($scope.notice.id);
+                    if(noticeIndex >-1) {
+                        $scope.user.likes.splice(noticeIndex, 1);
+                    } else {
+                        $scope.user.likes.push($scope.notice.id);
+                    }
+                }
 
                 StateService.fbLogin().then(
                     sendlike,
@@ -137,7 +148,8 @@
             restrict: 'E',
             templateUrl: '/components/notice/notice.html',
             scope: {
-                notice: "=data"
+                notice: "=data",
+                user: "="
             },
             controller: controller
         };

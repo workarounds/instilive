@@ -25,7 +25,7 @@
         <li>
             <button
                 class="btn btn-default"
-                ng-click="postLike()"><i class="fa fa-heart"></i>
+                ng-click="postLike()"><i class="fa" ng-class="user.likes.indexOf(notice.id) > -1?'fa-heart':'fa-heart-o'"></i>
             </button>
         </li>
         <li>
