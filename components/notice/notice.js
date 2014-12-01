@@ -11,7 +11,29 @@
         //TODO: make this better to return 2d, 1m, 'Nov,28' etc
         var MS_PER_HOUR = 1000 * 60 * 60;
         var now = new Date();
-        return Math.floor((now.getTime() - d.getTime()) / MS_PER_HOUR) + " h";
+        var diff_hrs = (now.getTime() - d.getTime()) / MS_PER_HOUR;
+        var ago = '';
+        if (diff_hrs > 24) {
+            var diff_days = Math.floor(diff_hrs / 24);
+            ago = diff_days + "d";
+        } else if (diff_hrs < 1) {
+            ago = getAgoLessThanHour(now.getTime() - d.getTime());
+        } else {
+            ago = Math.floor(diff_hrs) + "h";
+        }
+        return ago;
+    }
+
+    function getAgoLessThanHour(diff) {
+        var diff_secs = diff / 1000;
+        var diff_mins = diff_secs / 60;
+        var ago = '';
+        if (diff_secs >= 60) {
+            ago = Math.floor(diff_mins) + "m";
+        } else {
+            ago = Math.floor(diff_secs) + "s";
+        }
+        return ago;
     }
 
     function getDuration(diff) {
@@ -23,7 +45,10 @@
     var controller = ['$scope', 'VnbRestangular', 'StateService', '$modal',
         function ($scope, VnbRestangular, StateService, $modal) {
             //Initialise
+            $scope.canEdit = false;
             $scope.comment = '';
+            updateCanEdit(null);
+
             var created = getDate($scope.notice.created);
             $scope.notice.ago = getAgo(created);
             if ($scope.notice.start_time) {
@@ -36,9 +61,41 @@
             }
 
             $scope.notice.corners = JSON.parse($scope.notice.corners);
-            if(!$scope.notice.data.img_url){
+            if (!$scope.notice.data.img_url) {
                 $scope.notice.data.img_url = '';
             }
+
+            function updateCanEdit(data) {
+                var userObj;
+                console.log('updateCanEdit called');
+                if(!data) {
+                    userObj = $scope.user;
+                } else {
+                    userObj = data;
+                }
+                console.log('user obj is :');
+                console.log(userObj);
+                if (userObj.positions) {
+                    var editPositions = userObj.positions.edit_positions;
+                    console.log('positions: ');
+                    console.log(editPositions);
+                    console.log('notice position_id:');
+                    console.log($scope.notice.position_id);
+                    for (var editIndex in editPositions) {
+                        if (editPositions[editIndex].id == $scope.notice.position_id) {
+                            $scope.canEdit = true;
+                            return;
+                        }
+                    }
+                }
+                $scope.canEdit = false;
+
+            };
+
+            $scope.$on('userDataEvent', function(event, data) {
+                console.log('event listened in notice.js');
+                updateCanEdit(data);
+            });
 
             $scope.postLike = function () {
                 var sendlike = function () {
@@ -67,12 +124,12 @@
 
                 var toggleLike = function () {
                     var noticeIndex = $scope.user.likes.indexOf($scope.notice.id);
-                    if(noticeIndex >-1) {
+                    if (noticeIndex > -1) {
                         $scope.user.likes.splice(noticeIndex, 1);
                     } else {
                         $scope.user.likes.push($scope.notice.id);
                     }
-                }
+                };
 
                 StateService.fbLogin().then(
                     sendlike,
@@ -100,13 +157,34 @@
                 }
             };
 
+            function showLikes(data) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'components/notice/likes.html',
+                    controller: 'LikesController as likesCtrl',
+                    size: 'sm',
+                    resolve: {
+                        likeData: function () {
+                            console.log("these are the likes");
+                            console.log(data);
+                            return data;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+                    console.log('something happened');
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+            };
+
             $scope.getLikes = function () {
                 VnbRestangular.setJsonp(true);
                 VnbRestangular.all('notices')
                     .get('likes', {id: $scope.notice.id})
                     .then(
                     function (data) {
-                        console.log(data);
+                        showLikes(data);
                     },
                     function (err) {
                         console.log(err);

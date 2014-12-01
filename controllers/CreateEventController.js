@@ -55,14 +55,16 @@
                     } else {
                         $scope.position = $scope.positions[0];
                         $scope.changePos();
+                        console.log($scope.corners);
                     }
                 }
 
                 var initSelection = function () {
+                    console.log('selection inited');
                     $scope.corners = $scope.position.corners;
-                    $scope.selected = $scope.notice.corners;
-                    for (var selectedCornerId in $scope.selected) {
-                        var selectedCorner = $scope.selected[selectedCornerId];
+                    createEventCtrl.selected = $scope.notice.corners;
+                    for (var selectedCornerId in createEventCtrl.selected) {
+                        var selectedCorner = createEventCtrl.selected[selectedCornerId];
                         for (var scopeCornerId in $scope.corners) {
                             var scopeCorner = $scope.corners[scopeCornerId];
                             if (scopeCorner.tag == selectedCorner.tag) {
@@ -74,12 +76,12 @@
                 };
 
                 $scope.changePos = function () {
-                    $scope.corners = $scope.position.corners;
-                    $scope.selected = [];
+                    createEventCtrl.corners = $scope.position.corners;
+                    createEventCtrl.selected = [];
                 };
 
 
-                $scope.selected = [];
+                createEventCtrl.selected = [];
                 createEventCtrl.currentTag = '';
                 $scope.format = "dd/MM/yyyy";
 
@@ -90,15 +92,15 @@
                     $scope[opened] = true;
                 };
                 createEventCtrl.onTagSelect = function (item) {
-                    $scope.selected.push(item);
-                    var index = $scope.corners.indexOf(item);
-                    $scope.corners.splice(index,1);
+                    createEventCtrl.selected.push(item);
+                    var index = createEventCtrl.corners.indexOf(item);
+                    createEventCtrl.corners.splice(index,1);
                     createEventCtrl.currentTag = '';
                 };
                 createEventCtrl.onTagRemove = function (index) {
-                    var tag = $scope.selected[index];
-                    $scope.selected.splice(index, 1);
-                    $scope.corners.push(tag);
+                    var tag = createEventCtrl.selected[index];
+                    createEventCtrl.selected.splice(index, 1);
+                    createEventCtrl.corners.push(tag);
                 };
 
                 createEventCtrl.adjustToDate = function () {
@@ -136,8 +138,11 @@
                     };
                     data.notice.position_id = $scope.position.id;
 
-                    for (var i = 0; i < $scope.selected.length; i++) {
-                        data.notice.corners.push($scope.selected[i]);
+                    if(data.notice.corners) {
+                        data.notice.corners = [];
+                    }
+                    for (var i = 0; i < createEventCtrl.selected.length; i++) {
+                        data.notice.corners.push(createEventCtrl.selected[i]);
                     }
 
                     data.notice.start_time = parseInt(data.notice.from.getTime() / 1000);
