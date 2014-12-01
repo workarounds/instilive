@@ -33,10 +33,10 @@
             </label>
 
             <div class="col-sm-8">
-                <select id="postas" ng-model="position"
+                <select id="postas" ng-model="createEventCtrl.position"
                         class="form-control"
                         ng-change="changePos()"
-                        ng-options="pos.name for pos in positions"></select>
+                        ng-options="pos.name for pos in createEventCtrl.positions"></select>
             </div>
         </div>
 

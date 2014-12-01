@@ -1,45 +1,61 @@
 (function () {
     var app = angular.module('Vnb');
-    app.controller('CreateEventController',
+    app.controller('UpdateEventController',
         [
             'VnbRestangular',
             'StateService',
             '$scope',
             '$modalInstance',
-            'noticeData',
-            function (VnbRestangular, StateService, $scope, $modalInstance, noticeData) {
+            'parentData',
+            function (VnbRestangular, StateService, $scope, $modalInstance, parentData) {
                 var createEventCtrl = this;
-                console.log(noticeData);
-                if (!noticeData) {
-                    var emptyNotice = {
-                        type: "event",
-                        visible: true,
-                        corners: [],
-                        from: new Date(),
-                        to: new Date(),
-                        data: {
-                            title: '',
-                            content: '',
-                            venue: ''
-                        },
-                        start_time: '',
-                        end_time: ''
-                    };
-                    $scope.notice = emptyNotice;
+                function initialise() {
+                    createEventCtrl.selected = [];
+                    createEventCtrl.currentTag = '';
+                    $scope.format = "dd/MM/yyyy";
 
-                } else {
-                    $scope.notice = noticeData;
+                    StateService.getUserData().then(
+                        setUserData,
+                        console.log
+                    );
+
+                }
+
+                var initNotice = function() {
+                    if (!parentData) {
+                        console.log('No, parent. Should not be here. Close Modal');
+                    } else {
+                        var emptyNotice = {
+                            type: "event",
+                            visible: true,
+                            corners: [],
+                            from: new Date(),
+                            to: new Date(),
+                            data: {
+                                title: '',
+                                content: '',
+                                venue: ''
+                            },
+                            start_time: '',
+                            end_time: ''
+                        };
+
+                        console.log('parent data');
+                        console.log(parentData);
+                        $scope.notice = emptyNotice;
+                        $scope.notice.parent = parentData.id;
+                        $scope.notice.corners = parentData.corners;
+                        $scope.notice.data.parent_title = parentData.title;
+                    }
                 }
 
                 var setUserData = function (data) {
+                    console.log('data :');
                     console.log(data);
                     createEventCtrl.positions = data.positions.post_positions;
+                    initNotice();
                     $scope.initPos();
                 };
-                StateService.getUserData().then(
-                    setUserData,
-                    console.log
-                );
 
                 $scope.initPos = function () {
                     if ($scope.notice.position_id) {
@@ -53,11 +69,13 @@
                             }
                         }
                     } else {
+                        console.log('positions *******************');
+                        console.log(createEventCtrl.positions);
                         createEventCtrl.position = createEventCtrl.positions[0];
-                        $scope.changePos();
-                        console.log($scope.corners);
+                        console.log(createEventCtrl.position);
+                        initSelection();
                     }
-                }
+                };
 
                 var initSelection = function () {
                     console.log('selection inited');
@@ -79,11 +97,6 @@
                     createEventCtrl.corners = createEventCtrl.position.corners;
                     createEventCtrl.selected = [];
                 };
-
-
-                createEventCtrl.selected = [];
-                createEventCtrl.currentTag = '';
-                $scope.format = "dd/MM/yyyy";
 
                 $scope.open = function ($event, opened) {
                     $event.preventDefault();
@@ -172,6 +185,8 @@
                     }
                     $modalInstance.close();
                 };
+
+                initialise();
 
             }]);
 })();
