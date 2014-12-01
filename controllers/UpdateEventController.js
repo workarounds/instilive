@@ -13,6 +13,7 @@
                     createEventCtrl.selected = [];
                     createEventCtrl.currentTag = '';
                     $scope.format = "dd/MM/yyyy";
+                    createEventCtrl.parentData = parentData;
 
                     StateService.getUserData().then(
                         setUserData,
@@ -43,9 +44,13 @@
                         console.log('parent data');
                         console.log(parentData);
                         $scope.notice = emptyNotice;
-                        $scope.notice.parent = parentData.id;
+                        if(parentData.parent) {
+                            $scope.notice.parent = parentData.parent;
+                        } else {
+                            $scope.notice.parent = parentData.id;
+                        }
                         $scope.notice.corners = parentData.corners;
-                        $scope.notice.data.parent_title = parentData.title;
+                        $scope.notice.data.parent_title = parentData.data.title;
                     }
                 }
 
