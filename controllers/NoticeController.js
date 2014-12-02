@@ -94,7 +94,7 @@
                     console.log('notice position_id:');
                     console.log($scope.notice.position_id);
                     for (var editIndex in editPositions) {
-                        if (editPositions[editIndex].id == $scope.notice.position_id) {
+                        if (editPositions[editIndex].id === $scope.notice.position_id) {
                             $scope.canEdit = true;
                             return;
                         }

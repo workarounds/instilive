@@ -32,13 +32,16 @@
     </table>
 
     <h3>Positions
-    <span class="pull-right"><button class="btn btn-default small"><i
-        class="fa fa-plus"></i></button></span>
+    <span class="pull-right">
+        <button class="btn btn-default small" ng-click="manageCtrl.openPosition(false)">
+            <i class="fa fa-plus"></i>
+        </button>
+    </span>
     </h3>
     <table class="table table-hover"
         ng-show="manageCtrl.position.sub_positions.length">
         <tr ng-repeat="position in manageCtrl.position.sub_positions"
-            ng-click="manageCtrl.editPosition(position)">
+            ng-click="manageCtrl.openPosition(position)">
             <td>{{position.name}}</td>
             <td>
                 <span ng-repeat="corner in position.corners"

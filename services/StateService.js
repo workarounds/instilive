@@ -130,7 +130,7 @@
                                 deferred.reject(err);
                                 console.log(err);
                             }
-                        )
+                        );
                     },
                     function (err) {
                         deferred.reject(err);

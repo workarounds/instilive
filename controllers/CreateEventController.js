@@ -46,7 +46,7 @@
                         for (var tempPositionId in createEventCtrl.positions) {
                             console.log(tempPositionId);
                             var tempPosition = createEventCtrl.positions[tempPositionId];
-                            if (tempPosition['id'] == $scope.notice.position_id) {
+                            if (tempPosition['id'] === $scope.notice.position_id) {
                                 createEventCtrl.position = tempPosition;
                                 initSelection();
                                 break;
@@ -57,7 +57,7 @@
                         $scope.changePos();
                         console.log($scope.corners);
                     }
-                }
+                };
 
                 var initSelection = function () {
                     console.log('selection inited');
@@ -67,7 +67,7 @@
                         var selectedCorner = createEventCtrl.selected[selectedCornerId];
                         for (var scopeCornerId in $scope.corners) {
                             var scopeCorner = $scope.corners[scopeCornerId];
-                            if (scopeCorner.tag == selectedCorner.tag) {
+                            if (scopeCorner.tag === selectedCorner.tag) {
                                 $scope.corners.splice(scopeCornerId, 1);
                                 break;
                             }
