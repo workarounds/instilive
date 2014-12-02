@@ -87,7 +87,7 @@
                 if (userObj.positions) {
                     var editPositions = userObj.positions.edit_positions;
                     for (var editIndex in editPositions) {
-                        if (editPositions[editIndex].id == $scope.notice.position_id) {
+                        if (editPositions[editIndex].id === $scope.notice.position_id) {
                             $scope.canEdit = true;
                             return;
                         }

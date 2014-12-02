@@ -44,6 +44,33 @@
 
     var controller = ['$scope', 'VnbRestangular', 'StateService', '$modal',
         function ($scope, VnbRestangular, StateService, $modal) {
+            function updateCanEdit(data) {
+                var userObj;
+                console.log('updateCanEdit called');
+                if(!data) {
+                    userObj = $scope.user;
+                } else {
+                    userObj = data;
+                }
+                console.log('user obj is :');
+                console.log(userObj);
+                if (userObj.positions) {
+                    var editPositions = userObj.positions.edit_positions;
+                    console.log('positions: ');
+                    console.log(editPositions);
+                    console.log('notice position_id:');
+                    console.log($scope.notice.position_id);
+                    for (var editIndex in editPositions) {
+                        if (editPositions[editIndex].id === $scope.notice.position_id) {
+                            $scope.canEdit = true;
+                            return;
+                        }
+                    }
+                }
+                $scope.canEdit = false;
+
+            }
+
             //Initialise
             $scope.canEdit = false;
             $scope.comment = '';
@@ -64,33 +91,6 @@
             if (!$scope.notice.data.img_url) {
                 $scope.notice.data.img_url = '';
             }
-
-            function updateCanEdit(data) {
-                var userObj;
-                console.log('updateCanEdit called');
-                if(!data) {
-                    userObj = $scope.user;
-                } else {
-                    userObj = data;
-                }
-                console.log('user obj is :');
-                console.log(userObj);
-                if (userObj.positions) {
-                    var editPositions = userObj.positions.edit_positions;
-                    console.log('positions: ');
-                    console.log(editPositions);
-                    console.log('notice position_id:');
-                    console.log($scope.notice.position_id);
-                    for (var editIndex in editPositions) {
-                        if (editPositions[editIndex].id == $scope.notice.position_id) {
-                            $scope.canEdit = true;
-                            return;
-                        }
-                    }
-                }
-                $scope.canEdit = false;
-
-            };
 
             $scope.$on('userDataEvent', function(event, data) {
                 console.log('event listened in notice.js');
@@ -176,7 +176,7 @@
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
-            };
+            }
 
             $scope.getLikes = function () {
                 VnbRestangular.setJsonp(true);
