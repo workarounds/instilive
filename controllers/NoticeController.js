@@ -1,6 +1,7 @@
 (function () {
-    var app = angular.module('vnb.notice', ['Vnb']);
+    var app = angular.module('Vnb');
 
+    /* Helper functions to handle dates */
     function getDate(s) {
         var a = s.split(/[^0-9]/);
         var d = new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
@@ -42,33 +43,44 @@
         return Math.floor(diff / MS_PER_HOUR) + "h";
     }
 
-    var controller = ['$scope', 'VnbRestangular', 'StateService', '$modal',
+    /* End Helper Functions */
+
+    app.controller('NoticeController', [
+        '$scope',
+        'VnbRestangular',
+        'StateService',
+        '$modal',
         function ($scope, VnbRestangular, StateService, $modal) {
-            //Initialise
-            $scope.canEdit = false;
-            $scope.comment = '';
-            updateCanEdit(null);
+            /* initialising the variables */
+            function initialise() {
+                $scope.canEdit = false;
+                $scope.comment = '';
+                updateCanEdit(null);
 
-            var created = getDate($scope.notice.created);
-            $scope.notice.ago = getAgo(created);
-            if ($scope.notice.start_time) {
-                var from = getDate($scope.notice.start_time);
-                var to = getDate($scope.notice.end_time);
+                var created = getDate($scope.notice.created);
+                $scope.notice.ago = getAgo(created);
+                if ($scope.notice.start_time) {
+                    var from = getDate($scope.notice.start_time);
+                    var to = getDate($scope.notice.end_time);
 
-                $scope.notice.from = from;
-                $scope.notice.to = to;
-                $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                    $scope.notice.from = from;
+                    $scope.notice.to = to;
+                    $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                }
+
+                $scope.notice.corners = JSON.parse($scope.notice.corners);
+                if (!$scope.notice.data.img_url) {
+                    $scope.notice.data.img_url = '';
+                }
             }
 
-            $scope.notice.corners = JSON.parse($scope.notice.corners);
-            if (!$scope.notice.data.img_url) {
-                $scope.notice.data.img_url = '';
-            }
+            /* End initialisation */
 
+            /* Functions to decide whether to show edit options */
             function updateCanEdit(data) {
                 var userObj;
                 console.log('updateCanEdit called');
-                if(!data) {
+                if (!data) {
                     userObj = $scope.user;
                 } else {
                     userObj = data;
@@ -90,13 +102,20 @@
                 }
                 $scope.canEdit = false;
 
-            };
+            }
 
-            $scope.$on('userDataEvent', function(event, data) {
+            $scope.$on('userDataEvent', function (event, data) {
                 console.log('event listened in notice.js');
                 updateCanEdit(data);
             });
+            $scope.toggleDropdown = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+                $scope.status.isopen = !$scope.status.isopen;
+            };
+            /* End Edit Functions */
 
+            /* Functions to handle likes */
             $scope.postLike = function () {
                 var sendlike = function () {
                     //TODO: change the like button to "Liked"
@@ -136,27 +155,6 @@
                     console.log
                 );
             };
-
-            $scope.postComment = function () {
-                if ($scope.comment !== '') {
-                    VnbRestangular.all('notices')
-                        .customPOST({
-                            id: $scope.notice.id,
-                            comment: $scope.comment
-                        }, 'comment')
-                        .then(
-                        function (data) {
-                            console.log(data);
-                            $scope.comment = '';
-                        },
-                        function (err) {
-                            console.log(err.data);
-                        }
-                    );
-
-                }
-            };
-
             function showLikes(data) {
                 var modalInstance = $modal.open({
                     templateUrl: 'components/notice/likes.html',
@@ -176,8 +174,7 @@
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
-            };
-
+            }
             $scope.getLikes = function () {
                 VnbRestangular.setJsonp(true);
                 VnbRestangular.all('notices')
@@ -192,13 +189,31 @@
                 );
                 VnbRestangular.setJsonp(false);
             };
+            /* End Like Functions */
 
-            $scope.toggleDropdown = function ($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
-                $scope.status.isopen = !$scope.status.isopen;
+            /* Functions to handle comments */
+            $scope.postComment = function () {
+                if ($scope.comment !== '') {
+                    VnbRestangular.all('notices')
+                        .customPOST({
+                            id: $scope.notice.id,
+                            comment: $scope.comment
+                        }, 'comment')
+                        .then(
+                        function (data) {
+                            console.log(data);
+                            $scope.comment = '';
+                        },
+                        function (err) {
+                            console.log(err.data);
+                        }
+                    );
+
+                }
             };
+            /* End comment Functions */
 
+            /* Functions to handle edits and updates to notice */
             $scope.editNotice = function () {
                 var modalInstance = $modal.open({
                     templateUrl: 'components/notice/create-event.html',
@@ -219,18 +234,32 @@
                     console.log('Modal dismissed at: ' + new Date());
                 });
             };
-        }];
+            $scope.addUpdate = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'components/notice/create-event.html',
+                    controller: 'UpdateEventController as createEventCtrl',
+                    size: 'lg',
+                    resolve: {
+                        parentData: function () {
+                            console.log("this is the notice");
+                            console.log($scope.notice);
+                            return $scope.notice;
+                        }
+                    }
+                });
 
-    app.directive('notice', [function () {
-        return {
-            restrict: 'E',
-            templateUrl: '/components/notice/notice.html',
-            scope: {
-                notice: "=data",
-                user: "="
-            },
-            controller: 'NoticeController',
-            controllerAs: 'noticeCtrl'
-        };
-    }]);
+                modalInstance.result.then(function () {
+                    console.log('something happened');
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+            };
+
+            /* End notice Edit functions */
+
+            initialise();
+        }
+    ]);
+
+
 })();

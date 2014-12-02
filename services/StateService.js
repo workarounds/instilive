@@ -35,7 +35,7 @@
                     }
                 });
             }
-            else{
+            else {
                 deferred.reject('FB not loaded');
             }
             return deferred.promise;
@@ -48,16 +48,13 @@
                     if (response.status === "connected") {
                         deferred.resolve();
                         $(document).trigger('FB_LOGGED_IN');
-                        if (!userDetails) {
-                            fetchUserData();
-                        }
+                        stateService.getUserData();
                     } else {
                         FB.login(function (result) {
                             if (result.authResponse) {
                                 deferred.resolve();
                                 $(document).trigger('FB_LOGGED_IN');
-
-                                fetchUserData();
+                                stateService.getUserData(true);
                             } else {
                                 deferred.reject('could not login');
                             }
@@ -122,7 +119,7 @@
             var deferred = $q.defer();
             if (!userDetails || forceRefresh) {
                 stateService.getLoginStatus().then(
-                    function(){
+                    function () {
                         fetchUserData().then(
                             function (data) {
                                 $rootScope.$broadcast('userDataEvent', data);
@@ -147,9 +144,11 @@
             return deferred.promise;
         };
 
-        $(document).bind('FB_LOADED', function(){
+        $(document).bind('FB_LOADED', function () {
             stateService.getUserData();
-            if(!FB_LOADED){console.log('FB_LOADED = false');}
+            if (!FB_LOADED) {
+                console.log('FB_LOADED = false');
+            }
             else {
                 console.log('FB_LOADED = true');
             }

@@ -1,12 +1,15 @@
 <div class="card notice">
     <span class="pull-right text-muted">
-        <div class="dropdown">
+        <div class="dropdown" ng-show="canEdit">
             <a href class="dropdown-toggle">
                 <i class="fa fa-chevron-down"></i>
             </a>
             <ul class="dropdown-menu">
                 <li>
                     <a href ng-click="editNotice()">Edit</a>
+                </li>
+                <li>
+                    <a href ng-click="addUpdate()">Add Update</a>
                 </li>
             </ul>
         </div>
