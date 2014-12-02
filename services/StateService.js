@@ -27,6 +27,8 @@
             if (FB_LOADED) {
                 FB.getLoginStatus(function (response) {
                     if (response.status === "connected") {
+                        $(document).trigger('FB_LOGGED_IN');
+
                         deferred.resolve();
                     } else {
                         deferred.reject('not connected');
@@ -45,6 +47,7 @@
                 FB.getLoginStatus(function (response) {
                     if (response.status === "connected") {
                         deferred.resolve();
+                        $(document).trigger('FB_LOGGED_IN');
                         if (!userDetails) {
                             fetchUserData();
                         }
@@ -52,6 +55,8 @@
                         FB.login(function (result) {
                             if (result.authResponse) {
                                 deferred.resolve();
+                                $(document).trigger('FB_LOGGED_IN');
+
                                 fetchUserData();
                             } else {
                                 deferred.reject('could not login');

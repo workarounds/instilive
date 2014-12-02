@@ -1,1 +1,52 @@
-<p>Hello</p>
+<button class="btn btn-primary center-block"
+        ng-click="manageCtrl.login()"
+        ng-hide="manageCtrl.loggedIn">
+    Login
+</button>
+
+<div class="col-xs-8" ng-show="manageCtrl.positions.length">
+    <select id="postas" ng-model="manageCtrl.position"
+            class="form-control"
+            ng-change="manageCtrl.changePos()"
+            ng-options="pos.name for pos in manageCtrl.positions"></select>
+    <p>Manager for
+        <span
+            ng-repeat="corner in manageCtrl.position.corners"
+            ng-class="{'board': corner.is_board}">
+        {{corner.name}} </span>
+    </p>
+
+    <h3>Users
+    <span class="pull-right"><button class="btn btn-default small"><i
+        class="fa fa-plus"></i></button></span>
+    </h3>
+    <table class="table">
+        <tr ng-repeat="user in manageCtrl.position.users">
+            <td><vnb-user data="user"></vnb-user></td>
+            <td>
+                <button class="btn btn-link"
+                        ng-hide="manageCtrl.userData.facebook_id == user.facebook_id"
+                        ng-click="manageCtrl.removeUser(user)">remove</button>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Positions
+    <span class="pull-right"><button class="btn btn-default small"><i
+        class="fa fa-plus"></i></button></span>
+    </h3>
+    <table class="table table-hover"
+        ng-show="manageCtrl.position.sub_positions.length">
+        <tr ng-repeat="position in manageCtrl.position.sub_positions"
+            ng-click="manageCtrl.editPosition(position)">
+            <td>{{position.name}}</td>
+            <td>
+                <span ng-repeat="corner in position.corners"
+                    ng-class="{'board':corner.is_board}">
+                    {{corner.name}}
+                </span>
+            </td>
+        </tr>
+
+    </table>
+</div>

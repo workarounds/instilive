@@ -9,6 +9,7 @@
             'ngCookies',
             'vnb.link',
             'vnb.notice',
+            'vnb.user',
             'restangular'
         ]);
 
