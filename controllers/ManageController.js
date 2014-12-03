@@ -31,6 +31,7 @@
             manageCtrl.loggedIn = false;
             manageCtrl.loading = false;
             manageCtrl.positions = false;
+            manageCtrl.addUserCollapsed = true;
             manageCtrl.userData = {facebook_id:''};
 
             StateService.getLoginStatus().then(
@@ -60,12 +61,47 @@
         }
 
 
-
         manageCtrl.removeUser = function(user){
+            var i = manageCtrl.position.users.indexOf(user);
+            if(i !== -1){
+                manageCtrl.position.users.splice(i, 1);
+                var postData = {
+                    position_id: manageCtrl.position.id,
+                    user_id: user.id
+                };
+                VnbRestangular.all('positions')
+                    .customPOST(postData, 'removeUser')
+                    .then(function(){
 
+                    }, function(){
+                        manageCtrl.position.users.push(user);
+                    })
+            }
         };
 
-        manageCtrl.addUser = function(){
+        manageCtrl.showAddUser = function(){
+            manageCtrl.addUserCollapsed = false;
+        };
+
+        manageCtrl.addUser = function(user){
+            var i = manageCtrl.position.users.indexOf(user);
+            if(i === -1){
+                manageCtrl.position.users.push(user);
+                var postData = {
+                    position_id: manageCtrl.position.id,
+                    user_id: user.id
+                };
+                VnbRestangular.all('positions')
+                    .customPOST(postData, 'user')
+                    .then(function(){
+                        console.log('User added');
+                        //TODO: show feedback
+                    }, function(){
+                        manageCtrl.position.users.pop();
+                        //TODO: show error msg
+                    });
+            }
+            manageCtrl.addUserCollapsed = true;
 
         };
 

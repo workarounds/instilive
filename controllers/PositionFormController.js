@@ -11,6 +11,7 @@
                 users:[]
             };
             posFormCtrl.allCorners = allCorners;
+            posFormCtrl.addUsersCollapsed = true;
 
             posFormCtrl.close = function(){
                 $modalInstance.close();
@@ -25,9 +26,22 @@
                     .customPOST(posFormCtrl.position, posFormCtrl.postTo)
                     .then(posFormCtrl.close, posFormCtrl.showError);
             };
+            posFormCtrl.addUser = function(user){
+                var i = posFormCtrl.position.users.indexOf(user);
+                if(i === -1) {
+                    posFormCtrl.position.users.push(user);
+                    posFormCtrl.addUsersCollapsed = true;
+                }
+            };
+            posFormCtrl.removeUser = function(user){
+                var i = posFormCtrl.position.users.indexOf(user);
+                if(i !== -1){
+                    posFormCtrl.position.users.splice(i,1);
+                }
+            };
 
-            posFormCtrl.removeUser = function(){
-
+            posFormCtrl.showAddUser = function(){
+                posFormCtrl.addUsersCollapsed = false;
             };
 
             function initialise(){

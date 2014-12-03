@@ -17,13 +17,19 @@
 
         <h3>Users
         <span class="pull-right">
-            <button class="btn btn-default small">
+            <button class="btn btn-default small"
+                    ng-click="posFormCtrl.showAddUser()"
+                >
                 <i class="fa fa-plus"></i>
             </button>
         </span>
         </h3>
+        <div collapse="posFormCtrl.addUsersCollapsed">
+            <vnb-add-user
+                callback="posFormCtrl.addUser(user)"></vnb-add-user>
+        </div>
         <table class="table">
-            <tr ng-repeat="user in posFormCtrl.users">
+            <tr ng-repeat="user in posFormCtrl.position.users">
                 <td>
                     <vnb-user data="user"></vnb-user>
                 </td>

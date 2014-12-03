@@ -17,9 +17,18 @@
     </p>
 
     <h3>Users
-    <span class="pull-right"><button class="btn btn-default small"><i
-        class="fa fa-plus"></i></button></span>
+    <span class="pull-right">
+        <button class="btn btn-default small"
+                ng-click="manageCtrl.showAddUser()"
+            >
+            <i class="fa fa-plus"></i>
+        </button>
+    </span>
     </h3>
+    <div collapse="manageCtrl.addUserCollapsed">
+        <vnb-add-user
+            callback="manageCtrl.addUser(user)"></vnb-add-user>
+    </div>
     <table class="table">
         <tr ng-repeat="user in manageCtrl.position.users">
             <td><vnb-user data="user"></vnb-user></td>
