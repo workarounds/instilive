@@ -79,20 +79,13 @@
             /* Functions to decide whether to show edit options */
             function updateCanEdit(data) {
                 var userObj;
-                console.log('updateCanEdit called');
                 if (!data) {
                     userObj = $scope.user;
                 } else {
                     userObj = data;
                 }
-                console.log('user obj is :');
-                console.log(userObj);
                 if (userObj.positions) {
                     var editPositions = userObj.positions.edit_positions;
-                    console.log('positions: ');
-                    console.log(editPositions);
-                    console.log('notice position_id:');
-                    console.log($scope.notice.position_id);
                     for (var editIndex in editPositions) {
                         if (editPositions[editIndex].id === $scope.notice.position_id) {
                             $scope.canEdit = true;
@@ -105,7 +98,6 @@
             }
 
             $scope.$on('userDataEvent', function (event, data) {
-                console.log('event listened in notice.js');
                 updateCanEdit(data);
             });
             $scope.toggleDropdown = function ($event) {
@@ -125,11 +117,9 @@
                         .then(
                         function (data) {
                             if (data.like) {
-                                console.log('liked');
                                 $scope.notice.like_count++;
                             }
                             else {
-                                console.log('Unliked');
                                 $scope.notice.like_count--;
                             }
                         },
@@ -162,15 +152,13 @@
                     size: 'sm',
                     resolve: {
                         likeData: function () {
-                            console.log("these are the likes");
-                            console.log(data);
                             return data;
                         }
                     }
                 });
 
                 modalInstance.result.then(function () {
-                    console.log('something happened');
+                    console.log('modal closed with success');
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
@@ -201,7 +189,6 @@
                         }, 'comment')
                         .then(
                         function (data) {
-                            console.log(data);
                             $scope.comment = '';
                         },
                         function (err) {
@@ -221,8 +208,6 @@
                     size: 'lg',
                     resolve: {
                         noticeData: function () {
-                            console.log("this is the notice");
-                            console.log($scope.notice);
                             return $scope.notice;
                         }
                     }
@@ -241,15 +226,13 @@
                     size: 'lg',
                     resolve: {
                         parentData: function () {
-                            console.log("this is the notice");
-                            console.log($scope.notice);
                             return $scope.notice;
                         }
                     }
                 });
 
                 modalInstance.result.then(function () {
-                    console.log('something happened');
+                    console.log('modal closed with success');
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
