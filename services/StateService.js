@@ -28,7 +28,7 @@
             hashData = {};
             for (var bTag in boards) {
                 hashData[bTag] = {
-                    name: boards[bTag].name,
+                    name: boards[bTag].title,
                     tag: bTag,
                     is_board: true,
                     sref: bTag+"/all",
@@ -43,6 +43,7 @@
                     };
                 }
             }
+            $(document).trigger('VNB_HASH_DATA', hashData);
         };
 
         stateService.getHashData = function(){
