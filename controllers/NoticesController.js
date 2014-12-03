@@ -30,8 +30,6 @@
         StateService.getUserData().then(
             function (data) {
                 $scope.user = data;
-                console.log("got the user data in NoticeController");
-                console.log(data);
             },
             function (err) {
                 $scope.user= emptyUser;
@@ -45,7 +43,6 @@
             'userDataEvent',
             function(event, data) {
                 $scope.user = data;
-                console.log("updated user in NoticesController");
             }
         );
 

@@ -4,12 +4,6 @@
         var sidebarCtrl = this;
         sidebarCtrl.currentBoardId = 1;
         var populateSidebar = function(boards) {
-            for (var bTag in boards) {
-                boards[bTag].tag = bTag + "/all";
-                for(var cTag in boards[bTag].corners){
-                    boards[bTag].corners[cTag].tag = bTag + "/" + cTag;
-                }
-            }
             sidebarCtrl.boards = boards;
             sidebarCtrl.error = false;
             sidebarCtrl.errorMsg = "success";
