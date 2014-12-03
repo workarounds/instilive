@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="app.less" type="text/css" rel="stylesheet/less">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/themes/blue-theme.css">
+</head>
+
+<body ng-app="Vnb" ng-controller="MainController as mainCtrl" layout="row" md-theme="blue">
+<button class="FAB" ng-click="mainCtrl.openEventModal()"><i class="fa fa-pencil"></i></button>
+
+<!-- start page-wrapper -->
+<div id="page-wrapper" ng-class="{'active': mainCtrl.toggle}">
+    <!-- start sidebar-wrapper -->
+    <div id="sidebar-wrapper">
+        <sidebar></sidebar>
+    </div>
+    <!-- end sidebar-wrapper -->
+
+    <!-- start content-wrapper -->
+    <div id="content-wrapper">
+        <!-- start page-content -->
+        <div class="page-content">
+            <!-- start header -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="meta"
+                         ng-click="mainCtrl.toggleSidebar()"
+                         style="cursor: pointer">
+                        <div class="page">
+                            Inter IIT
+                        </div>
+                        <div class="breadcrumb-links"
+                             ng-bind-template="{{mainCtrl.state.board}} / {{mainCtrl.state.corner}}"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="fa fa-filter pull-right hidden hidden-lg hidden-md"
+                    ng-click="mainCtrl.toggleFilterFunction()"
+                    style="cursor: pointer">
+
+                </button>
+            </div>
+            <!-- end header -->
+
+            <!-- start small screen filter -->
+            <div class="filter-container hidden hidden-lg hidden-md"
+                 ng-class="{'open-filter': mainCtrl.toggleFilter}">
+                <div class="widget">
+                    <div class="widget-header">
+                        Filters
+                    </div>
+                    <div class="widget-body">
+                        <!-- start ui-view for rightnav -->
+                        <section ui-view="smallrightnav">
+
+                        </section>
+                        <!-- end ui-view for rightnav -->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end small screen filter -->
+
+            <!-- start main body -->
+            <div class="row-fluid">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <section ui-view="main">
+
+                    </section>
+                    <!-- end ui-view for main -->
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="col-lg-4 col-md-4 hidden hidden-xs hidden-sm">
+                    <div class="widget">
+                        <div class="widget-header">
+                            Filters
+                        </div>
+                        <div class="widget-body">
+                            <!-- start ui-view for rightnav -->
+                            <section ui-view="rightnav">
+
+                            </section>
+                            <!-- end ui-view for rightnav -->
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end main body -->
+        </div>
+        <!-- end page-content -->
+    </div>
+    <!-- end content-wrapper -->
+    <div id="fb-root"></div>
+</div>
+<!-- end page-wrapper-->
+
+
+<!-- Livereload script for development only (stripped during dist build) -->
+<script src="http://localhost:35729/livereload.js"
+        data-concat="false"></script>
+
+<!-- JS from Bower Components -->
+<script src="bower_components/less.js/dist/less-1.6.2.js"
+        data-concat="false"></script>
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script
+    src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script
+    src="bower_components/angular-animate/angular-animate.js"></script>
+<script
+    src="bower_components/angular-resource/angular-resource.js"></script>
+<script
+    src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script
+    src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+<script src="bower_components/restangular/src/restangular.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/hammerjs/hammer.js"></script>
+<script src="/bower_components/angular-material/angular-material.js"></script>
+<!-- Add New Bower Component JS Above -->
+
+<!--IMPORTANT:This script should be the placed below angular.js for loading-->
+<script src="facebook.js"></script>
+
+<!-- Main App JS -->
+<script src="app.js"></script>
+<script src="services/VnbRestangular.js"></script>
+<script src="services/VnbHttpInterceptor.js"></script>
+<script src="test/test.js"></script>
+<script src="controllers/HomeController.js"></script>
+<script src="controllers/MainController.js"></script>
+<script src="controllers/SidebarController.js"></script>
+<script src="controllers/HomeNavController.js"></script>
+<script src="controllers/AdminController.js"></script>
+<script src="controllers/CreateEventController.js"></script>
+<script src="controllers/UpdateEventController.js"></script>
+<script src="controllers/ManageController.js"></script>
+<script src="controllers/NoticesController.js"></script>
+<script src="controllers/NoticeController.js"></script>
+<script src="controllers/LikesController.js"></script>
+<script src="controllers/CommentsController.js"></script>
+<script src="controllers/PositionFormController.js"></script>
+<script src="services/StateService.js"></script>
+<script src="components/sidebar/sidebar.js"></script>
+<script src="components/notice/notice.js"></script>
+<script src="components/vnbLink/vnbLink.js"></script>
+<script src="components/vnbUser/vnbUser.js"></script>
+<script src="components/vnbTagInput/vnbTagInput.js"></script>
+<script src="components/vnbAddUser/vnbAddUser.js"></script>
+
+<!-- Add New Component JS Above -->
+
+
+
+</body>
+
+</html>

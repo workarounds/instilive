@@ -11,7 +11,8 @@
             'vnb.notice',
             'vnb.user',
             'vnb.directives',
-            'restangular'
+            'restangular',
+            'ngMaterial'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
@@ -124,4 +125,5 @@
         };
 
     });
+
 })();
