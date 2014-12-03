@@ -4,6 +4,7 @@
     app.factory('StateService', ['$rootScope', '$q', 'VnbRestangular', function ($rootScope, $q, VnbRestangular) {
         var currentState = {};
         var userDetails = false;
+        var hashData = false;
 
         var stateService = {};
 
@@ -20,6 +21,32 @@
                 }
             );
             return deferred.promise;
+        };
+
+        var generateHashData = function(data){
+            var boards = data.boards;
+            hashData = {};
+            for (var bTag in boards) {
+                hashData[bTag] = {
+                    name: boards[bTag].name,
+                    tag: bTag,
+                    is_board: true,
+                    sref: bTag+"/all",
+                    corners: boards[bTag].corners
+                };
+                for(var cTag in boards[bTag].corners){
+                    hashData[cTag] = {
+                        name: boards[bTag].corners[cTag].name,
+                        tag: cTag,
+                        is_board: false,
+                        sref: bTag + "/" + cTag
+                    };
+                }
+            }
+        };
+
+        stateService.getHashData = function(){
+            return hashData;
         };
 
         stateService.getLoginStatus = function () {
@@ -112,7 +139,18 @@
         };
 
         stateService.getSidebar = function () {
-            return VnbRestangular.all('boards').customGET('sidebar');
+            var request = VnbRestangular.all('boards').customGET('sidebar');
+            var deferred = $q.defer();
+            request.then(
+                function(data){
+                    generateHashData(data);
+                    deferred.resolve(data);
+                }, function(err){
+                    console.log(err);
+                    deferred.reject(err);
+                });
+
+            return deferred.promise;
         };
 
         stateService.getUserData = function (forceRefresh) {
