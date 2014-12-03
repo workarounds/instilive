@@ -145,38 +145,25 @@
                     console.log
                 );
             };
-            function showLikes(data) {
-                var modalInstance = $modal.open({
-                    templateUrl: 'components/notice/likes.html',
-                    controller: 'LikesController as likesCtrl',
-                    size: 'sm',
-                    resolve: {
-                        likeData: function () {
-                            return data;
+            $scope.showLikes = function () {
+                if ($scope.notice.like_count > 0) {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'components/notice/likes.html',
+                        controller: 'LikesController as likesCtrl',
+                        size: 'sm',
+                        resolve: {
+                            notice: function () {
+                                return $scope.notice;
+                            }
                         }
-                    }
-                });
-
-                modalInstance.result.then(function () {
-                    console.log('modal closed with success');
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                });
+                    });
+                    modalInstance.result.then(function () {
+                        console.log('modal closed with success');
+                    }, function () {
+                        console.log('Modal dismissed at: ' + new Date());
+                    });
+                }
             }
-            $scope.getLikes = function () {
-                VnbRestangular.setJsonp(true);
-                VnbRestangular.all('notices')
-                    .get('likes', {id: $scope.notice.id})
-                    .then(
-                    function (data) {
-                        showLikes(data);
-                    },
-                    function (err) {
-                        console.log(err);
-                    }
-                );
-                VnbRestangular.setJsonp(false);
-            };
             /* End Like Functions */
 
             /* Functions to handle comments */
@@ -195,7 +182,32 @@
                             console.log(err.data);
                         }
                     );
+                    $scope.comment = "";
 
+                }
+            };
+            $scope.showComments = function () {
+                if($scope.notice.comment_count > 0) {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'components/notice/comments.html',
+                        controller: 'CommentsController as commentsCtrl',
+                        size: 'lg',
+                        resolve: {
+                            notice: function () {
+                                return $scope.notice;
+                            },
+                            user: function () {
+                                return $scope.user;
+                            }
+                        }
+                    });
+
+
+                    modalInstance.result.then(function () {
+                        console.log('modal closed with success');
+                    }, function () {
+                        console.log('Modal dismissed at: ' + new Date());
+                    });
                 }
             };
             /* End comment Functions */
