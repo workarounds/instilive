@@ -17,9 +17,9 @@
 	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
 
     <ul class="list-inline">
-        <li><a href="" ng-click="getLikes()">{{notice.like_count}}
+        <li><a href="" ng-click="showLikes()">{{notice.like_count}}
             likes</a></li>
-        <li><a href="" >{{notice.comment_count}} comments</a></li>
+        <li><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></li>
         <li><span class="text-muted font-thin font-small">{{notice
             .ago}}</span></li>
     </ul>
@@ -43,9 +43,14 @@
 
         </li>
     </ul>
-	<ul>
-		<li ng-repeat="corner in notice.data.corners">
-			<vnb-link data="corner"></vnb-link>
+	<ul class="list-inline">
+		<li ng-repeat="corner in notice.corners">
+            <a ng-href="#/interIIT/{{corner.tag}}">{{corner.name}}</a>
 		</li>
 	</ul>
+
+    <div>
+        <input type="text" ng-model="comment" class="col-xs-10"/>
+        <button class="btn btn-primary" ng-click="postComment()"> Comment </button>
+    </div>
 </div>
