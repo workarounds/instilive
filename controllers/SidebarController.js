@@ -50,13 +50,18 @@
             sidebarCtrl.currentBoard = board;
         };
 
+        sidebarCtrl.isBoardCurrent = function(board){
+            var state = StateService.getState();
+            return board.tag == state.tag;
+        };
+
         sidebarCtrl.isBoardSelected = function(board){
             return board.selected;
-        };
+        }
 
         sidebarCtrl.isCornerSelected = function(corner){
             var state = StateService.getState();
-            return corner.tag == state.corner;
+            return corner.tag == state.tag;
         };
 
 
