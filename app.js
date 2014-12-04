@@ -65,6 +65,18 @@
                 },
                 resolve: commonResolve
             })
+            .state('board.notice', {
+                url: '/:notice',
+                resolve: commonResolve
+            })
+            .state('board.notice.likes', {
+                url: '/likes',
+                resolve: commonResolve
+            })
+            .state('board.notice.comments', {
+                url: '/comments',
+                resolve: commonResolve
+            })
             .state('boardCorner', {
                 url: '/:board/:corner',
                 views: {
@@ -87,18 +99,6 @@
                 resolve: commonResolve
             })
             .state('boardCorner.notice.comments', {
-                url: '/comments',
-                resolve: commonResolve
-            })
-            .state('board.notice', {
-                url: '/:notice',
-                resolve: commonResolve
-            })
-            .state('board.notice.likes', {
-                url: '/likes',
-                resolve: commonResolve
-            })
-            .state('board.notice.comments', {
                 url: '/comments',
                 resolve: commonResolve
             })

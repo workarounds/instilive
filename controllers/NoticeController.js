@@ -50,7 +50,9 @@
         'VnbRestangular',
         'StateService',
         '$modal',
-        function ($scope, VnbRestangular, StateService, $modal) {
+        '$state',
+        '$window',
+        function ($scope, VnbRestangular, StateService, $modal, $state, $window) {
             /* initialising the variables */
             function initialise() {
                 var emptyUser = {
@@ -265,6 +267,7 @@
                 });
             };
             $scope.showUpdates = function() {
+                $state.go('^.notice', {notice: $scope.notice.id});
                 var modalInstance = $modal.open({
                     templateUrl: 'components/notice/updates.html',
                     controller: 'UpdatesController as updatesCtrl',
@@ -278,8 +281,10 @@
 
                 modalInstance.result.then(function () {
                     console.log('modal closed with success');
+                    $window.history.back();
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
+                    $window.history.back();
                 });
             };
             /* End notice Edit functions */

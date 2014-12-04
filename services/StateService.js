@@ -115,13 +115,7 @@
             var err = {data: "Network error"};
             var result = $q.reject(err);
             //based on state construct the URL for ajax call
-            if (state.notice) {
-                var notice = VnbRestangular.all('notices');
-                VnbRestangular.setJsonp(true);
-                result = notice.customGET('index', {id: state.notice});
-                VnbRestangular.setJsonp(false);
-            }
-            else if (state.corner) {
+            if (state.corner) {
                 var corner = VnbRestangular.all('corners');
                 VnbRestangular.setJsonp(true);
                 result = corner.customGET('index', {tag: state.corner});
