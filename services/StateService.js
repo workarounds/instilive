@@ -107,9 +107,12 @@
             return currentState;
         };
 
-        stateService.getData = function (state) {
+        stateService.getData = function (state, options) {
             if (!state) {
                 state = currentState;
+            }
+            if(!options){
+                options = {};
             }
 
             var err = {data: "Network error"};
@@ -124,13 +127,17 @@
             else if (state.corner) {
                 var corner = VnbRestangular.all('corners');
                 VnbRestangular.setJsonp(true);
-                result = corner.customGET('index', {tag: state.corner});
+                var params = {tag: state.corner};
+                $.extend(params, options);
+                result = corner.customGET('index', params);
                 VnbRestangular.setJsonp(false);
             }
             else if (state.board) {
                 var board = VnbRestangular.all('boards');
                 VnbRestangular.setJsonp(true);
-                result = board.customGET('index', {tag: state.board});
+                var params = {tag: state.board};
+                $.extend(params, options);
+                result = board.customGET('index', params);
                 VnbRestangular.setJsonp(false);
             }
             else {

@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.controller('NoticesController', ['StateService', '$scope', function (StateService, $scope) {
+    app.controller('NoticesController', ['StateService', function (StateService) {
         //intialize
         var noticesCtrl = this;
         noticesCtrl.notices = [];
@@ -14,5 +14,20 @@
             },
             console.log
         );
+
+        noticesCtrl.loadMore = function(){
+            var lastIndex = noticesCtrl.notices.length -1;
+            var from = noticesCtrl.notices[lastIndex].modified;
+            var options = {from:from};
+            StateService.getData(false, options).then(
+                function(data){
+                    var extraNotices = data.Notice;
+                    console.log(extraNotices);
+                    noticesCtrl.notices = noticesCtrl.notices.concat(extraNotices);
+                    console.log(noticesCtrl.notices);
+                },
+                console.log
+            );
+        };
     }]);
 })();
