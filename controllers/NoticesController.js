@@ -9,7 +9,6 @@
         //get the data
         StateService.getData().then(
             function (data) {
-                console.log(data);
                 var notices = data.Notice;
                 noticesCtrl.notices = notices;
             },

@@ -51,7 +51,7 @@
         };
 
         sidebarCtrl.isBoardSelected = function(board){
-            return board == sidebarCtrl.currentBoard;
+            return board.selected;
         };
 
 

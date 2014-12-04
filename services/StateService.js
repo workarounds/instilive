@@ -23,7 +23,7 @@
             return deferred.promise;
         };
 
-        var generateHashData = function(data){
+        var generateHashData = function(data, deferred){
             var boards = data.boards;
             hashData = {};
             for (var bTag in boards) {
@@ -39,10 +39,12 @@
                         name: boards[bTag].corners[cTag].name,
                         tag: cTag,
                         is_board: false,
+                        board_tag: bTag,
                         sref: bTag + "/" + cTag
                     };
                 }
             }
+            deferred.resolve(data);
             $(document).trigger('VNB_HASH_DATA', hashData);
         };
 
@@ -144,8 +146,7 @@
             var deferred = $q.defer();
             request.then(
                 function(data){
-                    generateHashData(data);
-                    deferred.resolve(data);
+                    generateHashData(data, deferred);
                 }, function(err){
                     console.log(err);
                     deferred.reject(err);
