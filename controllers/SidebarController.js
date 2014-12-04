@@ -3,7 +3,6 @@
     app.controller('SidebarController', ['StateService', function(StateService) {
         var sidebarCtrl = this;
         sidebarCtrl.currentBoardId = 1;
-        sidebarCtrl.currentBoard = {};
         var populateSidebar = function(boards) {
             sidebarCtrl.boards = boards;
             sidebarCtrl.error = false;
@@ -33,27 +32,6 @@
         sidebarCtrl.updateCurrentBoardId = function(boardId) {
             sidebarCtrl.currentBoardId = boardId;
         };
-
-        sidebarCtrl.toggleSelectBoard = function(board){
-            if(board == sidebarCtrl.currentBoard) {
-                if (board.selected) {
-                    board.selected = false;
-                }
-                else {
-                    board.selected = true;
-                }
-            }
-            else{
-                sidebarCtrl.currentBoard.selected = false;
-                board.selected = true;
-            }
-            sidebarCtrl.currentBoard = board;
-        };
-
-        sidebarCtrl.isBoardSelected = function(board){
-            return board == sidebarCtrl.currentBoard;
-        };
-
 
         sidebarCtrl.login = function() {
             StateService.fbLogin().then(
