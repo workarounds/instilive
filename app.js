@@ -43,15 +43,6 @@
                 },
                 resolve: commonResolve
             })
-            .state('admin', {
-                url:'/admin',
-                views: {
-                    "main@": {
-                        templateUrl: 'admin/create-notice.html',
-                        controller: 'AdminController as adminCtrl'
-                    }
-                }
-            })
             .state('manage', {
                 url: '/manage',
                 views: {
@@ -60,20 +51,6 @@
                         controller: 'ManageController as manageCtrl'
                     }
                 }
-            })
-            .state('corner', {
-                url: '/:corner',
-                views: {
-                    "main@": {
-                        templateUrl: 'components/home/home.html',
-                        controller: 'HomeController as homeCtrl'
-                    },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
-                        controller: 'HomeNavController as rightnavCtrl'
-                    }
-                },
-                resolve: commonResolve
             })
             .state('board', {
                 url: '/:board/all',
@@ -101,9 +78,28 @@
                 },
                 resolve: commonResolve
             })
-            .state('notice', {
-                url: '/:board/:corner/:notice',
-                template: '<test></test>',
+            .state('boardCorner.notice', {
+                url: '/:notice',
+                resolve: commonResolve
+            })
+            .state('boardCorner.notice.likes', {
+                url: '/likes',
+                resolve: commonResolve
+            })
+            .state('boardCorner.notice.comments', {
+                url: '/comments',
+                resolve: commonResolve
+            })
+            .state('board.notice', {
+                url: '/:notice',
+                resolve: commonResolve
+            })
+            .state('board.notice.likes', {
+                url: '/likes',
+                resolve: commonResolve
+            })
+            .state('board.notice.comments', {
+                url: '/comments',
                 resolve: commonResolve
             })
             ;
