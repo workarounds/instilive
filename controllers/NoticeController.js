@@ -51,8 +51,8 @@
         'StateService',
         '$modal',
         '$state',
-        '$window',
-        function ($scope, VnbRestangular, StateService, $modal, $state, $window) {
+        'VnbModal',
+        function ($scope, VnbRestangular, StateService, $modal, $state, VnbModal) {
             /* initialising the variables */
             function initialise() {
                 var emptyUser = {
@@ -267,8 +267,7 @@
                 });
             };
             $scope.showUpdates = function() {
-                $state.go('^.notice', {notice: $scope.notice.id});
-                var modalInstance = $modal.open({
+                var modalParams = {
                     templateUrl: 'components/notice/updates.html',
                     controller: 'UpdatesController as updatesCtrl',
                     size: 'lg',
@@ -276,16 +275,11 @@
                         notice: function () {
                             return $scope.notice;
                         }
-                    }
-                });
-
-                modalInstance.result.then(function () {
-                    console.log('modal closed with success');
-                    $window.history.back();
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                    $window.history.back();
-                });
+                    },
+                    state: '^.notice',
+                    params: {notice: $scope.notice.id}
+                };
+                VnbModal.openModal(modalParams);
             };
             /* End notice Edit functions */
 

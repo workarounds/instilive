@@ -101,6 +101,7 @@
             currentState.board = $stateParams.board;
             currentState.corner = $stateParams.corner;
             currentState.notice = $stateParams.notice;
+            $rootScope.$emit('StateChange', currentState);
         };
 
         stateService.getState = function () {
