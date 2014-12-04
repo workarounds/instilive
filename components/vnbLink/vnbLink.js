@@ -8,14 +8,8 @@
         });
         var go = function(tag) {
             if (hashData) {
-                if (hashData[tag].is_board) {
-                    $state.go('board', {board: tag});
-                }
-                else if (hashData[tag].board_tag) {
-                    $state.go('boardCorner', {
-                        board: hashData[tag].board_tag,
-                        corner: tag
-                    });
+                if(hashData[tag]){
+                    $state.go('tag.all', {tag: tag});
                 }
                 else {
                     console.log('No data found');

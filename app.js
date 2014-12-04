@@ -28,6 +28,7 @@
             ]
         };
 
+        $urlRouterProvider.when('/:tag', '/:tag/all');
         $stateProvider
             .state('home', {
                 url: '/home',
@@ -43,6 +44,14 @@
                 },
                 resolve: commonResolve
             })
+            .state('home.direct',{
+                url: '/direct/:notice',
+                resolve: commonResolve
+            })
+            .state('home.notice',{
+                url: '/:notice',
+                resolve: commonResolve
+            })
             .state('manage', {
                 url: '/manage',
                 views: {
@@ -52,8 +61,8 @@
                     }
                 }
             })
-            .state('board', {
-                url: '/:board/all',
+            .state('tag', {
+                url: '/:tag',
                 views: {
                     "main@": {
                         templateUrl: 'components/board/board.html'
@@ -65,40 +74,19 @@
                 },
                 resolve: commonResolve
             })
-            .state('board.notice', {
+            .state('tag.all', {
+                url: '/all',
+                resolve: commonResolve
+            })
+            .state('tag.notice', {
                 url: '/:notice',
                 resolve: commonResolve
             })
-            .state('board.notice.likes', {
+            .state('tag.notice.likes', {
                 url: '/likes',
                 resolve: commonResolve
             })
-            .state('board.notice.comments', {
-                url: '/comments',
-                resolve: commonResolve
-            })
-            .state('boardCorner', {
-                url: '/:board/:corner',
-                views: {
-                    "main@": {
-                        templateUrl: 'components/corner/corner.html'
-                    },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
-                        controller: 'HomeNavController as rightnavCtrl'
-                    }
-                },
-                resolve: commonResolve
-            })
-            .state('boardCorner.notice', {
-                url: '/:notice',
-                resolve: commonResolve
-            })
-            .state('boardCorner.notice.likes', {
-                url: '/likes',
-                resolve: commonResolve
-            })
-            .state('boardCorner.notice.comments', {
+            .state('tag.notice.comments', {
                 url: '/comments',
                 resolve: commonResolve
             })

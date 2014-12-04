@@ -98,8 +98,7 @@
         };
 
         stateService.setState = function ($stateParams) {
-            currentState.board = $stateParams.board;
-            currentState.corner = $stateParams.corner;
+            currentState.tag = $stateParams.tag;
             currentState.notice = $stateParams.notice;
         };
 
@@ -115,27 +114,41 @@
                 options = {};
             }
 
-            var err = {data: "Network error"};
-            var result = $q.reject(err);
-            //based on state construct the URL for ajax call
-            if (state.corner) {
-                var corner = VnbRestangular.all('corners');
-                VnbRestangular.setJsonp(true);
-                var params = {tag: state.corner};
-                $.extend(params, options);
-                result = corner.customGET('index', params);
-                VnbRestangular.setJsonp(false);
-            }
-            else if (state.board) {
-                var board = VnbRestangular.all('boards');
-                VnbRestangular.setJsonp(true);
-                var params = {tag: state.board};
-                $.extend(params, options);
-                result = board.customGET('index', params);
-                VnbRestangular.setJsonp(false);
+            var deferred = $q.defer();
+            var result = deferred.promise;
+            if(!hashData){
+                $(document).one('VNB_HASH_DATA', function(){
+                    var request = stateService.getData();
+                    request.then(
+                        function(data){deferred.resolve(data)},
+                        function(err){deferred.reject(err)}
+                    );
+                });
             }
             else {
-
+                //based on state construct the URL for ajax call
+                if (state.tag) {
+                    var tag = state.tag;
+                    if (!hashData[tag].is_board) {
+                        var corner = VnbRestangular.all('corners');
+                        VnbRestangular.setJsonp(true);
+                        var params = {tag: tag};
+                        $.extend(params, options);
+                        result = corner.customGET('index', params);
+                        VnbRestangular.setJsonp(false);
+                    }
+                    else {
+                        var board = VnbRestangular.all('boards');
+                        VnbRestangular.setJsonp(true);
+                        var params = {tag: tag};
+                        $.extend(params, options);
+                        result = board.customGET('index', params);
+                        VnbRestangular.setJsonp(false);
+                    }
+                }
+                else {
+                    deferred.reject('');
+                }
             }
 
             //for now returning a dummy
