@@ -54,6 +54,11 @@
             return board.selected;
         };
 
+        sidebarCtrl.isCornerSelected = function(corner){
+            var state = StateService.getState();
+            return corner.tag == state.corner;
+        };
+
 
         sidebarCtrl.login = function() {
             StateService.fbLogin().then(

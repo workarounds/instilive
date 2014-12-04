@@ -22,17 +22,18 @@
             <md-content ng-controller="SidebarController as sidebarCtrl">
                 <div ng-repeat="board in sidebarCtrl.boards">
 
-                    <md-button
+                    <button
                         class="menu-item menu-title md-menu-item"
                         ng-click="sidebarCtrl.toggleSelectBoard(board)" md-highlight="sidebarCtrl.isBoardSelected(board)" vnb-link="board.tag" md-ink-ripple="#bbb">
                         {{board.title}}
-                    </md-button>
+                    </button>
 
                     <a class="menu-item menu-sub-item md-menu-item"
                        ng-show="sidebarCtrl.isBoardSelected(board)"
                        ng-repeat="corner in board.corners"
                        vnb-link="corner.tag"
-                       md-highlight="" md-ink-ripple="#bbb">
+                       md-highlight="sidebarCtrl.isCornerSelected(corner)"
+                       md-ink-ripple="#bbb">
                         <span ng-bind="corner.name"></span>
                     </a>
 
