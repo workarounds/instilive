@@ -100,6 +100,7 @@
         stateService.setState = function ($stateParams) {
             currentState.tag = $stateParams.tag;
             currentState.notice = $stateParams.notice;
+            $rootScope.$emit('StateChange', currentState);
         };
 
         stateService.getState = function () {
