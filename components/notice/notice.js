@@ -226,8 +226,7 @@
             restrict: 'E',
             templateUrl: '/components/notice/notice.html',
             scope: {
-                notice: "=data",
-                user: "="
+                notice: "=data"
             },
             controller: 'NoticeController',
             controllerAs: 'noticeCtrl'

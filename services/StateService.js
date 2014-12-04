@@ -164,7 +164,6 @@
                             function (data) {
                                 $rootScope.$broadcast('userDataEvent', data);
                                 deferred.resolve(data);
-                                console.log(data);
                             },
                             function (err) {
                                 deferred.reject(err);

@@ -53,9 +53,26 @@
         function ($scope, VnbRestangular, StateService, $modal) {
             /* initialising the variables */
             function initialise() {
+                var emptyUser = {
+                    facebook_id: 0,
+                    id: 0,
+                    name: 'anon',
+                    username: 'anon',
+                    gender: 'unknown',
+                    likes: []
+                };
                 $scope.canEdit = false;
                 $scope.comment = '';
-                updateCanEdit(null);
+                StateService.getUserData().then(
+                    function (data) {
+                        $scope.user = data;
+                        updateCanEdit();
+                    },
+                    function (err) {
+                        $scope.user= emptyUser;
+                        console.log(err);
+                    }
+                );
 
                 var created = getDate($scope.notice.created);
                 $scope.notice.ago = getAgo(created);
@@ -69,21 +86,23 @@
                 }
 
                 $scope.notice.corners = JSON.parse($scope.notice.corners);
+                $scope.notice.data = JSON.parse($scope.notice.data);
                 if (!$scope.notice.data.img_url) {
                     $scope.notice.data.img_url = '';
                 }
             }
-
             /* End initialisation */
 
+            /* functions to get user data */
+            $scope.$on('userDataEvent', function (event, data) {
+                $scope.user = data;
+                updateCanEdit();
+            });
+            /* end functions to get user data */
+
             /* Functions to decide whether to show edit options */
-            function updateCanEdit(data) {
-                var userObj;
-                if (!data) {
-                    userObj = $scope.user;
-                } else {
-                    userObj = data;
-                }
+            function updateCanEdit() {
+                var userObj = $scope.user;
                 if (userObj.positions) {
                     var editPositions = userObj.positions.edit_positions;
                     for (var editIndex in editPositions) {
@@ -96,10 +115,6 @@
                 $scope.canEdit = false;
 
             }
-
-            $scope.$on('userDataEvent', function (event, data) {
-                updateCanEdit(data);
-            });
             $scope.toggleDropdown = function ($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -249,7 +264,24 @@
                     console.log('Modal dismissed at: ' + new Date());
                 });
             };
+            $scope.showUpdates = function() {
+                var modalInstance = $modal.open({
+                    templateUrl: 'components/notice/updates.html',
+                    controller: 'UpdatesController as updatesCtrl',
+                    size: 'lg',
+                    resolve: {
+                        notice: function () {
+                            return $scope.notice;
+                        }
+                    }
+                });
 
+                modalInstance.result.then(function () {
+                    console.log('modal closed with success');
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+            };
             /* End notice Edit functions */
 
             initialise();
