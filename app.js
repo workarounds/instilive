@@ -28,8 +28,16 @@
             ]
         };
 
-        $urlRouterProvider.when('/:tag', '/:tag/all');
         $stateProvider
+            .state('manage', {
+                url: '/manage',
+                views: {
+                    "main@": {
+                        templateUrl: 'manage/manage-aliases.html',
+                        controller: 'ManageController as manageCtrl'
+                    }
+                }
+            })
             .state('home', {
                 url: '/home',
                 views: {
@@ -52,15 +60,11 @@
                 url: '/:notice',
                 resolve: commonResolve
             })
-            .state('manage', {
-                url: '/manage',
-                views: {
-                    "main@": {
-                        templateUrl: 'manage/manage-aliases.html',
-                        controller: 'ManageController as manageCtrl'
-                    }
-                }
-            })
+        ;
+        $urlRouterProvider.when('/:tag', '/:tag/all');
+        $stateProvider
+
+
             .state('tag', {
                 url: '/:tag',
                 views: {
