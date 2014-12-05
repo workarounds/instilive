@@ -45,7 +45,6 @@
                     }
                 );
                 $scope.$on('userDataEvent', function (event, data) {
-                    console.log('got user data');
                     $scope.user = data;
                     setUserData(data);
                 });
@@ -64,7 +63,6 @@
                     } else {
                         createEventCtrl.position = createEventCtrl.positions[0];
                         $scope.changePos();
-                        console.log($scope.corners);
                     }
                 };
 

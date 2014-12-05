@@ -20,6 +20,7 @@
                 VnbRestangular.all('users').get('index').then(
                     function (data) {
                         userDetails = data;
+                        console.log(data);
                         deferred.resolve(data);
                     },
                     function (err) {
@@ -157,9 +158,9 @@
             stateService.getUserData = function (forceRefresh) {
                 var deferred = $q.defer();
                 if ((!userDetails && !processingRequest) || forceRefresh) {
-                    processingRequest = true;
                     stateService.getLoginStatus().then(
                         function () {
+                            processingRequest = true;
                             fetchUserData().then(
                                 function (data) {
                                     $rootScope.$broadcast('userDataEvent', data);
