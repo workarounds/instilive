@@ -4,16 +4,19 @@
         'notice',
         'VnbRestangular',
         function (notice, VnbRestangular) {
-            var likeCtrl = this;
-            likeCtrl.notice = notice;
+            var likesCtrl = this;
+            likesCtrl.notice = notice;
+            likesCtrl.loading = true;
 
             var getLikes = function () {
                 VnbRestangular.setJsonp(true);
                 VnbRestangular.all('notices')
-                    .get('likes', {id: likeCtrl.notice.id})
+                    .get('likes', {id: likesCtrl.notice.id})
                     .then(
                     function (data) {
-                        likeCtrl.likes = data;
+                        likesCtrl.likes = data;
+                        likesCtrl.loading = false;
+                        console.log(data);
                     },
                     function (err) {
                         console.log(err);
@@ -21,6 +24,7 @@
                 );
                 VnbRestangular.setJsonp(false);
             };
+
 
             getLikes();
         }]);
