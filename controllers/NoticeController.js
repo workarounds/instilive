@@ -124,6 +124,45 @@
             };
             /* End Edit Functions */
 
+            /* Functions to show pin options */
+            $scope.pinCorners = [];
+            $scope.updatePinCorners = function () {
+                $scope.pinCorners = [];
+                var corners = $scope.notice.corners;
+                for(var i in corners) {
+                    if($scope.existsInEditPositions(corners[i])) {
+                        $scope.pinCorners.push(corners[i]);
+                    }
+                }
+            };
+            $scope.existsInEditPositions = function (corner) {
+                var exists = false;
+                var editPositions = $scope.user.positions.edit_positions;
+                    for (var i in editPositions) {
+                        var corners = editPositions[i].corners;
+                        for (var j in corners) {
+                            if(corners[j].tag == corner.tag) {
+                                return true;
+                            }
+                        }
+                    }
+                return exists;
+            };
+            $scope.pinIn = function (pinCorner) {
+                VnbRestangular.all('notices')
+                    .customPOST({id: $scope.notice.id, corner: pinCorner, pin: true}, 'pin')
+                    .then(
+                    function (data) {
+                        console.log('pinned');
+                    },
+                    function (err) {
+                        console.log(err.data);
+                    }
+                );
+                console.log(pinCorner);
+            };
+            /* End pin functions */
+
             /* Functions to handle likes */
             $scope.postLike = function () {
                 var sendlike = function () {
