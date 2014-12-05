@@ -117,16 +117,7 @@
 
             var deferred = $q.defer();
             var result = deferred.promise;
-            if(!hashData){
-                $(document).one('VNB_HASH_DATA', function(){
-                    var request = stateService.getData();
-                    request.then(
-                        function(data){deferred.resolve(data)},
-                        function(err){deferred.reject(err)}
-                    );
-                });
-            }
-            else {
+            if(hashData){
                 //based on state construct the URL for ajax call
                 if (state.tag) {
                     var tag = state.tag;
@@ -148,7 +139,31 @@
                     }
                 }
                 else {
-                    deferred.reject('');
+                    var request = VnbRestangular.all('notices');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('index', options);
+                    VnbRestangular.setJsonp(false);
+                }
+            }
+            else {
+                if(!state.tag){
+                    var request = VnbRestangular.all('notices');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('index', options);
+                    VnbRestangular.setJsonp(false);
+                }
+                else {
+                    $(document).one('VNB_HASH_DATA', function () {
+                        var request = stateService.getData();
+                        request.then(
+                            function (data) {
+                                deferred.resolve(data)
+                            },
+                            function (err) {
+                                deferred.reject(err)
+                            }
+                        );
+                    });
                 }
             }
 

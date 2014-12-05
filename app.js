@@ -42,7 +42,7 @@
                 url: '/home',
                 views: {
                     "main@": {
-                        templateUrl: 'components/home/home.html',
+                        templateUrl: 'components/tag/tag.html',
                         controller: 'HomeController as homeCtrl'
                     },
                     "rightnav@home": {
@@ -69,7 +69,7 @@
                 url: '/:tag',
                 views: {
                     "main@": {
-                        templateUrl: 'components/board/board.html'
+                        templateUrl: 'components/tag/tag.html'
                     },
                     "rightnav@home": {
                         templateUrl: 'components/home/rightnav.html',
