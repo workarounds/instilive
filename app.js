@@ -38,12 +38,15 @@
                     }
                 }
             })
+            ;
+        $urlRouterProvider.when('/home', '/home/all');
+        $urlRouterProvider.when('/home/', '/home/all');
+        $stateProvider
             .state('home', {
                 url: '/home',
                 views: {
                     "main@": {
-                        templateUrl: 'components/tag/tag.html',
-                        controller: 'HomeController as homeCtrl'
+                        templateUrl: 'components/tag/tag.html'
                     },
                     "rightnav@home": {
                         templateUrl: 'components/home/rightnav.html',
@@ -54,6 +57,29 @@
             })
             .state('home.direct',{
                 url: '/direct/:notice',
+                views: {
+                    "main@": {
+                        templateUrl: 'components/notice/updates.html',
+                        controller: 'UpdatesController as updatesCtrl'
+                    },
+                    "rightnav@home": {
+                        templateUrl: 'components/home/rightnav.html',
+                        controller: 'HomeNavController as rightnavCtrl'
+                    }
+                },
+                resolve: {
+                    setStateFunc: ['StateService', '$stateParams',
+                        function (StateService, $stateParams) {
+                            return StateService.setState($stateParams);
+                        }
+                    ],
+                    notice: function () {
+                        return null;
+                    }
+                }
+            })
+            .state('home.all', {
+                url: '/all',
                 resolve: commonResolve
             })
             .state('home.notice',{
@@ -62,9 +88,8 @@
             })
         ;
         $urlRouterProvider.when('/:tag', '/:tag/all');
+        $urlRouterProvider.when('/:tag/', '/:tag/all');
         $stateProvider
-
-
             .state('tag', {
                 url: '/:tag',
                 views: {

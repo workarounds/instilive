@@ -1,7 +1,7 @@
 <div class="card notice" id="{{notice.id}}">
     <span class="pull-right text-muted">
         <div class="dropdown" ng-show="canEdit">
-            <a href class="dropdown-toggle">
+            <a href class="dropdown-toggle" ng-click="updatePinCorners()">
                 <i class="fa fa-chevron-down"></i>
             </a>
             <ul class="dropdown-menu">
@@ -10,6 +10,9 @@
                 </li>
                 <li>
                     <a href ng-click="addUpdate()">Add Update</a>
+                </li>
+                <li ng-repeat="pin in pinCorners">
+                    <a href="" ng-click="pinIn(pin)">Pin in {{pin.name}}</a>
                 </li>
             </ul>
         </div>
