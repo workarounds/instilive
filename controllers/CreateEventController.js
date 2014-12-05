@@ -5,11 +5,9 @@
             'VnbRestangular',
             'StateService',
             '$scope',
-            '$modalInstance',
             'noticeData',
-            function (VnbRestangular, StateService, $scope, $modalInstance, noticeData) {
+            function (VnbRestangular, StateService, $scope, noticeData) {
                 var createEventCtrl = this;
-                console.log(noticeData);
                 if (!noticeData) {
                     var emptyNotice = {
                         type: "event",
@@ -32,14 +30,25 @@
                 }
 
                 var setUserData = function (data) {
-                    console.log(data);
-                    createEventCtrl.positions = data.positions.post_positions;
-                    $scope.initPos();
+                    if(data) {
+                        createEventCtrl.positions = data.positions.post_positions;
+                        $scope.initPos();
+                    }
                 };
                 StateService.getUserData().then(
-                    setUserData,
-                    console.log
+                    function (data) {
+                        $scope.user = data;
+                        setUserData(data);
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
                 );
+                $scope.$on('userDataEvent', function (event, data) {
+                    console.log('got user data');
+                    $scope.user = data;
+                    setUserData(data);
+                });
 
                 $scope.initPos = function () {
                     if ($scope.notice.position_id) {
@@ -170,7 +179,6 @@
                             }
                         );
                     }
-                    $modalInstance.close();
                 };
 
             }]);

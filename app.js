@@ -38,6 +38,20 @@
                     }
                 }
             })
+            .state('create', {
+                url: '/create',
+                views: {
+                    "main@" : {
+                        templateUrl: 'components/notice/create-event.html',
+                        controller: 'CreateEventController as createEventCtrl'
+                    }
+                },
+                resolve: {
+                    noticeData: function () {
+                        return null;
+                    }
+                }
+            })
             ;
         $urlRouterProvider.when('/home', '/home/all');
         $urlRouterProvider.when('/home/', '/home/all');
