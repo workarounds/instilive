@@ -4,28 +4,37 @@
 <head>
     <title></title>
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
     <link href="app.less" type="text/css" rel="stylesheet/less">
-    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="/bower_components/angular-material/themes/blue-theme.css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet"
+          href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet"
+          href="/bower_components/angular-material/themes/blue-theme.css">
+    <link
+        href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,100'
+        rel='stylesheet' type='text/css'>
 </head>
 
-<body ng-controller="MainController as mainCtrl" layout="row" md-theme="blue">
+<body ng-controller="MainController as mainCtrl" layout="row"
+      md-theme="blue">
 <div layout="column" layout-fill>
     <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+                    md-component-id="left"
                     md-is-locked-open="$media('md')">
             <md-toolbar class="md-theme-indigo">
                 <h1 class="md-toolbar-tools">Notice Club</h1>
             </md-toolbar>
-            <md-content ng-controller="SidebarController as sidebarCtrl">
+            <md-content
+                ng-controller="SidebarController as sidebarCtrl">
                 <div ng-repeat="board in sidebarCtrl.boards">
 
                     <button
                         class="menu-item menu-title md-menu-item"
-                        ng-click="sidebarCtrl.toggleSelectBoard(board)" md-highlight="sidebarCtrl.isBoardCurrent(board)" vnb-link="board.tag" md-ink-ripple="#bbb">
+                        ng-click="sidebarCtrl.toggleSelectBoard(board)"
+                        md-highlight="sidebarCtrl.isBoardCurrent(board)"
+                        vnb-link="board.tag" md-ink-ripple="#bbb">
                         {{board.title}}
                     </button>
 
@@ -41,17 +50,33 @@
                 </div>
             </md-content>
         </md-sidenav>
-        <section layout="column" flex>
-            <md-toolbar></md-toolbar>
-            <section layout="row" flex>
-                <md-content flex class="md-padding">
-                    <section ui-view="main"></section>
-                </md-content>
-                <md-content flex class="md-padding">
-                    <section ui-view="right"></section>
-                </md-content>
-            </section>
-        </section>
+        <md-content layout="column" flex>
+            <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
+                        style="">
+                <section layout="row"
+                         flex
+                         layout-align="space-between end">
+                    <a href ng-click="mainCtrl.toggleLeftSidebar()">
+                        <span class="fa fa-heart"></span>
+                    </a>
+                    <a href ng-click="mainCtrl.toggleRightSidebar()">
+                        <span class="fa fa-heart"></span>
+                    </a>
+                </section>
+            </md-toolbar>
+            <md-content layout="row" flex layout-align="center start">
+                <section flex class="md-padding main-content"
+                         ui-view="main">
+                </section>
+                <md-sidenav class="md-sidenav-right"
+                            md-component-id="right"
+                            md-is-locked-open="$media('md')">
+                    <md-content>
+                        <section ui-view="right"></section>
+                    </md-content>
+                </md-sidenav>
+            </md-content>
+        </md-content>
     </section>
 </div>
 
@@ -82,7 +107,8 @@
 <script src="bower_components/restangular/src/restangular.js"></script>
 <script src="/bower_components/angular-aria/angular-aria.js"></script>
 <script src="/bower_components/hammerjs/hammer.js"></script>
-<script src="/bower_components/angular-material/angular-material.js"></script>
+<script
+    src="/bower_components/angular-material/angular-material.js"></script>
 <!-- Add New Bower Component JS Above -->
 
 <!--IMPORTANT:This script should be the placed below angular.js for loading-->

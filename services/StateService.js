@@ -123,57 +123,20 @@
 
                 var deferred = $q.defer();
                 var result = deferred.promise;
-                if (hashData) {
-                    //based on state construct the URL for ajax call
-                    if (state.tag) {
-                        var tag = state.tag;
-                        if (!hashData[tag].is_board) {
-                            var corner = VnbRestangular.all('corners');
-                            VnbRestangular.setJsonp(true);
-                            var params = {tag: tag};
-                            $.extend(params, options);
-                            result = corner.customGET('index', params);
-                            VnbRestangular.setJsonp(false);
-                        }
-                        else {
-                            var board = VnbRestangular.all('boards');
-                            VnbRestangular.setJsonp(true);
-                            var params = {tag: tag};
-                            $.extend(params, options);
-                            result = board.customGET('index', params);
-                            VnbRestangular.setJsonp(false);
-                        }
-                    }
-                    else {
-                        var request = VnbRestangular.all('notices');
-                        VnbRestangular.setJsonp(true);
-                        result = request.customGET('index', options);
-                        VnbRestangular.setJsonp(false);
-                    }
+                if (!state.tag) {
+                    var request = VnbRestangular.all('notices');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('index', options);
+                    VnbRestangular.setJsonp(false);
                 }
                 else {
-                    if (!state.tag) {
-                        var request = VnbRestangular.all('notices');
-                        VnbRestangular.setJsonp(true);
-                        result = request.customGET('index', options);
-                        VnbRestangular.setJsonp(false);
-                    }
-                    else {
-                        $(document).one('VNB_HASH_DATA', function () {
-                            var request = stateService.getData();
-                            request.then(
-                                function (data) {
-                                    deferred.resolve(data)
-                                },
-                                function (err) {
-                                    deferred.reject(err)
-                                }
-                            );
-                        });
-                    }
+                    var params = {tag: state.tag};
+                    $.extend(params, options);
+                    var request = VnbRestangular.all('notices');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('data', params);
+                    VnbRestangular.setJsonp(false);
                 }
-
-                //for now returning a dummy
                 return result;
             };
 
