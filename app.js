@@ -45,8 +45,8 @@
                         templateUrl: 'components/tag/tag.html',
                         controller: 'HomeController as homeCtrl'
                     },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
+                    "right@": {
+                        templateUrl: 'components/home/right.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
@@ -71,8 +71,8 @@
                     "main@": {
                         templateUrl: 'components/tag/tag.html'
                     },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
+                    "right@": {
+                        templateUrl: 'components/home/right.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },

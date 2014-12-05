@@ -167,7 +167,25 @@
                 }
             }
 
-            //for now returning a dummy
+            return result;
+        };
+
+        stateService.getSchedule = function(state, options){
+            if(!state){
+                state = currentState;
+            }
+            if(!options){
+                options = {from: '2012-11-28 11:00:00'};
+            }
+
+            var result;
+            if(state.tag){
+                options.tag = state.tag;
+            }
+            VnbRestangular.setJsonp(true);
+            result = VnbRestangular.all('notices').customGET('schedule', options);
+            VnbRestangular.setJsonp(false);
+
             return result;
         };
 

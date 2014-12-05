@@ -1,0 +1,115 @@
+<md-card style="width: 320px; padding: 0px">
+    <h2 class="schedule-heading">Schedule</h2>
+    <md-divider></md-divider>
+    <div ng-controller="ScheduleController as scheduleCtrl"
+         layout="column" flex  layout-fill style="position: relative; overflow: hidden">
+        <md-content style="height: 500px; width: 100%" >
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day md-primary">
+                    {{day.date | date:'MMM d'}}
+                </md-subheader>
+                <md-list layout="column">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="row">
+                        <div class="event-item-left">
+                            <h4 class="event-time">
+                                {{event.start | date:'hh:mm a'}}
+                            </h4>
+                        </div>
+                        <div>
+                            <h3 class="event-title">
+                                {{event.data.title}}</h3>
+                        </div>
+                    </md-item>
+                </md-list>
+            </section>
+
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day md-primary">
+                    {{day.date | date:'MMM d'}}
+                </md-subheader>
+                <md-list layout="column">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="row">
+                        <div class="event-item-left">
+                            <h4 class="event-time">
+                                {{event.start | date:'hh:mm a'}}
+                            </h4>
+                        </div>
+                        <div>
+                            <h3 class="event-title">
+                                {{event.data.title}}</h3>
+                        </div>
+                    </md-item>
+                </md-list>
+            </section>
+
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day md-primary">
+                    {{day.date | date:'MMM d'}}
+                </md-subheader>
+                <md-list layout="column">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="row">
+                        <div class="event-item-left">
+                            <h4 class="event-time">
+                                {{event.start | date:'hh:mm a'}}
+                            </h4>
+                        </div>
+                        <div>
+                            <h3 class="event-title">
+                                {{event.data.title}}</h3>
+                        </div>
+                    </md-item>
+                </md-list>
+            </section>
+
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day md-primary">
+                    {{day.date | date:'MMM d'}}
+                </md-subheader>
+                <md-list layout="column">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="row">
+                        <div class="event-item-left">
+                            <h4 class="event-time">
+                                {{event.start | date:'hh:mm a'}}
+                            </h4>
+                        </div>
+                        <div>
+                            <h3 class="event-title">
+                                {{event.data.title}}</h3>
+                        </div>
+                    </md-item>
+                </md-list>
+            </section>
+
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day md-primary">
+                    {{day.date | date:'MMM d'}}
+                </md-subheader>
+                <md-list layout="column">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="row">
+                        <div class="event-item-left">
+                            <h4 class="event-time">
+                                {{event.start | date:'hh:mm a'}}
+                            </h4>
+                        </div>
+                        <div>
+                            <h3 class="event-title">
+                                {{event.data.title}}</h3>
+                        </div>
+                    </md-item>
+                </md-list>
+            </section>
+
+
+        </md-content>
+    </div>
+</md-card>
