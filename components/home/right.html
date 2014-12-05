@@ -1,9 +1,9 @@
-<md-card style="width: 320px; padding: 0px">
+<md-card style="padding: 0px">
     <h2 class="schedule-heading">Schedule</h2>
     <md-divider></md-divider>
     <div ng-controller="ScheduleController as scheduleCtrl"
          layout="column" flex  layout-fill style="position: relative; overflow: hidden">
-        <md-content style="height: 500px; width: 100%" >
+        <md-content style="max-height: 500px; width: 100%" >
             <section ng-repeat="day in scheduleCtrl.eventDays">
                 <md-subheader class="schedule-day md-primary">
                     {{day.date | date:'MMM d'}}
