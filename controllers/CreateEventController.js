@@ -161,6 +161,7 @@
                         request.customPOST(data, 'edit').then(
                             function () {
                                 console.log('Edit successful');
+                                $scope.notice = emptyNotice;
                             },
                             function (err) {
                                 console.log(err);
@@ -171,6 +172,7 @@
                         request.customPOST(data, 'add').then(
                             function () {
                                 console.log('Post successful');
+                                $scope.notice = emptyNotice;
                             },
                             function (err) {
                                 console.log(err);

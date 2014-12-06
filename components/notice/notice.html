@@ -12,6 +12,23 @@
                 </span>
             </div>
         </section>
+
+        <div class="dropdown" ng-show="canEdit">
+            <a href class="dropdown-toggle" ng-click="updatePinCorners()">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href ng-click="editNotice()">Edit</a>
+                </li>
+                <li>
+                    <a href ng-click="addUpdate()">Add Update</a>
+                </li>
+                <li ng-repeat="pin in pinCorners">
+                    <a href="" ng-click="pinIn(pin)">Pin in {{pin.name}}</a>
+                </li>
+            </ul>
+        </div>
     </section>
     <md-divider class="vnb-notice-separator"></md-divider>
 
@@ -40,14 +57,19 @@
             </section>
         </section>
         <span class="vnb-notice-content">{{notice.data.content}}</span>
+
+        <md-list class="vnb-notice-tags" layout="column">
+            <md-item ng-repeat="corner in notice.corners">
+                <md-card>
+                    <span vnb-link="corner.tag">{{corner.name}}</span>
+                </md-card>
+            </md-item>
+        </md-list>
+
     </section>
+
     <md-divider class="vnb-notice-separator"></md-divider>
-    <md-list class="vnb-notice-tags" layout="row">
-        <md-item ng-repeat="corner in notice.corners">
-            <span vnb-link="corner.tag">{{corner.name}}</span>
-        </md-item>
-    </md-list>
-    <md-divider class="vnb-notice-separator"></md-divider>
+
     <md-list class="vnb-notice-social-meta" layout="row">
         <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
             likes</a></md-item>

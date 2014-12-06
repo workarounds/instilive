@@ -50,28 +50,37 @@
                 </div>
             </md-content>
         </md-sidenav>
-        <md-content layout="column" flex >
+        <md-content layout="column" flex
+                    md-swipe-left="mainCtrl.toggleRightSidebar()"
+                    md-swipe-right="mainCtrl.toggleLeftSidebar()">
             <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
                         style="">
                 <section layout="row"
-                         flex
-                         layout-align="space-between end">
-                    <a href ng-click="mainCtrl.toggleLeftSidebar()">
-                        <span class="fa fa-heart"></span>
-                    </a>
-                    <a href ng-click="mainCtrl.toggleRightSidebar()">
-                        <span class="fa fa-heart"></span>
-                    </a>
+                         flex hide-gt-md>
+                    <section flex layout="row"
+                             layout-align="start center"
+                             class="vnb-hamburger">
+                        <span ng-click="mainCtrl.toggleLeftSidebar()">
+                            <i class="fa fa-bars vnb-nav-icon"></i>
+                        </span>
+                    </section>
+                    <section flex layout="row"
+                             layout-align="end center"
+                             class="vnb-hamburger">
+                        <span ng-click="mainCtrl.toggleRightSidebar()">
+                            <i class="fa fa-bars vnb-nav-icon"></i>
+                        </span>
+                    </section>
                 </section>
             </md-toolbar>
-            <md-content layout="row" flex layout-align="center start">
+            <md-content layout="row" flex layout-align="center start" class="background-container">
                 <section flex class="md-padding main-content"
                          ui-view="main">
                 </section>
                 <md-sidenav class="md-sidenav-right"
                             md-component-id="right"
                             md-is-locked-open="$media('md')">
-                    <md-content>
+                    <md-content class="background-container">
                         <section ui-view="right"></section>
                     </md-content>
                 </md-sidenav>

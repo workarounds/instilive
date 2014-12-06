@@ -2,6 +2,8 @@
     padding: 0px;
     font-weight: normal;
     font-family: Roboto, 'Helvetica Neue', sans-serif;
+    background: #fff;
+    margin: 14px 8px;
 }
 .vnb-notice-header{
     padding: 12px;
@@ -79,7 +81,8 @@
 }
 
 .vnb-notice-body{
-    padding:16px 16px;
+    position: relative;
+    padding:16px 16px 0px 16px;
     margin-left: 16px;
     font-size: 16px;
 }
@@ -96,7 +99,21 @@
 }
 
 .vnb-notice-tags md-item{
+    position: absolute;
+    right: -2px;
+    top: 10px;
     padding-left: 16px;
+}
+
+.vnb-notice-tags md-card {
+    margin: 0px;
+    padding: 2px 4px;
+    cursor: pointer;
+    font-size: small;
+}
+
+.vnb-notice-tags .hide {
+    display: none;
 }
 
 .vnb-notice-social-meta md-item{
@@ -104,7 +121,8 @@
 }
 
 .vnb-notice .dropdown{
-    width:160px;
+    padding-top: 26px;
+    width:48px;
     text-align:right;
 }
 
