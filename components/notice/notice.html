@@ -5,45 +5,57 @@
             <div class="vnb-notice-title">
                 <span class="">{{notice.data.title}}</span>
             </div>
-            <div class="vnb-notice-metadata">
-                <span class="vnb-notice-time">{{notice.from | date: 'h:mm a'}}, at</span>
-                <span class="vnb-notice-venue">{{notice.data.venue}} </span>
+            <div class="vnb-notice-signature">
+                Inter IIT Head&nbsp;
+                <span class="text-muted font-thin font-small">
+                    {{notice.ago}} ago
+                </span>
             </div>
         </section>
+    </section>
+    <md-divider class="vnb-notice-separator"></md-divider>
 
-        <section layout="column" layout-align="center start" class="vnb-date-container">
-            <section class="vnb-month">
-                {{notice.from | date:'MMM'}}
+    <section class="vnb-notice-body" layout="column" flex>
+        <section layout="row">
+            <section layout="column" layout-align="center start" class="vnb-date-container">
+                <section class="vnb-month">
+                    {{notice.from | date:'MMM'}}
+                </section>
+                <!--<md-divider class="vnb-date-separator"></md-divider>-->
+                <section class="vnb-date">
+                    {{notice.from | date:'dd'}}
+                </section>
             </section>
-            <!--<md-divider class="vnb-date-separator"></md-divider>-->
-            <section class="vnb-date">
-                {{notice.from | date:'dd'}}
+            <section layout="column"
+                     layout-align="space-around start"
+                     class="vnb-notice-metadata">
+                <span class="vnb-notice-time">
+                    <span class="right-align">Time : </span>
+                    {{notice.from | date:'h:mm a'}}
+                </span>
+                <span class="vnb-notice-venue">
+                    <span class="right-align">Venue : </span>
+                    {{notice.data.venue}}
+                </span>
             </section>
         </section>
+        <span class="vnb-notice-content">{{notice.data.content}}</span>
     </section>
-    <!--<md-divider class="vnb-notice-header-separator"></md-divider>-->
-
-    <section class="vnb-notice-body" flex>
-        <span class="vnb-notice-content">{{notice.data.content}}</span><br>
-            <div>
-                <a href="http://www.facebook.com/themadhukiran">Madhu Kiran</a>,<br>Inter IIT Head
-            </div>
-    </section>
-
-    <md-list class="vnb-notice-social-meta" layout="row">
-        <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
-            likes</a></md-item>
-        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></md-item>
-        <md-item><a href="" ng-click="showUpdates()"> updates </a></md-item>
-        <md-item><span class="text-muted font-thin font-small">{{notice
-            .ago}}</span></md-item>
-    </md-list>
-
+    <md-divider class="vnb-notice-separator"></md-divider>
     <md-list class="vnb-notice-tags" layout="row">
         <md-item ng-repeat="corner in notice.corners">
             <span vnb-link="corner.tag">{{corner.name}}</span>
         </md-item>
     </md-list>
+    <md-divider class="vnb-notice-separator"></md-divider>
+    <md-list class="vnb-notice-social-meta" layout="row">
+        <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
+            likes</a></md-item>
+        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></md-item>
+        <md-item><a href="" ng-click="showUpdates()"> updates </a></md-item>
+        <md-item></md-item>
+    </md-list>
+
 
     <section class="vnb-notice-footer">
 
