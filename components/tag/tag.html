@@ -8,5 +8,10 @@
         <notice ng-repeat="notice in noticesCtrl.notices" data="notice">
 
         </notice>
-        <button ng-click="noticesCtrl.loadMore()">Load more</button>
+        <section flex layout="row" layout-align="center start" ng-show="noticesCtrl.notices.length">
+            <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
+        </section>
+        <md-card layout="row" flex layout-align="center center" style="height: 300px;" ng-hide="noticesCtrl.notices.length">
+            <p> No notices </p>
+        </md-card>
     </div>

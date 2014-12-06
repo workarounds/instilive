@@ -157,22 +157,24 @@
 
             stateService.getUserData = function (forceRefresh) {
                 var deferred = $q.defer();
-                if ((!userDetails && !processingRequest) || forceRefresh) {
+                if ((!userDetails) || forceRefresh) {
                     stateService.getLoginStatus().then(
                         function () {
-                            processingRequest = true;
-                            fetchUserData().then(
-                                function (data) {
-                                    $rootScope.$broadcast('userDataEvent', data);
-                                    processingRequest = false;
-                                    deferred.resolve(data);
-                                },
-                                function (err) {
-                                    deferred.reject(err);
-                                    processingRequest = false;
-                                    console.log(err);
-                                }
-                            );
+                            if(!processingRequest) {
+                                processingRequest = true;
+                                fetchUserData().then(
+                                    function (data) {
+                                        processingRequest = false;
+                                        $rootScope.$broadcast('userDataEvent', data);
+                                        deferred.resolve(data);
+                                    },
+                                    function (err) {
+                                        processingRequest = false;
+                                        deferred.reject(err);
+                                        console.log(err);
+                                    }
+                                );
+                            }
                         },
                         function (err) {
                             deferred.reject(err);

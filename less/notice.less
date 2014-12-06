@@ -1,34 +1,108 @@
-.notice{
-    padding:16px;
+.vnb-notice{
+    padding: 0px;
+    font-weight: normal;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-.notice h4{
-    margin-top: 0px;
-    font-size: large;
+.vnb-notice-header{
+    padding: 12px;
 }
-
-.notice .event-info{
+.vnb-notice-header-separator{
+    margin: 0px 12px;
+}
+//.vnb-notice-header .vnb-date-container{
+//    margin-right: 16px;
+//    box-shadow: -1px 1px 2px #d7d7d7;
+//    width: 42px;
+//}
+//.vnb-notice-header .vnb-month{
+//    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+//    padding: 1px 0px;
+//    text-align: center;
+//    width: 100%;
+//    text-transform: uppercase;
+//    font-size: 12px;
+//    line-height: 14px;
+//    background: #E7E7E7;
+//    color: #999;
+//}
+.vnb-notice-header .vnb-date-container{
+}
+.vnb-date-separator{
+    width: 50%;
+    margin: 0px 25%;
+}
+.vnb-notice-header .vnb-month{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 1px 0px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 14px;
+    color: #aaa;
+    font-weight: 500;
+}
+.vnb-notice-header .vnb-date{
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    line-height: 24px;
+    color: #aaa;
     font-weight: 300;
-    font-size: large;
 }
 
-.notice .dropdown{
+.vnb-notice-title{
+    font-size: 18px;
+    font-weight: normal;
+    color: @themeColor;
+    line-height: 26px;
+    margin-bottom: 2px;
+}
+
+.vnb-notice-metadata{
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #999;
+}
+
+.vnb-notice-ago{
+    font-size: 12px;
+    color: #aaa;
+    font-weight: normal;
+}
+
+.vnb-notice-body{
+    padding:8px 16px;
+    margin-left: 16px;
+}
+
+.vnb-notice-signature{
+    color: #999;
+}
+
+.vnb-notice-social-meta md-item{
+    padding-left: 16px;
+}
+
+.vnb-notice .dropdown{
     width:160px;
     text-align:right;
 }
 
-.notice .dropdown .dropdown-toggle{
+.vnb-notice .dropdown .dropdown-toggle{
     color:#ddd;
 }
 
-.notice .dropdown .dropdown-toggle:hover{
+.vnb-notice .dropdown .dropdown-toggle:hover{
     color:#bbb;
 }
 
-.notice .dropdown.open .dropdown-toggle{
+.vnb-notice .dropdown.open .dropdown-toggle{
     color:#bbb;
 }
 
-.notice .dropdown .dropdown-menu{
+.vnb-notice .dropdown .dropdown-menu{
     text-align: left;
     font-size: small;
 }

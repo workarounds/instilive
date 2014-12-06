@@ -1,60 +1,52 @@
-<div class="card notice" id="{{notice.id}}">
-    <span class="pull-right text-muted">
-        <div class="dropdown" ng-show="canEdit">
-            <a href class="dropdown-toggle" ng-click="updatePinCorners()">
-                <i class="fa fa-chevron-down"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href ng-click="editNotice()">Edit</a>
-                </li>
-                <li>
-                    <a href ng-click="addUpdate()">Add Update</a>
-                </li>
-                <li ng-repeat="pin in pinCorners">
-                    <a href="" ng-click="pinIn(pin)">Pin in {{pin.name}}</a>
-                </li>
-            </ul>
-        </div>
-    </span>
-	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
+<md-card layout="column" class="vnb-notice" md-theme="indigo">
+    <section layout="row" flex class="vnb-notice-header">
 
-    <ul class="list-inline">
-        <li><a href="" ng-click="showLikes()">{{notice.like_count}}
-            likes</a></li>
-        <li><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></li>
-        <li><a href="" ng-click="showUpdates()"> updates </a></li>
-        <li><span class="text-muted font-thin font-small">{{notice
-            .ago}}</span></li>
-    </ul>
+        <section layout="column" flex class="vnb-notice-title-container">
+            <div class="vnb-notice-title">
+                <span class="">{{notice.data.title}}</span>
+            </div>
+            <div class="vnb-notice-metadata">
+                <span class="vnb-notice-time">{{notice.from | date: 'h:mm a'}}, at</span>
+                <span class="vnb-notice-venue">{{notice.data.venue}} </span>
+            </div>
+        </section>
 
-    <ul class="list-inline">
-        <li>
-            <button
-                class="btn btn-default"
-                ng-click="postLike()"><i class="fa" ng-class="user.likes.indexOf(notice.id) > -1?'fa-heart':'fa-heart-o'"></i>
-            </button>
-        </li>
-        <li>
-            <button
-                class="btn btn-default"><i class="fa fa-comment"></i>
-            </button>
-        </li>
-        <li>
-            <button class="btn btn-default">
-                <i class="fa fa-share"></i>
-            </button>
+        <section layout="column" layout-align="center start" class="vnb-date-container">
+            <section class="vnb-month">
+                {{notice.from | date:'MMM'}}
+            </section>
+            <!--<md-divider class="vnb-date-separator"></md-divider>-->
+            <section class="vnb-date">
+                {{notice.from | date:'dd'}}
+            </section>
+        </section>
+    </section>
+    <!--<md-divider class="vnb-notice-header-separator"></md-divider>-->
 
-        </li>
-    </ul>
-	<ul class="list-inline">
-		<li ng-repeat="corner in notice.corners">
-            <a ng-href="#/interIIT/{{corner.tag}}">{{corner.name}}</a>
-		</li>
-	</ul>
+    <section class="vnb-notice-body" flex>
+        <span class="vnb-notice-content">{{notice.data.content}}</span><br>
+            <div>
+                <a href="http://www.facebook.com/themadhukiran">Madhu Kiran</a>,<br>Inter IIT Head
+            </div>
+    </section>
 
-    <div>
-        <input type="text" ng-model="comment" class="col-xs-10"/>
-        <button class="btn btn-primary" ng-click="postComment()"> Comment </button>
-    </div>
-</div>
+    <md-list class="vnb-notice-social-meta" layout="row">
+        <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
+            likes</a></md-item>
+        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></md-item>
+        <md-item><a href="" ng-click="showUpdates()"> updates </a></md-item>
+        <md-item><span class="text-muted font-thin font-small">{{notice
+            .ago}}</span></md-item>
+    </md-list>
+
+    <md-list class="vnb-notice-tags" layout="row">
+        <md-item ng-repeat="corner in notice.corners">
+            <span vnb-link="corner.tag">{{corner.name}}</span>
+        </md-item>
+    </md-list>
+
+    <section class="vnb-notice-footer">
+
+    </section>
+
+</md-card>
