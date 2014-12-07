@@ -21,7 +21,7 @@
         <div class="col-sm-4">
             <input type="text" id="from" class="form-control"
                    style="margin-top: 34px;"
-                   datepicker-popup="{{format}}"
+                   datepicker-popup="{{createEventCtrl.format}}"
                    ng-model="notice.from" is-open="fromOpen"
                    ng-required="true" close-text="Close"
                    ng-change="createEventCtrl.adjustToDate()"
@@ -44,7 +44,7 @@
         <div class="col-sm-4">
             <input type="text" id="to" class="form-control"
                    style="margin-top: 34px;"
-                   datepicker-popup="{{format}}"
+                   datepicker-popup="{{createEventCtrl.format}}"
                    ng-model="notice.to" is-open="toOpen"
                    ng-required="true" close-text="Close"
                    ng-change="createEventCtrl.adjustFromDate()"

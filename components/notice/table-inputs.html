@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <label for="rows" class="col-sm-2 control-label">
-            Columns
+            Rows
         </label>
 
         <div class="col-sm-8">
@@ -24,9 +24,10 @@
     </div>
 
     <section layout="row">
-        <section layout="column" ng-repeat="col in createEventCtrl.range(1, data.content.columns)" flex>
-            <section layout="row" ng-repeat="row in createEventCtrl.range(1, data.content.rows)" flex>
-                <input type="text" ng-model="data.content.table[col][row]" flex/>
+        <section layout="column" ng-repeat="col in createEventCtrl.range(0, data.content.columns -1)" flex>
+            <section layout="row" ng-repeat="row in createEventCtrl.range(0, data.content.rows -1)" flex>
+                <input type="text" required
+                       ng-model="data.content.table[col][row]" flex/>
             </section>
         </section>
     </section>
