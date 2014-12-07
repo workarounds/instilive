@@ -4,103 +4,89 @@
 <head>
     <title></title>
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
     <link href="app.less" type="text/css" rel="stylesheet/less">
+    <link rel="stylesheet"
+          href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet"
+          href="/bower_components/angular-material/themes/indigo-theme.css">
+    <link
+        href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,100'
+        rel='stylesheet' type='text/css'>
 </head>
 
-<body ng-app="Vnb" ng-controller="MainController as mainCtrl">
-<button class="FAB" ng-click="mainCtrl.openEventModal()"><i class="fa fa-pencil"></i></button>
+<body ng-controller="MainController as mainCtrl" layout="row"
+      md-theme="indigo">
+<div layout="column" layout-fill>
+    <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+                    md-component-id="left"
+                    md-is-locked-open="$media('md')">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Notice Club</h1>
+            </md-toolbar>
+            <md-content
+                ng-controller="SidebarController as sidebarCtrl">
+                <div ng-repeat="board in sidebarCtrl.boards">
 
-<!-- start page-wrapper -->
-<div id="page-wrapper" ng-class="{'active': mainCtrl.toggle}">
-    <!-- start sidebar-wrapper -->
-    <div id="sidebar-wrapper">
-        <sidebar></sidebar>
-    </div>
-    <!-- end sidebar-wrapper -->
+                    <button
+                        class="menu-item menu-title md-menu-item"
+                        ng-click="sidebarCtrl.toggleSelectBoard(board)"
+                        md-highlight="sidebarCtrl.isBoardCurrent(board)"
+                        vnb-link="board.tag" md-ink-ripple="#bbb">
+                        {{board.title}}
+                    </button>
 
-    <!-- start content-wrapper -->
-    <div id="content-wrapper">
-        <!-- start page-content -->
-        <div class="page-content">
-            <!-- start header -->
-            <div class="row header">
-                <div class="col-xs-12">
-                    <div class="meta"
-                         ng-click="mainCtrl.toggleSidebar()"
-                         style="cursor: pointer">
-                        <div class="page">
-                            Inter IIT
-                        </div>
-                        <div class="breadcrumb-links"
-                            ng-bind-template="{{mainCtrl.state.board}} / {{mainCtrl.state.corner}}"
-                        >
-                        </div>
-                    </div>
+                    <a class="menu-item menu-sub-item md-menu-item"
+                       ng-show="sidebarCtrl.isBoardSelected(board)"
+                       ng-repeat="corner in board.corners"
+                       vnb-link="corner.tag"
+                       md-highlight="sidebarCtrl.isCornerSelected(corner)"
+                       md-ink-ripple="#bbb">
+                        <span ng-bind="corner.name"></span>
+                    </a>
+
                 </div>
-                <button
-                    class="fa fa-filter pull-right hidden hidden-lg hidden-md"
-                    ng-click="mainCtrl.toggleFilterFunction()"
-                    style="cursor: pointer">
-
-                </button>
-            </div>
-            <!-- end header -->
-
-            <!-- start small screen filter -->
-            <div class="filter-container hidden hidden-lg hidden-md"
-                 ng-class="{'open-filter': mainCtrl.toggleFilter}">
-                <div class="widget">
-                    <div class="widget-header">
-                        Filters
-                    </div>
-                    <div class="widget-body">
-                        <!-- start ui-view for rightnav -->
-                        <section ui-view="smallrightnav">
-
-                        </section>
-                        <!-- end ui-view for rightnav -->
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- end small screen filter -->
-
-            <!-- start main body -->
-            <div class="row-fluid">
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <section ui-view="main">
-
+            </md-content>
+        </md-sidenav>
+        <md-content layout="column" flex
+                    md-swipe-left="mainCtrl.toggleRightSidebar()"
+                    md-swipe-right="mainCtrl.toggleLeftSidebar()">
+            <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
+                        style="">
+                <section layout="row"
+                         flex hide-gt-md>
+                    <section flex layout="row"
+                             layout-align="start center"
+                             class="vnb-hamburger">
+                        <span ng-click="mainCtrl.toggleLeftSidebar()">
+                            <i class="fa fa-bars vnb-nav-icon"></i>
+                        </span>
                     </section>
-                    <!-- end ui-view for main -->
-                    <div class="clearfix"></div>
-
-                </div>
-
-                <div class="col-lg-4 col-md-4 hidden hidden-xs hidden-sm">
-                    <div class="widget">
-                        <div class="widget-header">
-                            Filters
-                        </div>
-                        <div class="widget-body">
-                            <!-- start ui-view for rightnav -->
-                            <section ui-view="rightnav">
-
-                            </section>
-                            <!-- end ui-view for rightnav -->
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- end main body -->
-        </div>
-        <!-- end page-content -->
-    </div>
-    <!-- end content-wrapper -->
-    <div id="fb-root"></div>
+                    <section flex layout="row"
+                             layout-align="end center"
+                             class="vnb-hamburger">
+                        <span ng-click="mainCtrl.toggleRightSidebar()">
+                            <i class="fa fa-bars vnb-nav-icon"></i>
+                        </span>
+                    </section>
+                </section>
+            </md-toolbar>
+            <md-content layout="row" flex layout-align="center start" class="background-container">
+                <section flex class="md-padding main-content"
+                         ui-view="main">
+                </section>
+                <md-sidenav class="md-sidenav-right"
+                            md-component-id="right"
+                            md-is-locked-open="$media('md')">
+                    <md-content class="background-container">
+                        <section ui-view="right"></section>
+                    </md-content>
+                </md-sidenav>
+            </md-content>
+        </md-content>
+    </section>
 </div>
 <!-- end page-wrapper-->
 
@@ -129,6 +115,11 @@
     src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
 <script src="bower_components/restangular/src/restangular.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/hammerjs/hammer.js"></script>
+<script
+    src="/bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/ng-imgur/module/Imgur.js"></script>
 <!-- Add New Bower Component JS Above -->
 
 <!--IMPORTANT:This script should be the placed below angular.js for loading-->
@@ -138,12 +129,13 @@
 <script src="app.js"></script>
 <script src="services/VnbRestangular.js"></script>
 <script src="services/VnbHttpInterceptor.js"></script>
+<script src="services/VnbModal.js"></script>
+<script src="/components/notice/imageUpload.js"></script>
 <script src="test/test.js"></script>
 <script src="controllers/HomeController.js"></script>
 <script src="controllers/MainController.js"></script>
 <script src="controllers/SidebarController.js"></script>
 <script src="controllers/HomeNavController.js"></script>
-<script src="controllers/AdminController.js"></script>
 <script src="controllers/CreateEventController.js"></script>
 <script src="controllers/UpdateEventController.js"></script>
 <script src="controllers/ManageController.js"></script>
@@ -151,7 +143,9 @@
 <script src="controllers/NoticeController.js"></script>
 <script src="controllers/LikesController.js"></script>
 <script src="controllers/CommentsController.js"></script>
+<script src="controllers/UpdatesController.js"></script>
 <script src="controllers/PositionFormController.js"></script>
+<script src="controllers/ScheduleController.js"></script>
 <script src="services/StateService.js"></script>
 <script src="components/sidebar/sidebar.js"></script>
 <script src="components/notice/notice.js"></script>
@@ -161,7 +155,6 @@
 <script src="components/vnbAddUser/vnbAddUser.js"></script>
 
 <!-- Add New Component JS Above -->
-
 
 
 </body>

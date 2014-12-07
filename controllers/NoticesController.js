@@ -1,53 +1,43 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.controller('NoticesController', ['StateService', '$scope', function (StateService, $scope) {
-        //intialize
-        var noticesCtrl = this;
-        var emptyUser = {
-            facebook_id: 0,
-            id: 0,
-            name: 'anon',
-            username: 'anon',
-            gender: 'unknown',
-            likes: []
-        };
-        noticesCtrl.notices = [];
+    app.controller('NoticesController', [
+        'StateService',
+        '$state',
+        function (StateService, $state) {
+            //intialize
+            var noticesCtrl = this;
+            noticesCtrl.notices = [];
 
-        //get the data
-        StateService.getData().then(
-            function (data) {
-                console.log(data);
-                var notices = data.Notice;
-                for (var i in notices) {
-                    notices[i].data = JSON.parse(notices[i].data);
-                }
-                noticesCtrl.notices = notices;
-            },
-            console.log
-        );
-
-        StateService.getUserData().then(
-            function (data) {
-                $scope.user = data;
-            },
-            function (err) {
-                $scope.user= emptyUser;
-                console.log("failed to get user data");
-                console.log(noticesCtrl.user);
-                console.log(err);
+            // check for redirect
+            var currentState = StateService.getState();
+            if(currentState.notice) {
+                $state.go('home.direct', {notice: currentState.notice});
             }
-        );
-
-        $scope.$on(
-            'userDataEvent',
-            function(event, data) {
-                $scope.user = data;
-            }
-        );
 
 
+            //get the data
+            StateService.getData().then(
+                function (data) {
+                    var notices = data.Notice;
+                    noticesCtrl.notices = notices;
+                },
+                console.log
+            );
 
-
-    }]);
+            noticesCtrl.loadMore = function () {
+                var lastIndex = noticesCtrl.notices.length - 1;
+                var from = noticesCtrl.notices[lastIndex].modified;
+                var options = {from: from};
+                StateService.getData(false, options).then(
+                    function (data) {
+                        var extraNotices = data.Notice;
+                        console.log(extraNotices);
+                        noticesCtrl.notices = noticesCtrl.notices.concat(extraNotices);
+                        console.log(noticesCtrl.notices);
+                    },
+                    console.log
+                );
+            };
+        }]);
 })();

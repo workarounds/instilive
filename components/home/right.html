@@ -1,0 +1,35 @@
+<md-card style="padding: 0px">
+    <h2 class="schedule-heading">Schedule</h2>
+    <md-divider></md-divider>
+    <div ng-controller="ScheduleController as scheduleCtrl"
+         layout="column" flex  layout-fill style="position: relative; overflow: hidden">
+        <md-content style="max-height: 500px; width: 100%" >
+            <section ng-repeat="day in scheduleCtrl.eventDays">
+                <md-subheader class="schedule-day">
+                    {{day.date | date:'MMMM d'}}
+                </md-subheader>
+                <!--<md-divider></md-divider>-->
+                <md-list layout="column" class="schedule-list">
+                    <md-item class="event-item"
+                             ng-repeat="event in day.events"
+                             layout="column">
+                        <div>
+                            <span class="event-title">
+                                {{event.data.title}}</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-time">
+                                {{event.start | date:'hh:mm a'}},
+                            </span>
+                            <span class="event-venue">at {{event.data.venue}}</span>
+                        </div>
+                    </md-item>
+                </md-list>
+                <md-divider></md-divider>
+            </section>
+            <!--<section layout="row" flex layout-align="center center" style="height: 300px;" ng-hide="scheduleCtrl.eventDays.length > 0">-->
+                <!--<p> No events </p>-->
+            <!--</section>-->
+        </md-content>
+    </div>
+</md-card>

@@ -1,32 +1,20 @@
 (function () {
     var app = angular.module('Vnb');
     app.controller('MainController', [
-        '$cookieStore',
         'StateService',
         '$modal',
-        function ($cookieStore, StateService, $modal) {
+        '$mdSidenav',
+        function (StateService, $modal, $mdSidenav) {
             var mainCtrl = this;
-            // initializing toggled value from cookies
-            if (angular.isDefined($cookieStore.get('toggle'))) {
-                if ($cookieStore.get('toggle') === false) {
-                    mainCtrl.toggle = false;
-                }
-                else {
-                    mainCtrl.toggle = true;
-                }
-            }
-            mainCtrl.toggleFilter = true;
 
             // function to toggle sidebar
-            mainCtrl.toggleSidebar = function () {
-                mainCtrl.toggle = !mainCtrl.toggle;
-
-                $cookieStore.put('toggle', mainCtrl.toggle);
+            mainCtrl.toggleLeftSidebar = function () {
+                $mdSidenav('left').toggle();
             };
 
             // function to toggle filter
-            mainCtrl.toggleFilterFunction = function () {
-                mainCtrl.toggleFilter = !mainCtrl.toggleFilter;
+            mainCtrl.toggleRightSidebar = function () {
+                $mdSidenav('right').toggle();
             };
 
             // getting the state for header

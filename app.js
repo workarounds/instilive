@@ -11,7 +11,9 @@
             'vnb.notice',
             'vnb.user',
             'vnb.directives',
-            'restangular'
+            'restangular',
+            'ngMaterial',
+            'ngImgur'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
@@ -28,29 +30,6 @@
         };
 
         $stateProvider
-            .state('home', {
-                url: '/home',
-                views: {
-                    "main@": {
-                        templateUrl: 'components/home/home.html',
-                        controller: 'HomeController as homeCtrl'
-                    },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
-                        controller: 'HomeNavController as rightnavCtrl'
-                    }
-                },
-                resolve: commonResolve
-            })
-            .state('admin', {
-                url:'/admin',
-                views: {
-                    "main@": {
-                        templateUrl: 'admin/create-notice.html',
-                        controller: 'AdminController as adminCtrl'
-                    }
-                }
-            })
             .state('manage', {
                 url: '/manage',
                 views: {
@@ -60,49 +39,99 @@
                     }
                 }
             })
-            .state('corner', {
-                url: '/:corner',
+            .state('create', {
+                url: '/create',
+                views: {
+                    "main@" : {
+                        templateUrl: 'components/notice/create-event.html',
+                        controller: 'CreateEventController as createEventCtrl'
+                    }
+                },
+                resolve: {
+                    noticeData: function () {
+                        return null;
+                    }
+                }
+            })
+            ;
+        $urlRouterProvider.when('/home', '/home/all');
+        $urlRouterProvider.when('/home/', '/home/all');
+        $stateProvider
+            .state('home', {
+                url: '/home',
                 views: {
                     "main@": {
-                        templateUrl: 'components/home/home.html',
-                        controller: 'HomeController as homeCtrl'
+                        templateUrl: 'components/tag/tag.html'
+                    },
+                    "right@": {
+                        templateUrl: 'components/home/right.html',
+                        controller: 'HomeNavController as rightnavCtrl'
+                    }
+                },
+                resolve: commonResolve
+            })
+            .state('home.direct',{
+                url: '/direct/:notice',
+                views: {
+                    "main@": {
+                        templateUrl: 'components/notice/updates.html',
+                        controller: 'UpdatesController as updatesCtrl'
                     },
                     "rightnav@home": {
                         templateUrl: 'components/home/rightnav.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
+                resolve: {
+                    setStateFunc: ['StateService', '$stateParams',
+                        function (StateService, $stateParams) {
+                            return StateService.setState($stateParams);
+                        }
+                    ],
+                    notice: function () {
+                        return null;
+                    }
+                }
+            })
+            .state('home.all', {
+                url: '/all',
                 resolve: commonResolve
             })
-            .state('board', {
-                url: '/:board/all',
+            .state('home.notice',{
+                url: '/:notice',
+                resolve: commonResolve
+            })
+        ;
+        $urlRouterProvider.when('/:tag', '/:tag/all');
+        $urlRouterProvider.when('/:tag/', '/:tag/all');
+        $stateProvider
+            .state('tag', {
+                url: '/:tag',
                 views: {
                     "main@": {
-                        templateUrl: 'components/board/board.html'
+                        templateUrl: 'components/tag/tag.html'
                     },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
+                    "right@": {
+                        templateUrl: 'components/home/right.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
                 resolve: commonResolve
             })
-            .state('boardCorner', {
-                url: '/:board/:corner',
-                views: {
-                    "main@": {
-                        templateUrl: 'components/corner/corner.html'
-                    },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
-                        controller: 'HomeNavController as rightnavCtrl'
-                    }
-                },
+            .state('tag.all', {
+                url: '/all',
                 resolve: commonResolve
             })
-            .state('notice', {
-                url: '/:board/:corner/:notice',
-                template: '<test></test>',
+            .state('tag.notice', {
+                url: '/:notice',
+                resolve: commonResolve
+            })
+            .state('tag.notice.likes', {
+                url: '/likes',
+                resolve: commonResolve
+            })
+            .state('tag.notice.comments', {
+                url: '/comments',
                 resolve: commonResolve
             })
             ;

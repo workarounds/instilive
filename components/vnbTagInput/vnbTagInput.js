@@ -19,13 +19,17 @@
                     $scope.selectableCorners.push(tag);
                 };
 
-                $scope.selectableCorners = [];
-                for(var i=0; i<$scope.allCorners.length; i++){
-                    console.log('entered ' + i);
-                    if(!($scope.selectedCorners.indexOf($scope.allCorners[i]) > -1)){
-                        $scope.selectableCorners.push($scope.allCorners[i]);
+                function init() {
+                    $scope.selectableCorners = [];
+                    for (var i = 0; i < $scope.allCorners.length; i++) {
+                        if (!($scope.selectedCorners.indexOf($scope.allCorners[i]) > -1)) {
+                            $scope.selectableCorners.push($scope.allCorners[i]);
+                        }
                     }
                 }
+
+                $scope.$watch($scope.allCorners, init);
+                $scope.$watch($scope.selectedCorners, init);
             }],
             scope: {
                 selectedCorners: "=model",

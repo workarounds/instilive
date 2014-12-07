@@ -1,7 +1,20 @@
-<div class="card notice">
-    <span class="pull-right text-muted">
+<md-card layout="column" class="vnb-notice" md-theme="indigo">
+    <section layout="row" flex class="vnb-notice-header">
+
+        <section layout="column" flex class="vnb-notice-title-container">
+            <div class="vnb-notice-title">
+                <span class="">{{notice.data.title}}</span>
+            </div>
+            <div class="vnb-notice-signature">
+                Inter IIT Head&nbsp;
+                <span class="text-muted font-thin font-small">
+                    {{notice.ago}} ago
+                </span>
+            </div>
+        </section>
+
         <div class="dropdown" ng-show="canEdit">
-            <a href class="dropdown-toggle">
+            <a href class="dropdown-toggle" ng-click="updatePinCorners()">
                 <i class="fa fa-chevron-down"></i>
             </a>
             <ul class="dropdown-menu">
@@ -11,46 +24,63 @@
                 <li>
                     <a href ng-click="addUpdate()">Add Update</a>
                 </li>
+                <li ng-repeat="pin in pinCorners">
+                    <a href="" ng-click="pinIn(pin)">Pin in {{pin.name}}</a>
+                </li>
             </ul>
         </div>
-    </span>
-	<div ng-include="'/components/notice/'+notice.type+'post.html'"></div>
+    </section>
+    <md-divider class="vnb-notice-separator"></md-divider>
 
-    <ul class="list-inline">
-        <li><a href="" ng-click="showLikes()">{{notice.like_count}}
-            likes</a></li>
-        <li><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></li>
-        <li><span class="text-muted font-thin font-small">{{notice
-            .ago}}</span></li>
-    </ul>
+    <section class="vnb-notice-body" layout="column" flex>
+        <section layout="row">
+            <section layout="column" layout-align="center start" class="vnb-date-container">
+                <section class="vnb-month">
+                    {{notice.from | date:'MMM'}}
+                </section>
+                <!--<md-divider class="vnb-date-separator"></md-divider>-->
+                <section class="vnb-date">
+                    {{notice.from | date:'dd'}}
+                </section>
+            </section>
+            <section layout="column"
+                     layout-align="space-around start"
+                     class="vnb-notice-metadata">
+                <span class="vnb-notice-time">
+                    <span class="right-align">Time : </span>
+                    {{notice.from | date:'h:mm a'}}
+                </span>
+                <span class="vnb-notice-venue">
+                    <span class="right-align">Venue : </span>
+                    {{notice.data.venue}}
+                </span>
+            </section>
+        </section>
+        <span class="vnb-notice-content">{{notice.data.content}}</span>
 
-    <ul class="list-inline">
-        <li>
-            <button
-                class="btn btn-default"
-                ng-click="postLike()"><i class="fa" ng-class="user.likes.indexOf(notice.id) > -1?'fa-heart':'fa-heart-o'"></i>
-            </button>
-        </li>
-        <li>
-            <button
-                class="btn btn-default"><i class="fa fa-comment"></i>
-            </button>
-        </li>
-        <li>
-            <button class="btn btn-default">
-                <i class="fa fa-share"></i>
-            </button>
+        <md-list class="vnb-notice-tags" layout="column">
+            <md-item ng-repeat="corner in notice.corners">
+                <md-card>
+                    <span vnb-link="corner.tag">{{corner.name}}</span>
+                </md-card>
+            </md-item>
+        </md-list>
 
-        </li>
-    </ul>
-	<ul class="list-inline">
-		<li ng-repeat="corner in notice.corners">
-            <a ng-href="#/interIIT/{{corner.tag}}">{{corner.name}}</a>
-		</li>
-	</ul>
+    </section>
 
-    <div>
-        <input type="text" ng-model="comment" class="col-xs-10"/>
-        <button class="btn btn-primary" ng-click="postComment()"> Comment </button>
-    </div>
-</div>
+    <md-divider class="vnb-notice-separator"></md-divider>
+
+    <md-list class="vnb-notice-social-meta" layout="row">
+        <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
+            likes</a></md-item>
+        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></md-item>
+        <md-item><a href="" ng-click="showUpdates()"> updates </a></md-item>
+        <md-item></md-item>
+    </md-list>
+
+
+    <section class="vnb-notice-footer">
+
+    </section>
+
+</md-card>
