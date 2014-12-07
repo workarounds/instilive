@@ -62,11 +62,18 @@
             stateService.getLoginStatus = function () {
                 var deferred = $q.defer();
                 if (FB_LOADED) {
+                    FB.init({
+                        appId: 261775467279599, // App ID
+                        channelURL: '/channel.html', // Channel File
+                        status: true, // check login status
+                        cookie: true, // enable cookies to allow the server to access the session
+                        oauth: true, // enable OAuth 2.0
+                        xfbml: true // parse XFBML
+                    });
                     FB.getLoginStatus(function (response) {
-                        if (response.status === "connected") {
+                        if (response.status == "connected") {
                             $(document).trigger('FB_LOGGED_IN');
-
-                            deferred.resolve();
+                            deferred.resolve(response);
                         } else {
                             deferred.reject('not connected');
                         }

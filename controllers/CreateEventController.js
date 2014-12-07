@@ -58,10 +58,6 @@
                     });
                 };
 
-                createEventCtrl.printData = function () {
-                    console.log($scope.notice.data.blocks);
-                };
-
                 createEventCtrl.addImage = function () {
                     var ImageObj = {
                         type: 'image',
@@ -173,6 +169,10 @@
                     }
                 };
 
+                createEventCtrl.login = function(){
+                    StateService.fbLogin();
+                };
+
                 createEventCtrl.initPos = function () {
                     if ($scope.notice.position_id) {
                         for (var tempPositionId in createEventCtrl.positions) {
@@ -240,15 +240,12 @@
                 };
 
                 createEventCtrl.test = function () {
-                    VnbRestangular.setJsonp(false);
-                    VnbRestangular.all('users').get('index').then(
-                        function (data) {
-                            console.log(data);
-                        },
-                        function (err) {
-                            console.log(err.data);
-                        }
-                    );
+                    var result = StateService.getLoginStatus();
+                    result.then(function(data){
+                        console.log(data);
+                    }, function(err){
+                        console.log(err);
+                    });
                 };
 
                 createEventCtrl.add = function () {

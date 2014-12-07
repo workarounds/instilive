@@ -1,4 +1,10 @@
-<section layout="column" flex>
+<section layout="row" ng-hide="user" flex
+         layout-align="center center">
+    <md-button class="md-raised md-primary"
+               ng-click="createEventCtrl.login()">Login
+    </md-button>
+</section>
+<section layout="column" ng-if="user && createEventCtrl.position" flex>
     <h1>Create new post</h1>
 
     <section>
@@ -55,38 +61,39 @@
                  ng-repeat="data in notice.data.blocks">
             <div
                 ng-include="'/components/notice/'+data.type+'-inputs.html'"></div>
-            <md-button ng-click="createEventCtrl.deleteBlock($index)">Delete</md-button>
+            <md-button ng-click="createEventCtrl.deleteBlock($index)">
+                Delete
+            </md-button>
         </section>
 
 
         <section class="create-option-buttons" layout="row"
-                 layout-align="center space-around">
-            <md-button class="md-primary"
+                 layout-align="start center">
+            <md-button class="md-raised"
+                       style="margin-right: 16px"
                        ng-disabled="createEventCtrl.hasImage"
                        ng-click="createEventCtrl.addImage()">
                 Insert Image
             </md-button>
-            <md-button class="md-primary"
+            <md-button class="md-raised"
+                       style="margin-right: 16px"
                        ng-disabled="createEventCtrl.hasTable"
                        ng-click="createEventCtrl.addTable()">
                 Insert Table
             </md-button>
-            <md-button class="md-primary"
+            <md-button class="md-raised"
+                       style="margin-right: 16px"
                        ng-click="createEventCtrl.addText()">
                 Insert Text
-            </md-button>
-            <md-button class="md-primary"
-                       ng-click="createEventCtrl.printData()">Test
             </md-button>
         </section>
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-6">
-                <input class="submit btn btn-primary"
-                       type="button"
-                       ng-disabled="!(createEventCtrl.isDataValid() && form.$valid)"
-                       ng-click="createEventCtrl.add()"
-                       value="Add"/>
+                <md-button class="md-primary"
+                           ng-disabled="!(createEventCtrl.isDataValid() && form.$valid)"
+                           ng-click="createEventCtrl.add()">Add
+                </md-button>
             </div>
         </div>
     </form>
