@@ -1,6 +1,6 @@
 (function(){
     var app = angular.module('Vnb');
-    var apiURL = "/api/";
+    var apiURL = "vnb/api/";
     var uid = 0, accessToken = "";
     var isLoggedIn = function(){
         var loggedIn = false;
@@ -25,7 +25,7 @@
         var uid = 0, accessToken = "";
         return {
             request: function(config){
-                if(isLoggedIn()){
+                if(isLoggedIn() && (config.url.indexOf(apiURL) > -1)){
                     var authHeaders = getAuthHeaders();
                     $.extend(config.headers, authHeaders);
                 }

@@ -6,7 +6,8 @@
             'StateService',
             '$scope',
             'noticeData',
-            function (VnbRestangular, StateService, $scope, noticeData) {
+            'imgur',
+            function (VnbRestangular, StateService, $scope, noticeData, imgur) {
                 var createEventCtrl = this;
                 var initialise = function () {
                     // initialising the booleans
@@ -86,7 +87,28 @@
                     for (var i = min; i <= max; i += step) input.push(i);
                     return input;
                 };
-
+                createEventCtrl.upload = function () {
+                    var file = createEventCtrl.image.file;
+                    if (!file) {
+                        console.log('no file');
+                        return false;
+                    } else if(!file.type.match(/image.*/)) {
+                        console.log('file not image');
+                        return false;
+                    }
+                    imgur.setAPIKey('Client-ID 86505db4630921a');
+                    imgur.upload(file).then(function then(model) {
+                        var ImageObj = {
+                            type: 'image',
+                            id: '',
+                            content: {}
+                        };
+                        var index = createEventCtrl.findIndexOf(ImageObj);
+                        createEventCtrl.datatypes[index].content = model;
+                        console.log(model);
+                        return true;
+                    });
+                };
 
 
 

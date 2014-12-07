@@ -1,11 +1,10 @@
 (function () {
     var app = angular.module('Vnb');
     app.controller('MainController', [
-        '$cookieStore',
         'StateService',
         '$modal',
         '$mdSidenav',
-        function ($cookieStore, StateService, $modal, $mdSidenav) {
+        function (StateService, $modal, $mdSidenav) {
             var mainCtrl = this;
 
             // function to toggle sidebar
