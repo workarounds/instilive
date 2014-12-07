@@ -1,142 +1,47 @@
-<div class="modal-header">
-    <h3 class="modal-title">Post New Event</h3>
-</div>
-<div class="modal-body">
-    <form name="form" class="form-horizontal" novalidate>
-        <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">
-                Title
-            </label>
+<section layout="column" flex>
+    <h1>Create new post</h1>
 
-            <div class="col-sm-8">
-                <input type="text" class="form-control"
-                       id="title" ng-model="notice.data.title"
-                       placeholder="Swimming Finals" required>
-            </div>
+    <section>
+        <p> notice preview here </p>
+    </section>
+
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">
+            Title
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control"
+                   id="title" ng-model="notice.data.title"
+                   placeholder="Swimming Finals" required>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="venue" class="col-sm-2 control-label">
-                Venue
-            </label>
+    <section class="create-event-container" layout="column">
+        <md-checkbox ng-model="createEventCtrl.hasEvent" aria-label="Event">
+            Event
+        </md-checkbox>
+        <section class="create-event-inputs" ng-if="createEventCtrl.hasEvent">
+            <div ng-include="'/components/notice/event-inputs.html'"></div>
+        </section>
+    </section>
 
-            <div class="col-sm-8">
-                <input type="text" class="form-control"
-                       id="venue" ng-model="notice.data.venue"
-                       placeholder="New Swimming Pool" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="postas">
-                Post as
-            </label>
-
-            <div class="col-sm-8">
-                <select id="postas" ng-model="createEventCtrl.position"
-                        class="form-control"
-                        ng-change="changePos()"
-                        ng-options="pos.name for pos in createEventCtrl.positions"></select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">
-            </label>
-
-            <div class="col-sm-8">
-                <span class="badge"
-                      style="cursor:pointer; margin: 4px;"
-                      ng-repeat="corner in createEventCtrl.selected"
-                      ng-click="createEventCtrl.onTagRemove($index)">{{corner.name}}
-                    <i class="glyphicon glyphicon-remove"></i></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">
-                Corners
-            </label>
-
-            <div class="col-sm-8">
-                <input class="form-control"
-                       ng-model="createEventCtrl.currentTag"
-                       ng-required="!createEventCtrl.selected"
-                       typeahead="tag.name for tag in createEventCtrl.corners | filter:{name:$viewValue}"
-                       typeahead-on-select="createEventCtrl.onTagSelect($item, $model, $label)"/>
-            </div>
-        </div>
+    <section class="create-others-container" ng-repeat="data in createEventCtrl.datatypes">
+        <div ng-include="'/components/notice/'+data.type+'-inputs.html'"></div>
+    </section>
 
 
-        <div class="form-group">
-            <label for="from"
-                   style="margin-top: 34px;"
-                   class="col-sm-2 control-label">
-                From
-            </label>
+    <section class="create-option-buttons" layout="row" layout-align="center space-around">
+        <md-button class="md-primary" ng-click="createEventCtrl.addImage()">
+            {{createEventCtrl.hasImage?'Delete ':'Insert '}}Image
+        </md-button>
+        <md-button class="md-primary" ng-click="createEventCtrl.addTable()">
+            {{createEventCtrl.hasTable?'Delete ':'Insert '}} Table
+        </md-button>
+        <md-button class="md-primary" ng-click="createEventCtrl.addText()">
+            Insert Text
+        </md-button>
+        <md-button class="md-primary" ng-click="createEventCtrl.printData()">Test</md-button>
+    </section>
 
-            <div class="col-sm-4">
-                <input type="text" id="from" class="form-control"
-                       style="margin-top: 34px;"
-                       datepicker-popup="{{format}}"
-                       ng-model="notice.from" is-open="fromOpen"
-                       ng-required="true" close-text="Close"
-                       ng-change="createEventCtrl.adjustToDate()"
-                    />
-            </div>
-            <div class="col-sm-4">
-                <timepicker ng-model="notice.from"
-                            ng-change="createEventCtrl.adjustToDate()">
-                </timepicker>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="to"
-                   style="margin-top: 34px;"
-                   class="col-sm-2 control-label">
-                To
-            </label>
-
-            <div class="col-sm-4">
-                <input type="text" id="to" class="form-control"
-                       style="margin-top: 34px;"
-                       datepicker-popup="{{format}}"
-                       ng-model="notice.to" is-open="toOpen"
-                       ng-required="true" close-text="Close"
-                       ng-change="createEventCtrl.adjustFromDate()"
-                    />
-            </div>
-            <div class="col-sm-4">
-                <timepicker ng-model="notice.to"
-                            ng-change="createEventCtrl.adjustFromDate()">
-                </timepicker>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label for="desc" class="col-sm-2 control-label">
-                Description
-            </label>
-
-            <div class="col-sm-8">
-                <textarea class="form-control"
-                          id="desc" ng-model="notice.data.content"
-                          placeholder="The final event of Inter IIT" required>
-                </textarea>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-6">
-                <input class="submit btn btn-primary"
-                       type="button"
-                       ng-disabled="!((createEventCtrl.selected.length>0) && form.$valid)"
-                       ng-click="createEventCtrl.add()"
-                       value="Add"/>
-            </div>
-        </div>
-
-    </form>
-</div>
+</section>

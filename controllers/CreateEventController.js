@@ -8,6 +8,88 @@
             'noticeData',
             function (VnbRestangular, StateService, $scope, noticeData) {
                 var createEventCtrl = this;
+                var initialise = function () {
+                    // initialising the booleans
+                    createEventCtrl.hasImage = false;
+                    createEventCtrl.hasTable = false;
+                    createEventCtrl.hasEvent = false;
+
+                    createEventCtrl.datatypes = [];
+                    createEventCtrl.textCount = 0;
+                };
+
+                createEventCtrl.printData = function() {
+                    console.log(createEventCtrl.datatypes);
+                };
+
+                createEventCtrl.addImage = function() {
+                    var ImageObj = {
+                        type: 'image',
+                        id: '',
+                        content: {}
+                    };
+                    if(createEventCtrl.hasImage) {
+                        var index = createEventCtrl.findIndexOf(ImageObj);
+                        createEventCtrl.datatypes.splice(index, true);
+                        createEventCtrl.hasImage = false;
+                    } else {
+                        createEventCtrl.datatypes.push(ImageObj);
+                        createEventCtrl.hasImage = true;
+                    }
+                };
+                createEventCtrl.addTable = function() {
+                    var TableObj = {
+                        type: 'table',
+                        id: '',
+                        content: {}
+                    };
+                    if(createEventCtrl.hasTable) {
+                        var index = createEventCtrl.findIndexOf(TableObj);
+                        createEventCtrl.datatypes.splice(index, true);
+                        createEventCtrl.hasTable = false;
+
+                    } else {
+                        createEventCtrl.datatypes.push(TableObj);
+                        createEventCtrl.hasTable = true;
+
+                    }
+                };
+                createEventCtrl.addText = function() {
+                    var TextObj = {
+                        type: 'text',
+                        id: createEventCtrl.textCount,
+                        content: {}
+                    };
+                    createEventCtrl.datatypes.push(TextObj);
+                    createEventCtrl.textCount++;
+                };
+                createEventCtrl.deleteText = function (id) {
+                    console.log(id);
+                    var TextObj = {
+                        type: 'text',
+                        id: id
+                    };
+                    var index = createEventCtrl.findIndexOf(TextObj);
+                    createEventCtrl.datatypes.splice(index, true);
+                };
+                createEventCtrl.findIndexOf = function(TypeObj) {
+                    for (var i in createEventCtrl.datatypes) {
+                        var dataType = createEventCtrl.datatypes[i];
+                        if(dataType.type===TypeObj.type && dataType.id===TypeObj.id) {
+                            return i;
+                        }
+                    }
+                };
+                createEventCtrl.range = function(min, max, step){
+                    step = step || 1;
+                    var input = [];
+                    for (var i = min; i <= max; i += step) input.push(i);
+                    return input;
+                };
+
+
+
+
                 if (!noticeData) {
                     var emptyNotice = {
                         type: "event",
@@ -180,6 +262,8 @@
                         );
                     }
                 };
+
+                initialise();
 
             }]);
 })();
