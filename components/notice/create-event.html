@@ -33,40 +33,43 @@
         </div>
 
         <vnb-tag-input ng-if="createEventCtrl.corners.length"
-                       model="createEventCtrl.selected"
+                       model="notice.corners"
                        data="createEventCtrl.corners"
                        label="'Corners'">
 
         </vnb-tag-input>
 
         <section class="create-event-container" layout="column">
-            <md-checkbox ng-model="createEventCtrl.hasEvent"
+            <md-checkbox ng-model="notice.is_event"
                          aria-label="Event">
                 Event
             </md-checkbox>
             <section class="create-event-inputs"
-                     ng-if="createEventCtrl.hasEvent">
+                     ng-if="notice.is_event">
                 <div
                     ng-include="'/components/notice/event-inputs.html'"></div>
             </section>
         </section>
 
         <section class="create-others-container"
-                 ng-repeat="data in createEventCtrl.datatypes">
+                 ng-repeat="data in notice.data.blocks">
             <div
                 ng-include="'/components/notice/'+data.type+'-inputs.html'"></div>
+            <md-button ng-click="createEventCtrl.deleteBlock($index)">Delete</md-button>
         </section>
 
 
         <section class="create-option-buttons" layout="row"
                  layout-align="center space-around">
             <md-button class="md-primary"
+                       ng-disabled="createEventCtrl.hasImage"
                        ng-click="createEventCtrl.addImage()">
-                {{createEventCtrl.hasImage?'Delete ':'Insert '}}Image
+                Insert Image
             </md-button>
             <md-button class="md-primary"
+                       ng-disabled="createEventCtrl.hasTable"
                        ng-click="createEventCtrl.addTable()">
-                {{createEventCtrl.hasTable?'Delete ':'Insert '}} Table
+                Insert Table
             </md-button>
             <md-button class="md-primary"
                        ng-click="createEventCtrl.addText()">
@@ -81,7 +84,7 @@
             <div class="col-sm-offset-2 col-sm-6">
                 <input class="submit btn btn-primary"
                        type="button"
-                       ng-disabled="!((createEventCtrl.selected.length > 0) && ((createEventCtrl.datatypes.length > 0) || (createEventCtrl.hasEvent)) && form.$valid)"
+                       ng-disabled="!(createEventCtrl.isDataValid() && form.$valid)"
                        ng-click="createEventCtrl.add()"
                        value="Add"/>
             </div>

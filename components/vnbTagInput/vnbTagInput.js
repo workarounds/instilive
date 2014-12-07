@@ -28,7 +28,8 @@
                     }
                 }
 
-                init();
+                $scope.$watch($scope.allCorners, init);
+                $scope.$watch($scope.selectedCorners, init);
             }],
             scope: {
                 selectedCorners: "=model",

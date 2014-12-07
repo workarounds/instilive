@@ -7,33 +7,31 @@
             '$scope',
             'noticeData',
             'imgur',
-            function (VnbRestangular, StateService, $scope, noticeData, imgur) {
+            '$q',
+            function (VnbRestangular, StateService, $scope, noticeData, imgur, $q) {
                 var createEventCtrl = this;
                 var initialise = function () {
                     // initialising the booleans
                     createEventCtrl.hasImage = false;
                     createEventCtrl.hasTable = false;
-                    createEventCtrl.hasEvent = false;
 
-                    createEventCtrl.datatypes = [];
-                    createEventCtrl.textCount = 0;
+                    createEventCtrl.lastUploadImage = null;
+                    createEventCtrl.uploading = false;
 
                     createEventCtrl.corners = [];
-                    createEventCtrl.selected = [];
-                    createEventCtrl.currentTag = '';
                     createEventCtrl.format = "dd/MM/yyyy";
 
                     if (!noticeData) {
                         var emptyNotice = {
-                            type: "event",
+                            is_event: false,
                             visible: true,
                             corners: [],
                             from: new Date(),
                             to: new Date(),
                             data: {
                                 title: '',
-                                content: '',
-                                venue: ''
+                                venue: '',
+                                blocks: []
                             },
                             start_time: '',
                             end_time: ''
@@ -42,7 +40,6 @@
 
                     } else {
                         $scope.notice = noticeData;
-                        createEventCtrl.populateDataTypes()
                     }
 
                     StateService.getUserData().then(
@@ -61,109 +58,118 @@
                     });
                 };
 
-                createEventCtrl.populateDataTypes = function(){
-                    var blocks = $scope.notice.data.blocks;
-                    for(var i = 0; i<blocks.length; i++){
-                        createEventCtrl.datatypes.push(blocks[i]);
-                    }
+                createEventCtrl.printData = function () {
+                    console.log($scope.notice.data.blocks);
                 };
 
-                createEventCtrl.printData = function() {
-                    console.log(createEventCtrl.datatypes);
-                };
-
-                createEventCtrl.addImage = function() {
+                createEventCtrl.addImage = function () {
                     var ImageObj = {
                         type: 'image',
-                        id: '',
                         content: {}
                     };
-                    if(createEventCtrl.hasImage) {
+                    if (createEventCtrl.hasImage) {
                         var index = createEventCtrl.findIndexOf(ImageObj);
-                        createEventCtrl.datatypes.splice(index, true);
+                        $scope.notice.data.blocks.splice(index, true);
                         createEventCtrl.hasImage = false;
                     } else {
-                        createEventCtrl.datatypes.push(ImageObj);
+                        $scope.notice.data.blocks.push(ImageObj);
                         createEventCtrl.hasImage = true;
                     }
                 };
-                createEventCtrl.addTable = function() {
+                createEventCtrl.addTable = function () {
                     var TableObj = {
                         type: 'table',
-                        id: '',
                         content: {}
                     };
-                    if(createEventCtrl.hasTable) {
+                    if (createEventCtrl.hasTable) {
                         var index = createEventCtrl.findIndexOf(TableObj);
-                        createEventCtrl.datatypes.splice(index, true);
+                        $scope.notice.data.blocks.splice(index, 1);
                         createEventCtrl.hasTable = false;
 
                     } else {
-                        createEventCtrl.datatypes.push(TableObj);
+                        $scope.notice.data.blocks.push(TableObj);
                         createEventCtrl.hasTable = true;
 
                     }
                 };
-                createEventCtrl.addText = function() {
+                createEventCtrl.addText = function () {
                     var TextObj = {
                         type: 'text',
-                        id: createEventCtrl.textCount,
                         content: {}
                     };
-                    createEventCtrl.datatypes.push(TextObj);
-                    createEventCtrl.textCount++;
+                    $scope.notice.data.blocks.push(TextObj);
                 };
-                createEventCtrl.deleteText = function (id) {
-                    console.log(id);
-                    var TextObj = {
-                        type: 'text',
-                        id: id
-                    };
-                    var index = createEventCtrl.findIndexOf(TextObj);
-                    createEventCtrl.datatypes.splice(index, true);
+
+                createEventCtrl.deleteBlock = function (index) {
+                    var block = $scope.notice.data.blocks[index];
+                    if (block.type == 'image') {
+                        createEventCtrl.hasImage = false;
+                    }
+                    if (block.type == 'table') {
+                        createEventCtrl.hasTable = false;
+                    }
+                    $scope.notice.data.blocks.splice(index, 1);
                 };
-                createEventCtrl.findIndexOf = function(TypeObj) {
-                    for (var i in createEventCtrl.datatypes) {
-                        var dataType = createEventCtrl.datatypes[i];
-                        if(dataType.type===TypeObj.type && dataType.id===TypeObj.id) {
+
+                createEventCtrl.findIndexOf = function (TypeObj) {
+                    for (var i in $scope.notice.data.blocks) {
+                        var dataType = $scope.notice.data.blocks[i];
+                        if (dataType.type === TypeObj.type) {
                             return i;
                         }
                     }
                 };
-                createEventCtrl.range = function(min, max, step){
+                createEventCtrl.range = function (min, max, step) {
                     step = step || 1;
                     var input = [];
                     for (var i = min; i <= max; i += step) input.push(i);
                     return input;
                 };
                 createEventCtrl.upload = function () {
-                    var file = createEventCtrl.image.file;
+                    var deferred = $q.defer();
+                    var file = false;
+                    if(createEventCtrl.image) {
+                        file = createEventCtrl.image.file;
+                    }
                     if (!file) {
-                        console.log('no file');
-                        return false;
-                    } else if(!file.type.match(/image.*/)) {
-                        console.log('file not image');
-                        return false;
+                        deferred.reject('no file');
+                        return deferred.promise;
+                    } else if (!file.type.match(/image.*/)) {
+                        deferred.reject('file not image');
+                        return deferred.promise;
+                    } else if (createEventCtrl.lastUploadImage == createEventCtrl.image) {
+                        deferred.resolve();
+                        console.log('uploaded');
+                        return deferred.promise;
                     }
                     imgur.setAPIKey('Client-ID 86505db4630921a');
-                    imgur.upload(file).then(function then(model) {
-                        var ImageObj = {
-                            type: 'image',
-                            id: '',
-                            content: {}
-                        };
-                        var index = createEventCtrl.findIndexOf(ImageObj);
-                        createEventCtrl.datatypes[index].content = model;
-                        console.log(model);
-                        return true;
-                    });
+                    createEventCtrl.uploading = true;
+                    imgur.upload(file).then(function (model) {
+                            var ImageObj = {
+                                type: 'image',
+                                content: {}
+                            };
+                            var index = createEventCtrl.findIndexOf(ImageObj);
+                            $scope.notice.data.blocks[index].content = model;
+                            createEventCtrl.lastUploadImage = createEventCtrl.image;
+                            createEventCtrl.uploading = false;
+                            deferred.resolve();
+                            console.log('uploading');
+                        },
+                        function (err) {
+                            createEventCtrl.uploading = false;
+                            deferred.reject(err);
+                        });
+                    return deferred.promise;
                 };
 
 
-                var setUserData = function (data) {
-                    if(data) {
-                        createEventCtrl.positions = data.positions.post_positions;
+                var setUserData = function (user) {
+                    if (user) {
+                        createEventCtrl.positions = user.positions.post_positions;
                         createEventCtrl.initPos();
+                        $scope.notice.data.user_name = user.name;
+                        $scope.notice.data.user_fb_id = user.facebook_id;
                     }
                 };
 
@@ -185,12 +191,13 @@
 
                 var initSelection = function () {
                     createEventCtrl.corners = createEventCtrl.position.corners;
-                    createEventCtrl.selected = $scope.notice.corners;
                 };
 
                 $scope.changePos = function () {
                     createEventCtrl.corners = createEventCtrl.position.corners;
-                    createEventCtrl.selected = [];
+                    $scope.notice.corners = [];
+                    $scope.notice.data.position_name = createEventCtrl.position.name;
+                    $scope.notice.position_id = createEventCtrl.position.id;
                 };
 
                 $scope.open = function ($event, opened) {
@@ -217,6 +224,21 @@
                     }
                 };
 
+                createEventCtrl.isDataValid = function () {
+                    var hasCorners = $scope.notice.corners.length > 0;
+                    var hasBlocks = $scope.notice.data.blocks.length > 0;
+                    var isEvent = $scope.notice.is_event;
+                    if (createEventCtrl.hasImage) {
+                        if (!createEventCtrl.image) {
+                            return false;
+                        }
+                    }
+                    if(createEventCtrl.uploading){
+                        return false;
+                    }
+                    return (hasCorners) && ((hasBlocks) || (isEvent));
+                };
+
                 createEventCtrl.test = function () {
                     VnbRestangular.setJsonp(false);
                     VnbRestangular.all('users').get('index').then(
@@ -229,64 +251,23 @@
                     );
                 };
 
-                function getBlock(dataType){
-                    var block = {
-                        id: '',
-                        type: '',
-                        content: {}
-                    };
-                    if(dataType.type == 'image'){
-                        block.id = dataType.id;
-                        block.type = 'image';
-                        block.content = dataType.content;
-                    }
-                    else if(dataType.type == 'table') {
-                        block.id = dataType.id;
-                        block.type = 'table';
-                        block.content.rows = dataType.content.rows;
-                        block.content.columns = dataType.content.columns;
-                        block.content.table = {};
-                        for(var j = 0; j < block.content.columns; j++){
-                            block.content.table[j] = {};
-                            for(var i = 0; i < block.content.rows; i++){
-                                block.content.table[j][i] = dataType.content.table[j][i];
-                            }
-                        }
-                    }
-                    else if(dataType.type == 'text'){
-                        block.id = dataType.id;
-                        block.type = 'text';
-                        block.content.text = dataType.content.text;
-                    }
-                    return block;
-                }
-
                 createEventCtrl.add = function () {
+                    if (createEventCtrl.hasImage) {
+                        createEventCtrl.upload().then(createEventCtrl.post);
+                    }
+                };
+
+                createEventCtrl.post = function () {
                     var data = {
                         notice: $scope.notice
                     };
                     data.notice.position_id = createEventCtrl.position.id;
 
-                    if(data.notice.corners) {
-                        data.notice.corners = [];
-                    }
-                    for (var i = 0; i < createEventCtrl.selected.length; i++) {
-                        data.notice.corners.push(createEventCtrl.selected[i]);
-                    }
-
-                    if(createEventCtrl.hasEvent) {
+                    if (createEventCtrl.hasEvent) {
                         data.notice.start_time = parseInt(data.notice.from.getTime() / 1000);
                         data.notice.end_time = parseInt(data.notice.to.getTime() / 1000);
                     }
 
-                    data.notice.data.blocks = [];
-                    for(var i = 0; i < createEventCtrl.datatypes.length; i++){
-                        var dataType = createEventCtrl.datatypes[i];
-                        data.notice.data.blocks.push(getBlock(dataType));
-                    }
-
-                    data.notice.data.positionName = createEventCtrl.position.name;
-                    data.notice.data.userName = $scope.user.name;
 
                     console.log(data);
                     //var request = VnbRestangular.all('notices');
