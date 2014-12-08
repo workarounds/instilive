@@ -23,7 +23,6 @@
                     .customGET('pinned', {tag: tag})
                     .then(function(data){
                         pinnedNoticesCtrl.notices = data.Notice;
-                        console.log(data);
                     }, function(err){
                         console.log(err);
                     })

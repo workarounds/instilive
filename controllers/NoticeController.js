@@ -160,12 +160,12 @@
                     .then(
                     function (data) {
                         console.log('pinned');
+                        $state.go($state.current, {}, {reload: true});
                     },
                     function (err) {
                         console.log(err.data);
                     }
                 );
-                console.log(pinCorner);
             };
 
             $scope.unPin = function (corner){
@@ -174,6 +174,7 @@
                     .then(
                     function (data) {
                         console.log('unpinned');
+                        $state.go($state.current, {}, {reload: true});
                     },
                     function (err) {
                         console.log(err.data);

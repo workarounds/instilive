@@ -20,7 +20,6 @@
                 VnbRestangular.all('users').get('index').then(
                     function (data) {
                         userDetails = data;
-                        console.log(data);
                         deferred.resolve(data);
                     },
                     function (err) {

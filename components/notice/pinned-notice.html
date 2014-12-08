@@ -1,12 +1,11 @@
 
-<section ng-click="goToNotice()"
-    layout="column" class="vnb-pinned-notice" md-theme="indigo">
+<section layout="column" class="vnb-pinned-notice" md-theme="indigo">
     <section layout="row" flex class="vnb-pinned-notice-header">
 
         <section layout="column" flex
                  class="vnb-pinned-notice-title-container">
             <div class="vnb-pinned-notice-title">
-                <span class="">{{notice.data.title}}</span>
+                <span ng-click="goToNotice()" class="">{{notice.data.title}}</span>
             </div>
             <div class="vnb-pinned-notice-signature">
                 {{notice.data.position_name}}&nbsp;
