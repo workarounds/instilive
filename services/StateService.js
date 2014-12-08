@@ -52,7 +52,7 @@
                     }
                 }
                 deferred.resolve(data);
-                $(document).trigger('VNB_HASH_DATA', hashData);
+                $rootScope.$emit('VNB_HASH_DATA', hashData);
             };
 
             stateService.getHashData = function () {
@@ -167,22 +167,11 @@
                     state = currentState;
                 }
 
-                var deferred = $q.defer();
-                var result = deferred.promise;
-                if (!state.tag) {
-                    var request = VnbRestangular.all('corners');
-                    VnbRestangular.setJsonp(true);
-                    result = request.customGET('index', {});
-                    VnbRestangular.setJsonp(false);
-                }
-                else {
-                    var params = {tag: state.tag};
-                    $.extend(params, options);
-                    var request = VnbRestangular.all('corners');
-                    VnbRestangular.setJsonp(true);
-                    result = request.customGET('index', params);
-                    VnbRestangular.setJsonp(false);
-                }
+                var params = {tag: state.tag};
+                var request = VnbRestangular.all('corners');
+                VnbRestangular.setJsonp(true);
+                var result = request.customGET('meta', params);
+                VnbRestangular.setJsonp(false);
                 return result;
             };
 
@@ -191,7 +180,7 @@
                 if ((!userDetails) || forceRefresh) {
                     stateService.getLoginStatus().then(
                         function () {
-                            if(!processingRequest) {
+                            if (!processingRequest) {
                                 processingRequest = true;
                                 fetchUserData().then(
                                     function (data) {
@@ -247,6 +236,14 @@
                 VnbRestangular.setJsonp(false);
 
                 return result;
+            };
+
+            stateService.getDefaultHeader = function () {
+                var header = {
+                    image: '',
+                    description: ''
+                };
+                return header;
             };
 
             return stateService;

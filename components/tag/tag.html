@@ -1,26 +1,50 @@
-<md-content layout="column" flex
+<md-content ng-controller="TagsController as tagsCtrl" layout="column" flex
             md-swipe-left="mainCtrl.toggleRightSidebar()"
             md-swipe-right="mainCtrl.toggleLeftSidebar()">
     <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
-                style="">
+                ng-class="tagsCtrl.header.image? 'md-tall': ''">
         <section layout="row"
-                 flex hide-gt-md>
-            <section flex layout="row"
+                 flex layout-align="start end"
+                 style="padding-bottom: 19px;" back-img="{{tagsCtrl.header.image.link}}">
+            <section layout="row"
                      layout-align="start center"
-                     class="vnb-hamburger">
+                     class="vnb-hamburger" hide-gt-md>
                         <span ng-click="mainCtrl.toggleLeftSidebar()">
                             <i class="fa fa-bars vnb-nav-icon"></i>
                         </span>
             </section>
-            <section flex layout="row"
+            <section layout="row" style="width: 12px" hide-sm>
+
+            </section>
+            <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
+                <span>
+                    {{tagsCtrl.board}}
+                </span>
+                <span ng-if="tagsCtrl.board && tagsCtrl.corner" style="padding: 0px 5px">
+                    <i class="fa fa-caret-right"></i>
+                </span>
+                <span>
+                    {{tagsCtrl.corner}}
+                </span>
+            </section>
+            <section layout="row" ng-if="tagsCtrl.canEdit">
+                <span ng-click="tagsCtrl.updateHeaderImage()" style="cursor:pointer;">
+                    <i class="fa fa-plus vnb-nav-icon"></i>
+                </span>
+            </section>
+            <section layout="row" style="width: 12px" hide-sm>
+
+            </section>
+            <section layout="row"
                      layout-align="end center"
-                     class="vnb-hamburger">
-                        <span ng-click="mainCtrl.toggleRightSidebar()">
-                            <i class="fa fa-bars vnb-nav-icon"></i>
-                        </span>
+                     class="vnb-hamburger" hide-gt-md>
+                <span ng-click="mainCtrl.toggleRightSidebar()">
+                    <i class="fa fa-bars vnb-nav-icon"></i>
+                </span>
             </section>
         </section>
     </md-toolbar>
+
     <md-content layout="row" flex layout-align="center start" class="background-container">
         <section flex class="md-padding main-content">
             <div ng-controller="NoticesController as noticesCtrl">
@@ -33,7 +57,8 @@
                 <section flex layout="row" layout-align="center start" ng-show="noticesCtrl.notices.length">
                     <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
                 </section>
-                <md-card layout="row" flex layout-align="center center" style="height: 300px;" ng-hide="noticesCtrl.notices.length">
+                <md-card layout="row" flex layout-align="center center" style="height: 300px;"
+                         ng-hide="noticesCtrl.notices.length">
                     <p> No notices </p>
                 </md-card>
             </div>
