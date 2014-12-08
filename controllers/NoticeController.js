@@ -80,9 +80,15 @@
                     }
                 );
 
-                var created = getDate($scope.notice.created);
-                $scope.notice.ago = getAgo(created);
-                if ($scope.notice.start_time) {
+                if($scope.notice.created) {
+                    var created = getDate($scope.notice.created);
+                    $scope.notice.ago = getAgo(created);
+                }
+                else{
+                    $scope.notice.ago = '0m';
+                }
+
+                if ($scope.notice.start_time != "") {
                     var from = getDate($scope.notice.start_time);
                     var to = getDate($scope.notice.end_time);
 
@@ -91,8 +97,12 @@
                     $scope.notice.duration = getDuration(to.getTime() - from.getTime());
                 }
 
-                $scope.notice.corners = JSON.parse($scope.notice.corners);
-                $scope.notice.data = JSON.parse($scope.notice.data);
+                if(typeof $scope.notice.corners === "string") {
+                    $scope.notice.corners = JSON.parse($scope.notice.corners);
+                }
+                if(typeof $scope.notice.data === "string") {
+                    $scope.notice.data = JSON.parse($scope.notice.data);
+                }
             }
             /* End initialisation */
 
