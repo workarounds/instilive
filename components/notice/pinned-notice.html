@@ -1,0 +1,79 @@
+
+<section ng-click="goToNotice()"
+    layout="column" class="vnb-pinned-notice" md-theme="indigo">
+    <section layout="row" flex class="vnb-pinned-notice-header">
+
+        <section layout="column" flex
+                 class="vnb-pinned-notice-title-container">
+            <div class="vnb-pinned-notice-title">
+                <span class="">{{notice.data.title}}</span>
+            </div>
+            <div class="vnb-pinned-notice-signature">
+                {{notice.data.position_name}}&nbsp;
+                <span class="text-muted font-thin font-small">
+                    {{notice.ago}} ago
+                </span>
+            </div>
+        </section>
+
+        <div class="dropdown" ng-show="canEdit">
+            <a href class="dropdown-toggle"
+               ng-click="updatePinCorners()">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li >
+                    <a href="" ng-click="unPin(currentStateCorner)">Unpin from
+                        {{currentStateCorner.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="vnb-pinned-notice-body" layout="column" flex>
+        <section layout="row" ng-if="notice.is_event"
+                 class="vnb-pinned-notice-event">
+            <section layout="column" layout-align="center start"
+                     class="vnb-date-container">
+                <section class="vnb-month">
+                    {{notice.from | date:'MMM'}}
+                </section>
+                <!--<md-divider class="vnb-date-separator"></md-divider>-->
+                <section class="vnb-date">
+                    {{notice.from | date:'dd'}}
+                </section>
+            </section>
+            <section layout="column"
+                     layout-align="space-around start"
+                     class="vnb-pinned-notice-metadata">
+                <span class="vnb-pinned-notice-time">
+                    <span class="right-align">Time : </span>
+                    {{notice.from | date:'h:mm a'}}
+                </span>
+                <span class="vnb-pinned-notice-venue">
+                    <span class="right-align">Venue : </span>
+                    {{notice.data.venue}}
+                </span>
+            </section>
+        </section>
+
+        <section class="vnb-pinned-notice-block"
+                 ng-repeat="block in notice.data.blocks"
+                 ng-include="'/components/notice/' + block.type + '-block.html'"
+            >
+        </section>
+
+    </section>
+
+    <!--<md-divider class="vnb-pinned-notice-separator"></md-divider>-->
+    <!--<md-list class="vnb-pinned-notice-tags" layout="column">-->
+        <!--<md-item ng-repeat="corner in notice.corners">-->
+            <!--<a href vnb-link="corner.tag">{{corner.name}}</a>-->
+        <!--</md-item>-->
+    <!--</md-list>-->
+
+
+    <section class="vnb-pinned-notice-footer">
+
+    </section>
+
+</section>
