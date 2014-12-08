@@ -12,18 +12,18 @@
 
     app.controller('ScheduleController', [
         'StateService',
-        function(StateService){
+        function (StateService) {
             var scheduleCtrl = this;
 
             scheduleCtrl.notices = [];
             scheduleCtrl.eventDays = {};
 
-            function generateEvents(){
+            function generateEvents() {
                 var notices = scheduleCtrl.notices;
                 var eventDays = scheduleCtrl.eventDays;
-                for(var i = 0; i< notices.length; i++){
+                for (var i = 0; i < notices.length; i++) {
                     var start = getDateObj(notices[i].start_time);
-                    if(eventDays[start.toDateString()] === undefined){
+                    if (eventDays[start.toDateString()] === undefined) {
                         eventDays[start.toDateString()] = {
                             date: start,
                             events: []
@@ -37,11 +37,11 @@
             }
 
             StateService.getSchedule().then(
-                function(data){
+                function (data) {
                     scheduleCtrl.notices = data.Notice;
                     generateEvents();
                 },
-                function(err){
+                function (err) {
                     console.log(err);
                 }
             )

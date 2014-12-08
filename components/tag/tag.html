@@ -5,7 +5,7 @@
                 ng-class="tagsCtrl.header.image? 'md-tall': ''">
         <section layout="row"
                  flex layout-align="start end"
-                 style="padding-bottom: 19px;" back-img="{{tagsCtrl.header.image.link}}">
+                 style="padding-bottom: 19px; z-index: 20" back-img="{{tagsCtrl.header.image.link}}">
             <section layout="row"
                      layout-align="start center"
                      class="vnb-hamburger" hide-gt-md>
@@ -19,6 +19,9 @@
             <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
                 <span>
                     {{tagsCtrl.board}}
+                </span>
+                <span ng-if="tagsCtrl.home">
+                    Home
                 </span>
                 <span ng-if="tagsCtrl.board && tagsCtrl.corner" style="padding: 0px 5px">
                     <i class="fa fa-caret-right"></i>
@@ -43,6 +46,7 @@
                 </span>
             </section>
         </section>
+        <section class="vnb-toolbar-gradient"></section>
     </md-toolbar>
 
     <md-content layout="row" flex layout-align="center start" class="background-container">
@@ -57,17 +61,18 @@
                 <section flex layout="row" layout-align="center start" ng-show="noticesCtrl.notices.length">
                     <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
                 </section>
-                <md-card layout="row" flex layout-align="center center" style="height: 300px;"
+                <section layout="row" flex layout-align="center center" style="height: 400px;"
                          ng-hide="noticesCtrl.notices.length">
-                    <p> No notices </p>
-                </md-card>
+                    <i class="fa fa-exclamation-circle" style="color: #ccc; font-size: 144px"></i>
+                    <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
+                </section>
             </div>
         </section>
         <md-sidenav class="md-sidenav-right"
                     md-component-id="right"
                     md-is-locked-open="$media('md')">
             <md-content class="background-container">
-                <section ui-view="right"></section>
+                <section ui-view="right" style="padding-top: 6px"></section>
             </md-content>
         </md-sidenav>
     </md-content>
