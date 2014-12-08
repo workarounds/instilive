@@ -5,7 +5,8 @@
 <div class="modal-body">
     <div layout="row" layout-sm="column" layout-align="space-around"
          ng-show="commentsCtrl.loading">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <md-progress-linear
+            md-mode="indeterminate"></md-progress-linear>
     </div>
     <md-list>
         <md-item ng-repeat="comment in commentsCtrl.comments">
@@ -15,8 +16,7 @@
                          ng-src="{{'http://graph.facebook.com/' + comment.user.facebook_id + '/picture'}}" alt="DP"/>
                 </div>
                 <div class="md-tile-content">
-                    <a ng-href="user.profile_link"><h3>{{comment.user
-                        .name}}</h3></a>
+                    <a ng-href="user.profile_link"><h3>{{comment.user.name}}</h3></a>
                     <p class="comment-data">{{comment.data}}</p>
                 </div>
             </md-item-content>

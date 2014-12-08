@@ -65,6 +65,8 @@
                 };
                 $scope.canEdit = false;
                 $scope.comment = '';
+                $scope.commentsVisible = false;
+                $scope.showCommentBox = false;
 
                 $scope.currentStateTag = StateService.getState().tag;
                 StateService.getUserData().then(
@@ -183,6 +185,16 @@
             };
             /* End pin functions */
 
+            /* Function to copy direct link of the notice to clipboard*/
+            $scope.copyLink = function(){
+
+            };
+
+            //Funtion to share the notice to facebook
+            $scope.share = function(){
+
+            };
+
             /* Functions to handle likes */
             $scope.postLike = function () {
                 var sendlike = function () {
@@ -271,28 +283,7 @@
                 }
             };
             $scope.showComments = function () {
-                if($scope.notice.comment_count > 0) {
-                    var modalInstance = $modal.open({
-                        templateUrl: 'components/notice/comments.html',
-                        controller: 'CommentsController as commentsCtrl',
-                        size: 'lg',
-                        resolve: {
-                            notice: function () {
-                                return $scope.notice;
-                            },
-                            user: function () {
-                                return $scope.user;
-                            }
-                        }
-                    });
-
-
-                    modalInstance.result.then(function () {
-                        console.log('modal closed with success');
-                    }, function () {
-                        console.log('Modal dismissed at: ' + new Date());
-                    });
-                }
+                $scope.getComments();
             };
             /* End comment Functions */
 
