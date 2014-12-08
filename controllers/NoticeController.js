@@ -52,7 +52,8 @@
         '$modal',
         '$state',
         'VnbModal',
-        function ($scope, VnbRestangular, StateService, $modal, $state, VnbModal) {
+        '$rootScope',
+        function ($scope, VnbRestangular, StateService, $modal, $state, VnbModal, $rootScope) {
             /* initialising the variables */
             function initialise() {
                 var emptyUser = {
@@ -79,6 +80,10 @@
                         console.log(err);
                     }
                 );
+
+                if(!$scope.hideUpdate){
+                    $scope.hideUpdate = false;
+                }
 
                 var created = getDate($scope.notice.created);
                 $scope.notice.ago = getAgo(created);
@@ -307,22 +312,24 @@
                 });
             };
             $scope.addUpdate = function () {
-                var modalInstance = $modal.open({
-                    templateUrl: 'components/notice/create-event.html',
-                    controller: 'UpdateEventController as createEventCtrl',
-                    size: 'lg',
-                    resolve: {
-                        parentData: function () {
-                            return $scope.notice;
-                        }
-                    }
-                });
-
-                modalInstance.result.then(function () {
-                    console.log('modal closed with success');
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                });
+                //var modalInstance = $modal.open({
+                //    templateUrl: 'components/notice/create-event.html',
+                //    controller: 'UpdateEventController as createEventCtrl',
+                //    size: 'lg',
+                //    resolve: {
+                //        parentData: function () {
+                //            return $scope.notice;
+                //        }
+                //    }
+                //});
+                //
+                //modalInstance.result.then(function () {
+                //    console.log('modal closed with success');
+                //}, function () {
+                //    console.log('Modal dismissed at: ' + new Date());
+                //});
+                $rootScope.parentNotice = $scope.notice;
+                $state.go('create', {parentNotice: $scope.notice});
             };
             $scope.showUpdates = function() {
                 var modalParams = {

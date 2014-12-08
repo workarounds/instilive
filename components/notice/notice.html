@@ -92,11 +92,14 @@
                 {{notice.comment_count}} <i class="fa fa-comments"></i>
             </a>
         </md-item>
-        <md-item ng-show="notice.updates_above + notice.updates_below > 0">
+        <md-item ng-show="(notice.updates_above + notice.updates_below > 0) && !hideUpdate">
             <a href="" ng-click="showUpdates()">
                 {{notice.updates_above}} <i class="fa fa-arrow-up"></i>
                 {{notice.updates_below}} <i class="fa fa-arrow-down"></i>
             </a>
+            <md-tooltip>
+                See updates
+            </md-tooltip>
         </md-item>
         <md-item></md-item>
     </md-list>
@@ -142,11 +145,13 @@
                               autofocus="true"
                               ng-model="commentsCtrl.comment"
                               flex></textarea>
-                    <md-button
-                        class="vnb-button-round"
-                        ng-click="commentsCtrl.postComment()">
-                        <i class="fa fa-comment"></i>
-                    </md-button>
+                    <section layout="row" flex layout-align="end center">
+                        <md-button
+                            class="vnb-button-round"
+                            ng-click="commentsCtrl.postComment()">
+                            <i class="fa fa-comment"></i>
+                        </md-button>
+                    </section>
                 </form>
             </div>
             <div layout="row" layout-sm="column"

@@ -8,7 +8,10 @@
          flex layout-align="center start" class="background-container">
     <section flex layout="column" style="max-width: 620px">
         <h1>Create new post</h1>
-
+        <section ng-if="createEventCtrl.parent">
+            <h2>Update to {{createEventCtrl.parent.data.title}}</h2>
+            <p>Do not reload</p>
+        </section>
         <form name="form" class="form-horizontal" novalidate>
 
             <div class="form-group">

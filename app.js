@@ -56,6 +56,9 @@
                 resolve: {
                     noticeData: function () {
                         return null;
+                    },
+                    $modalInstance: function() {
+                        return null;
                     }
                 }
             })
