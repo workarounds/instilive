@@ -5,13 +5,11 @@
         '$scope',
         'StateService',
         'VnbRestangular',
-        'notice',
-        'user',
-        function ($scope, StateService, VnbRestangular, notice, user) {
+        function ($scope, StateService, VnbRestangular) {
             var commentsCtrl = this;
-            commentsCtrl.notice = notice;
-            commentsCtrl.user = user;
-            commentsCtrl.loading = true;
+            commentsCtrl.notice = $scope.notice;
+            commentsCtrl.user = $scope.user;
+            commentsCtrl.loading = false;
 
             commentsCtrl.postComment = function () {
                 if (/\S/.test(commentsCtrl.comment)) {
@@ -52,7 +50,8 @@
                 );
                 VnbRestangular.setJsonp(false);
             };
-            getComments();
+
+            $scope.$parent.getComments = getComments;
         }
     ]);
 })();
