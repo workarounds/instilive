@@ -34,7 +34,6 @@
                     notices[i].corners = JSON.parse(notices[i].corners);
                     eventDays[start.toDateString()].events.push(notices[i]);
                 }
-                console.log(scheduleCtrl.eventDays);
             }
 
             StateService.getSchedule().then(

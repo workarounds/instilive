@@ -15,7 +15,15 @@
 .vnb-date-container{
     margin-right: 16px;
     box-shadow: -1px 1px 2px #d7d7d7;
-    width: 42px;
+    width: 48px;
+}
+.vnb-date{
+    text-align: center;
+    width: 100%;
+    font-size: 26px;
+    line-height: 32px;
+    color: #aaa;
+    font-weight: 300;
 }
 .vnb-month{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -46,14 +54,6 @@
 //    color: #aaa;
 //    font-weight: 500;
 //}
-.vnb-date{
-    text-align: center;
-    width: 100%;
-    font-size: 24px;
-    line-height: 24px;
-    color: #aaa;
-    font-weight: 300;
-}
 
 .vnb-notice-title{
     font-size: 18px;
@@ -63,10 +63,10 @@
 }
 
 .vnb-notice-metadata{
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 16px;
+    line-height: 18px;
     font-weight: 500;
-    color: #777;
+    color: #999;
     margin-left: 16px;
 }
 
@@ -82,8 +82,8 @@
 
 .vnb-notice-body{
     position: relative;
-    padding:16px 16px 0px 16px;
-    margin-left: 16px;
+    padding:8px 16px;
+    margin:0px 16px;
     font-size: 16px;
 }
 
@@ -98,19 +98,34 @@
     color: #999;
 }
 
+.vnb-notice-event{
+    margin: 8px 0px;
+}
+
+.vnb-notice-block{
+    margin: 8px 0px;
+}
+
+.vnb-notice-table{
+    width: 100%;
+//    border-top: 1px solid #EFEFEF;
+}
+
+.vnb-notice-table tr{
+//    border-bottom: 1px solid #EFEFEF;
+}
+
+.vnb-notice-table-cell{
+    font-size: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: #777;
+}
+
 .vnb-notice-tags md-item{
-    position: absolute;
-    right: -2px;
-    top: 10px;
     padding-left: 16px;
 }
 
-.vnb-notice-tags md-card {
-    margin: 0px;
-    padding: 2px 4px;
-    cursor: pointer;
-    font-size: small;
-}
 
 .vnb-notice-tags .hide {
     display: none;
@@ -141,4 +156,5 @@
 .vnb-notice .dropdown .dropdown-menu{
     text-align: left;
     font-size: small;
+    left: -100px;
 }

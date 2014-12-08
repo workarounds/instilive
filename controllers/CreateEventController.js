@@ -252,6 +252,9 @@
                     if (createEventCtrl.hasImage) {
                         createEventCtrl.upload().then(createEventCtrl.post);
                     }
+                    else{
+                        createEventCtrl.post();
+                    }
                 };
 
                 createEventCtrl.post = function () {
@@ -260,36 +263,21 @@
                     };
                     data.notice.position_id = createEventCtrl.position.id;
 
-                    if (createEventCtrl.hasEvent) {
+                    if ($scope.notice.is_event) {
                         data.notice.start_time = parseInt(data.notice.from.getTime() / 1000);
                         data.notice.end_time = parseInt(data.notice.to.getTime() / 1000);
                     }
 
-
                     console.log(data);
-                    //var request = VnbRestangular.all('notices');
-                    //if (data.notice.id) {
-                    //    request.customPOST(data, 'edit').then(
-                    //        function () {
-                    //            console.log('Edit successful');
-                    //            $scope.notice = emptyNotice;
-                    //        },
-                    //        function (err) {
-                    //            console.log(err);
-                    //        }
-                    //    );
-                    //}
-                    //else {
-                    //    request.customPOST(data, 'add').then(
-                    //        function () {
-                    //            console.log('Post successful');
-                    //            $scope.notice = emptyNotice;
-                    //        },
-                    //        function (err) {
-                    //            console.log(err);
-                    //        }
-                    //    );
-                    //}
+                    var request = VnbRestangular.all('notices');
+                    request.customPOST(data, 'add').then(
+                        function (result) {
+                            console.log(result);
+                        },
+                        function (err) {
+                            console.log(err);
+                        }
+                    );
                 };
 
                 initialise();

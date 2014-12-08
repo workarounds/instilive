@@ -65,6 +65,8 @@
                 };
                 $scope.canEdit = false;
                 $scope.comment = '';
+
+                $scope.currentStateTag = StateService.getState().tag;
                 StateService.getUserData().then(
                     function (data) {
                         $scope.user = data;
@@ -89,12 +91,12 @@
 
                 $scope.notice.corners = JSON.parse($scope.notice.corners);
                 $scope.notice.data = JSON.parse($scope.notice.data);
-                if (!$scope.notice.data.img_url) {
-                    $scope.notice.data.img_url = '';
-                }
             }
             /* End initialisation */
 
+            $scope.goToNotice = function(){
+                $state.go('home.direct', {notice: $scope.notice.id});
+            };
             /* functions to get user data */
             $scope.$on('userDataEvent', function (event, data) {
                 $scope.user = data;
@@ -117,6 +119,7 @@
                 $scope.canEdit = false;
 
             }
+
             $scope.toggleDropdown = function ($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -132,6 +135,9 @@
                 for(var i in corners) {
                     if($scope.existsInEditPositions(corners[i])) {
                         $scope.pinCorners.push(corners[i]);
+                    }
+                    if(corners[i].tag = $scope.currentStateTag){
+                        $scope.currentStateCorner = corners[i];
                     }
                 }
             };
@@ -154,12 +160,26 @@
                     .then(
                     function (data) {
                         console.log('pinned');
+                        $state.go($state.current, {}, {reload: true});
                     },
                     function (err) {
                         console.log(err.data);
                     }
                 );
-                console.log(pinCorner);
+            };
+
+            $scope.unPin = function (corner){
+                VnbRestangular.all('notices')
+                    .customPOST({id: $scope.notice.id, corner: corner, pin: false}, 'pin')
+                    .then(
+                    function (data) {
+                        console.log('unpinned');
+                        $state.go($state.current, {}, {reload: true});
+                    },
+                    function (err) {
+                        console.log(err.data);
+                    }
+                );
             };
             /* End pin functions */
 
@@ -201,6 +221,14 @@
                     console.log
                 );
             };
+
+            $scope.range = function (min, max, step) {
+                step = step || 1;
+                var input = [];
+                for (var i = min; i <= max; i += step) input.push(i);
+                return input;
+            };
+
             $scope.showLikes = function () {
                 if ($scope.notice.like_count > 0) {
                     var modalInstance = $modal.open({
