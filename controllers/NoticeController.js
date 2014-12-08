@@ -201,6 +201,14 @@
                     console.log
                 );
             };
+
+            $scope.range = function (min, max, step) {
+                step = step || 1;
+                var input = [];
+                for (var i = min; i <= max; i += step) input.push(i);
+                return input;
+            };
+
             $scope.showLikes = function () {
                 if ($scope.notice.like_count > 0) {
                     var modalInstance = $modal.open({

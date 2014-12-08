@@ -1,12 +1,13 @@
 <md-card layout="column" class="vnb-notice" md-theme="indigo">
     <section layout="row" flex class="vnb-notice-header">
 
-        <section layout="column" flex class="vnb-notice-title-container">
+        <section layout="column" flex
+                 class="vnb-notice-title-container">
             <div class="vnb-notice-title">
                 <span class="">{{notice.data.title}}</span>
             </div>
             <div class="vnb-notice-signature">
-                Inter IIT Head&nbsp;
+                {{notice.data.position_name}}&nbsp;
                 <span class="text-muted font-thin font-small">
                     {{notice.ago}} ago
                 </span>
@@ -14,7 +15,8 @@
         </section>
 
         <div class="dropdown" ng-show="canEdit">
-            <a href class="dropdown-toggle" ng-click="updatePinCorners()">
+            <a href class="dropdown-toggle"
+               ng-click="updatePinCorners()">
                 <i class="fa fa-chevron-down"></i>
             </a>
             <ul class="dropdown-menu">
@@ -25,16 +27,19 @@
                     <a href ng-click="addUpdate()">Add Update</a>
                 </li>
                 <li ng-repeat="pin in pinCorners">
-                    <a href="" ng-click="pinIn(pin)">Pin in {{pin.name}}</a>
+                    <a href="" ng-click="pinIn(pin)">Pin in
+                        {{pin.name}}</a>
                 </li>
             </ul>
         </div>
     </section>
-    <md-divider class="vnb-notice-separator"></md-divider>
+    <md-divider></md-divider>
 
     <section class="vnb-notice-body" layout="column" flex>
-        <section layout="row">
-            <section layout="column" layout-align="center start" class="vnb-date-container">
+        <section layout="row" ng-if="notice.is_event"
+                 class="vnb-notice-event">
+            <section layout="column" layout-align="center start"
+                     class="vnb-date-container">
                 <section class="vnb-month">
                     {{notice.from | date:'MMM'}}
                 </section>
@@ -56,25 +61,29 @@
                 </span>
             </section>
         </section>
-        <span class="vnb-notice-content">{{notice.data.content}}</span>
 
-        <md-list class="vnb-notice-tags" layout="column">
-            <md-item ng-repeat="corner in notice.corners">
-                <md-card>
-                    <span vnb-link="corner.tag">{{corner.name}}</span>
-                </md-card>
-            </md-item>
-        </md-list>
+        <section class="vnb-notice-block"
+                 ng-repeat="block in notice.data.blocks"
+                 ng-include="'/components/notice/' + block.type + '-block.html'"
+            >
+        </section>
 
     </section>
 
+    <!--<md-divider class="vnb-notice-separator"></md-divider>-->
+    <md-list class="vnb-notice-tags" layout="column">
+        <md-item ng-repeat="corner in notice.corners">
+            <a href vnb-link="corner.tag">{{corner.name}}</a>
+        </md-item>
+    </md-list>
     <md-divider class="vnb-notice-separator"></md-divider>
-
     <md-list class="vnb-notice-social-meta" layout="row">
         <md-item><a href="" ng-click="showLikes()">{{notice.like_count}}
             likes</a></md-item>
-        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}} comments</a></md-item>
-        <md-item><a href="" ng-click="showUpdates()"> updates </a></md-item>
+        <md-item><a href="" ng-click="showComments()">{{notice.comment_count}}
+            comments</a></md-item>
+        <md-item><a href="" ng-click="showUpdates()"> updates </a>
+        </md-item>
         <md-item></md-item>
     </md-list>
 
