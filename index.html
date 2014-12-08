@@ -20,20 +20,28 @@
       md-theme="indigo" class="background-container">
 <div layout="column" layout-fill>
     <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+        <md-sidenav class="md-sidenav-left md-whiteframe-z1"
                     md-component-id="left"
                     md-is-locked-open="$media('md')">
-            <md-toolbar class="md-theme-indigo">
-                <h1 class="md-toolbar-tools">Insti live</h1>
+            <md-toolbar class="md-theme-indigo" layout="row" layout-align="start center">
+                <img src="/images/logo.png" alt="instilive" class="vnb-logo"/>
             </md-toolbar>
             <md-content
                 ng-controller="SidebarController as sidebarCtrl">
+                <button
+                    class="menu-item menu-title md-menu-item"
+                    ng-click="sidebarCtrl.removeSelectBoard()"
+                    md-highlight="sidebarCtrl.isHomeCurrent()"
+                    ui-sref="home.all"
+                    md-ink-ripple="#bbb">
+                    Home
+                </button>
                 <div ng-repeat="board in sidebarCtrl.boards">
 
                     <button
                         class="menu-item menu-title md-menu-item"
-                        ng-click="sidebarCtrl.toggleSelectBoard(board)"
-                        md-highlight="sidebarCtrl.isBoardCurrent(board)"
+                        ng-click="sidebarCtrl.openSelectBoard(board)"
+                        md-highlight="sidebarCtrl.isBoardSelected(board)"
                         vnb-link="board.tag" md-ink-ripple="#bbb">
                         {{board.title}}
                     </button>
@@ -49,6 +57,14 @@
 
                 </div>
             </md-content>
+            <section layout="row" flex layout-align="start end">
+                <section layout="row" flex layout-align="center center">
+                    <md-button md-primary ng-click="mainCtrl.login()" flex ng-if="!mainCtrl.user">
+                        Login
+                    </md-button>
+                    <span ng-if="mainCtrl.user">Logged in as: {{mainCtrl.user.name}}</span>
+                </section>
+            </section>
         </md-sidenav>
         <section ui-view="main" flex layout="row"></section>
     </section>

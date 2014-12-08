@@ -166,12 +166,18 @@
                     state = currentState;
                 }
 
-                var params = {tag: state.tag};
-                var request = VnbRestangular.all('corners');
-                VnbRestangular.setJsonp(true);
-                var result = request.customGET('meta', params);
-                VnbRestangular.setJsonp(false);
-                return result;
+                if(state.tag) {
+                    var params = {tag: state.tag};
+                    var request = VnbRestangular.all('corners');
+                    VnbRestangular.setJsonp(true);
+                    var result = request.customGET('meta', params);
+                    VnbRestangular.setJsonp(false);
+                    return result;
+                } else {
+                    var deferred = $q.defer();
+                    deferred.reject('No Tag');
+                    return deferred.promise;
+                }
             };
 
             stateService.getUserData = function (forceRefresh) {

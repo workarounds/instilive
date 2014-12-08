@@ -17,6 +17,14 @@
                     tagsCtrl.getTagData();
                 }
                 tagsCtrl.getUserData();
+                if(($state.current.name == 'home.all') || ($state.current.name == 'home.all')) {
+                    tagsCtrl.header = {
+                        image: {
+                            link: '/images/home.png'
+                        }
+                    };
+                    tagsCtrl.home = true;
+                }
             };
 
             tagsCtrl.getBoardFromCtag= function(cTag) {

@@ -1,88 +1,116 @@
-(function() {
+(function () {
     var app = angular.module('Vnb');
-    app.controller('SidebarController', ['StateService', function(StateService) {
-        var sidebarCtrl = this;
-        sidebarCtrl.currentBoardId = 1;
-        sidebarCtrl.currentBoard = {};
-        var populateSidebar = function(boards) {
-            sidebarCtrl.boards = boards;
-            sidebarCtrl.error = false;
-            sidebarCtrl.errorMsg = "success";
-        };
+    app.controller('SidebarController', [
+        'StateService',
+        '$state',
+        function (StateService, $state) {
+            var sidebarCtrl = this;
+            sidebarCtrl.currentBoardId = 1;
+            sidebarCtrl.currentBoard = {};
+            var populateSidebar = function (boards) {
+                sidebarCtrl.boards = boards;
+                sidebarCtrl.error = false;
+                sidebarCtrl.errorMsg = "success";
+                initialiseSidebar();
+            };
 
-        var showError = function(err) {
-            sidebarCtrl.boards = [];
-            sidebarCtrl.error = true;
-            sidebarCtrl.errorMsg = err;
-        };
+            var showError = function (err) {
+                sidebarCtrl.boards = [];
+                sidebarCtrl.error = true;
+                sidebarCtrl.errorMsg = err;
+            };
 
-        var loadSidebar = function() {
-            var request = StateService.getSidebar();
-            request.then(
-                function(data) {
-                    console.log(data);
-                    populateSidebar(data.boards);
-                },
-                function(err) {
-                    console.log(err);
-                    showError(err);
+            var loadSidebar = function () {
+                var request = StateService.getSidebar();
+                request.then(
+                    function (data) {
+                        console.log(data);
+                        populateSidebar(data.boards);
+                    },
+                    function (err) {
+                        console.log(err);
+                        showError(err);
+                    }
+                );
+            };
+
+            var initialiseSidebar = function () {
+                console.log('sidebar boards');
+                console.log(sidebarCtrl.boards);
+                var state = StateService.getState();
+                if(state.tag) {
+                    var hashData = StateService.getHashData();
+                    console.log('hashData');
+                    console.log(hashData);
+                    if(hashData[state.tag].is_board) {
+                        sidebarCtrl.currentBoard = sidebarCtrl.boards[state.tag];
+                        sidebarCtrl.currentBoard.selected = true;
+                    } else {
+                        sidebarCtrl.currentBoard = sidebarCtrl.boards[hashData[state.tag].board_tag];
+                        sidebarCtrl.currentBoard.selected = true;
+                    }
                 }
-            );
-        };
+            };
 
-        sidebarCtrl.updateCurrentBoardId = function(boardId) {
-            sidebarCtrl.currentBoardId = boardId;
-        };
+            sidebarCtrl.removeSelectBoard = function () {
+                sidebarCtrl.currentBoard.selected = false;
+            };
 
-        sidebarCtrl.toggleSelectBoard = function(board){
-            if(board == sidebarCtrl.currentBoard) {
-                if (board.selected) {
-                    board.selected = false;
+            sidebarCtrl.updateCurrentBoardId = function (boardId) {
+                sidebarCtrl.currentBoardId = boardId;
+            };
+
+            sidebarCtrl.openSelectBoard = function (board) {
+                if (board == sidebarCtrl.currentBoard) {
+                    if (board.selected) {
+                        // board.selected = false;
+                    }
+                    else {
+                        board.selected = true;
+                    }
                 }
                 else {
+                    sidebarCtrl.currentBoard.selected = false;
                     board.selected = true;
                 }
-            }
-            else{
-                sidebarCtrl.currentBoard.selected = false;
-                board.selected = true;
-            }
-            sidebarCtrl.currentBoard = board;
-        };
+                sidebarCtrl.currentBoard = board;
+            };
 
-        sidebarCtrl.isBoardCurrent = function(board){
-            var state = StateService.getState();
-            return board.tag == state.tag;
-        };
+            sidebarCtrl.isBoardCurrent = function (board) {
+                return sidebarCtrl.currentBoard == board;
+            };
 
-        sidebarCtrl.isBoardSelected = function(board){
-            return board.selected;
-        }
+            sidebarCtrl.isHomeCurrent = function () {
+                return ($state.current.name == 'home') || ($state.current.name == 'home.all');
+            };
 
-        sidebarCtrl.isCornerSelected = function(corner){
-            var state = StateService.getState();
-            return corner.tag == state.tag;
-        };
+            sidebarCtrl.isBoardSelected = function (board) {
+                return board.selected;
+            };
+
+            sidebarCtrl.isCornerSelected = function (corner) {
+                var state = StateService.getState();
+                return corner.tag == state.tag;
+            };
 
 
-        sidebarCtrl.login = function() {
-            StateService.fbLogin().then(
-                function(){
-                    console.log('Yo logged in');
-                },
-                function(err){
-                    console.log(err);
-                }
-            );
-        };
+            sidebarCtrl.login = function () {
+                StateService.fbLogin().then(
+                    function () {
+                        console.log('Yo logged in');
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+            };
 
-        //Initilise all data bound vars
-        sidebarCtrl.boards = [];
-        sidebarCtrl.error = false;
-        sidebarCtrl.errorMsg = "";
+            //Initilise all data bound vars
+            sidebarCtrl.boards = [];
+            sidebarCtrl.error = false;
+            sidebarCtrl.errorMsg = "";
 
 
-
-        loadSidebar();
-    }]);
+            loadSidebar();
+        }]);
 })();

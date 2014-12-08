@@ -4,7 +4,8 @@
         'StateService',
         '$modal',
         '$mdSidenav',
-        function (StateService, $modal, $mdSidenav) {
+        '$scope',
+        function (StateService, $modal, $mdSidenav, $scope) {
             var mainCtrl = this;
 
             // function to toggle sidebar
@@ -38,6 +39,20 @@
                     console.log('Modal dismissed at: ' + new Date());
                 });
             };
+
+            StateService.getUserData().then(
+                function (data) {
+                    mainCtrl.user = data;
+                },
+                function (err) {
+                    mainCtrl.user = false;
+                    console.log(err);
+                }
+            );
+
+            $scope.$on('userDataEvent', function (event, data) {
+                mainCtrl.user = data;
+            });
         }
     ]);
 })();
