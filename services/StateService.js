@@ -162,6 +162,30 @@
                 return deferred.promise;
             };
 
+            stateService.getTagData = function (state) {
+                if (!state) {
+                    state = currentState;
+                }
+
+                var deferred = $q.defer();
+                var result = deferred.promise;
+                if (!state.tag) {
+                    var request = VnbRestangular.all('corners');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('index', {});
+                    VnbRestangular.setJsonp(false);
+                }
+                else {
+                    var params = {tag: state.tag};
+                    $.extend(params, options);
+                    var request = VnbRestangular.all('corners');
+                    VnbRestangular.setJsonp(true);
+                    result = request.customGET('index', params);
+                    VnbRestangular.setJsonp(false);
+                }
+                return result;
+            };
+
             stateService.getUserData = function (forceRefresh) {
                 var deferred = $q.defer();
                 if ((!userDetails) || forceRefresh) {

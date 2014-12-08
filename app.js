@@ -34,6 +34,9 @@
                 url: '/manage',
                 views: {
                     "main@": {
+                        templateUrl: 'components/layout/plain-header.html'
+                    },
+                    "content@manage": {
                         templateUrl: 'manage/manage-aliases.html',
                         controller: 'ManageController as manageCtrl'
                     }
@@ -43,6 +46,9 @@
                 url: '/create',
                 views: {
                     "main@" : {
+                        templateUrl: 'components/layout/plain-header.html'
+                    },
+                    "content@create" : {
                         templateUrl: 'components/notice/create-event.html',
                         controller: 'CreateEventController as createEventCtrl'
                     }
@@ -63,7 +69,7 @@
                     "main@": {
                         templateUrl: 'components/tag/tag.html'
                     },
-                    "right@": {
+                    "right@home": {
                         templateUrl: 'components/home/right.html',
                         controller: 'HomeNavController as rightnavCtrl'
                     }
@@ -74,12 +80,11 @@
                 url: '/direct/:notice',
                 views: {
                     "main@": {
+                        templateUrl: 'components/layout/plain-header.html',
+                    },
+                    "content@home.direct": {
                         templateUrl: 'components/notice/updates.html',
                         controller: 'UpdatesController as updatesCtrl'
-                    },
-                    "rightnav@home": {
-                        templateUrl: 'components/home/rightnav.html',
-                        controller: 'HomeNavController as rightnavCtrl'
                     }
                 },
                 resolve: {
@@ -111,9 +116,8 @@
                     "main@": {
                         templateUrl: 'components/tag/tag.html'
                     },
-                    "right@": {
-                        templateUrl: 'components/home/right.html',
-                        controller: 'HomeNavController as rightnavCtrl'
+                    "right@tag": {
+                        templateUrl: 'components/home/right.html'
                     }
                 },
                 resolve: commonResolve
