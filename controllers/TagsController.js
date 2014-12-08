@@ -6,7 +6,8 @@
         '$rootScope',
         '$scope',
         '$modal',
-        function (StateService, $rootScope, $scope, $modal) {
+        '$state',
+        function (StateService, $rootScope, $scope, $modal, $state) {
             var tagsCtrl = this;
 
             var initialise = function () {
@@ -106,7 +107,7 @@
                 });
 
                 modalInstance.result.then(function () {
-                    console.log('something happened');
+                    $state.go($state.current, {}, {reload: true});
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });

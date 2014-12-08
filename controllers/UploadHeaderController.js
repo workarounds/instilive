@@ -5,7 +5,8 @@
         'corner',
         'imgur',
         'VnbRestangular',
-        function ($modalInstance, corner, imgur, VnbRestangular) {
+        '$state',
+        function ($modalInstance, corner, imgur, VnbRestangular, $state) {
             var uploadHeaderCtrl = this;
             uploadHeaderCtrl.corner = corner.tag;
             uploadHeaderCtrl.is_board = corner.is_board;
