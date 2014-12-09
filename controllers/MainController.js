@@ -21,6 +21,11 @@
             // getting the state for header
             mainCtrl.state = StateService.getState();
 
+            mainCtrl.login = function(){
+                console.log('entered mainCtrl.login');
+                StateService.fbLogin();
+            };
+
             // opening create event modal
             mainCtrl.openEventModal = function () {
 

@@ -96,7 +96,7 @@
                     $scope.notice.ago = '0m';
                 }
 
-                if($scope.notice.id){
+                if($state.current.name == 'create') {
                     $scope.editing = true;
                 }
 
@@ -313,6 +313,7 @@
 
             /* Functions to handle edits and updates to notice */
             $scope.editNotice = function () {
+                $scope.editing = true;
                 var modalInstance = $modal.open({
                     templateUrl: 'components/notice/create-event.html',
                     controller: 'CreateEventController as createEventCtrl',
@@ -325,8 +326,10 @@
                 });
 
                 modalInstance.result.then(function () {
-                    console.log('something happened');
+                    $scope.editing = false;
+                    console.log('Edited');
                 }, function () {
+                    $scope.editing = false;
                     console.log('Modal dismissed at: ' + new Date());
                 });
             };
