@@ -96,7 +96,7 @@
                     $scope.notice.ago = '0m';
                 }
 
-                if($scope.notice.id){
+                if(!$scope.notice.id){
                     $scope.editing = true;
                 }
 
