@@ -62,7 +62,7 @@
                 var deferred = $q.defer();
                 if (FB_LOADED) {
                     FB.init({
-                        appId: 261775467279599, // App ID
+                        appId: 977826648899435, // App ID
                         channelURL: '/channel.html', // Channel File
                         status: true, // check login status
                         cookie: true, // enable cookies to allow the server to access the session
@@ -86,13 +86,17 @@
 
             stateService.fbLogin = function () {
                 var deferred = $q.defer();
+                console.log('entered StateService.fbLogin()');
                 if (FB_LOADED) {
+                    console.log('fb-loaded = true');
                     FB.getLoginStatus(function (response) {
                         if (response.status === "connected") {
+                            console.log('fb-connected');
                             deferred.resolve();
                             $(document).trigger('FB_LOGGED_IN');
                             stateService.getUserData();
                         } else {
+                            console.log('fb-loggin in');
                             FB.login(function (result) {
                                 if (result.authResponse) {
                                     deferred.resolve();

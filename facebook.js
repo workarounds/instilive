@@ -1,7 +1,7 @@
 var FB_LOADED = false;
 window.fbAsyncInit = function() {
     FB.init({
-        appId: 261775467279599, // App ID
+        appId: 977826648899435, // App ID
         channelURL: '/channel.html', // Channel File
         status: true, // check login status
         cookie: true, // enable cookies to allow the server to access the session
