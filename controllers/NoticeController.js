@@ -95,7 +95,7 @@
                     $scope.editing = true;
                     $scope.notice.ago = '0m';
                 }
-                
+
                 if($state.current.name == 'create') {
                     $scope.editing = true;
                 }
