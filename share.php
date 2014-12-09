@@ -1,6 +1,6 @@
 <?php
-$front_root = 'http://localhost:9001/#/';
-$back_root = 'http://localhost/vnb/api/';
+$front_root = 'http://hashtalk.in/#/';
+$back_root = 'http://workaround.in/vnb/api';
 
 
 function getData($type, $param) {
