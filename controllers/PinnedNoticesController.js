@@ -25,7 +25,7 @@
                         pinnedNoticesCtrl.notices = data.Notice;
                     }, function(err){
                         console.log(err);
-                    })
+                    });
             }
 
             initialise();
