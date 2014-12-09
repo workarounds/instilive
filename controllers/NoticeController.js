@@ -9,23 +9,12 @@
     }
 
     function getAgo(d) {
-        //TODO: make this better to return 2d, 1m, 'Nov,28' etc
-        var MS_PER_HOUR = 1000 * 60 * 60;
         var now = new Date();
-        var diff_hrs = (now.getTime() - d.getTime()) / MS_PER_HOUR;
-        var ago = '';
-        if (diff_hrs > 24) {
-            var diff_days = Math.floor(diff_hrs / 24);
-            ago = diff_days + "d";
-        } else if (diff_hrs < 1) {
-            ago = getAgoLessThanHour(now.getTime() - d.getTime());
-        } else {
-            ago = Math.floor(diff_hrs) + "h";
-        }
-        return ago;
+        var diff = now.getTime() - d.getTime();
+        return getDuration(diff);
     }
 
-    function getAgoLessThanHour(diff) {
+    function getDurationLessThanHour(diff) {
         var diff_secs = diff / 1000;
         var diff_mins = diff_secs / 60;
         var ago = '';
@@ -40,7 +29,17 @@
     function getDuration(diff) {
         //TODO: make this better to return 2d, 1m etc
         var MS_PER_HOUR = 1000 * 60 * 60;
-        return Math.floor(diff / MS_PER_HOUR) + "h";
+        var diff_hrs = (diff) / MS_PER_HOUR;
+        var result = '';
+        if (diff_hrs > 24) {
+            var diff_days = Math.floor(diff_hrs / 24);
+            result = diff_days + "d";
+        } else if (diff_hrs < 1) {
+            result = getDurationLessThanHour(diff);
+        } else {
+            result = Math.floor(diff_hrs) + "h";
+        }
+        return result;
     }
 
     /* End Helper Functions */
