@@ -68,6 +68,7 @@
                 $scope.comment = '';
                 $scope.commentsVisible = false;
                 $scope.showCommentBox = false;
+                $scope.editing = false;
 
                 $scope.currentStateTag = StateService.getState().tag;
                 StateService.getUserData().then(
@@ -81,23 +82,41 @@
                     }
                 );
 
+
                 if(!$scope.hideUpdate){
                     $scope.hideUpdate = false;
                 }
 
-                var created = getDate($scope.notice.created);
-                $scope.notice.ago = getAgo(created);
-                if ($scope.notice.start_time) {
-                    var from = getDate($scope.notice.start_time);
-                    var to = getDate($scope.notice.end_time);
-
-                    $scope.notice.from = from;
-                    $scope.notice.to = to;
-                    $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                if($scope.notice.created) {
+                    var created = getDate($scope.notice.created);
+                    $scope.notice.ago = getAgo(created);
+                }
+                else{
+                    $scope.editing = true;
+                    $scope.notice.ago = '0m';
                 }
 
-                $scope.notice.corners = JSON.parse($scope.notice.corners);
-                $scope.notice.data = JSON.parse($scope.notice.data);
+                if($scope.notice.id){
+                    $scope.editing = true;
+                }
+
+                if ($scope.notice.start_time) {
+                    if($scope.notice.start_time != "") {
+                        var from = getDate($scope.notice.start_time);
+                        var to = getDate($scope.notice.end_time);
+
+                        $scope.notice.from = from;
+                        $scope.notice.to = to;
+                        $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                    }
+                }
+
+                if(typeof $scope.notice.corners === "string") {
+                    $scope.notice.corners = JSON.parse($scope.notice.corners);
+                }
+                if(typeof $scope.notice.data === "string") {
+                    $scope.notice.data = JSON.parse($scope.notice.data);
+                }
             }
             /* End initialisation */
 

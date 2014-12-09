@@ -32,7 +32,7 @@
                             from: new Date(),
                             to: new Date(),
                             data: {
-                                title: '',
+                                title: 'Sample title',
                                 venue: '',
                                 blocks: []
                             },

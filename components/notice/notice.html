@@ -14,7 +14,7 @@
             </div>
         </section>
 
-        <div class="dropdown" ng-show="canEdit">
+        <div class="dropdown" ng-show="canEdit && !editing">
             <a href class="dropdown-toggle"
                ng-click="updatePinCorners()">
                 <i class="fa fa-chevron-down"></i>
@@ -105,7 +105,7 @@
     </md-list>
 
     <md-divider></md-divider>
-    <section class="vnb-notice-footer" layout="column">
+    <section class="vnb-notice-footer" layout="column" ng-if="!editing">
         <section layout="row">
             <section class="vnb-notice-actions-left">
                 <md-list layout="row">
