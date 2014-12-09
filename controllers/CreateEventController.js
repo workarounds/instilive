@@ -8,7 +8,10 @@
             'noticeData',
             'imgur',
             '$q',
-            function (VnbRestangular, StateService, $scope, noticeData, imgur, $q) {
+            '$modalInstance',
+            '$state',
+            '$rootScope',
+            function (VnbRestangular, StateService, $scope, noticeData, imgur, $q, $modalInstance,$state, $rootScope) {
                 var createEventCtrl = this;
                 var initialise = function () {
                     // initialising the booleans
@@ -29,7 +32,7 @@
                             from: new Date(),
                             to: new Date(),
                             data: {
-                                title: '',
+                                title: 'Sample title',
                                 venue: '',
                                 blocks: []
                             },
@@ -41,6 +44,21 @@
                     } else {
                         $scope.notice = noticeData;
                     }
+
+
+                    createEventCtrl.parent = $rootScope.parentNotice;
+                    console.log(createEventCtrl.parent);
+                    $rootScope.parentNotice = null;
+                    if(createEventCtrl.parent) {
+                        if(createEventCtrl.parent.parent) {
+                            $scope.notice.parent = createEventCtrl.parent.parent;
+                            $scope.notice.data.parent_title = createEventCtrl.parent.data.parent_title;
+                        } else {
+                            $scope.notice.parent = createEventCtrl.parent.id;
+                            $scope.notice.data.parent_title = createEventCtrl.parent.data.title;
+                        }
+                    }
+                    console.log(createEventCtrl.parent);
 
                     StateService.getUserData().then(
                         function (data) {
@@ -272,6 +290,11 @@
                     var request = VnbRestangular.all('notices');
                     request.customPOST(data, 'add').then(
                         function (result) {
+                            if($modalInstance) {
+                                $modalInstance.close();
+                            } else {
+                                $state.go($state.current, {}, {reload: true});
+                            }
                             console.log(result);
                         },
                         function (err) {

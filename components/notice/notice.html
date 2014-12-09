@@ -14,7 +14,7 @@
             </div>
         </section>
 
-        <div class="dropdown" ng-show="canEdit">
+        <div class="dropdown" ng-show="canEdit && !editing">
             <a href class="dropdown-toggle"
                ng-click="updatePinCorners()">
                 <i class="fa fa-chevron-down"></i>
@@ -92,17 +92,20 @@
                 {{notice.comment_count}} <i class="fa fa-comments"></i>
             </a>
         </md-item>
-        <md-item ng-show="notice.updates_above + notice.updates_below > 0">
+        <md-item ng-show="(notice.updates_above + notice.updates_below > 0) && !hideUpdate">
             <a href="" ng-click="showUpdates()">
                 {{notice.updates_above}} <i class="fa fa-arrow-up"></i>
                 {{notice.updates_below}} <i class="fa fa-arrow-down"></i>
             </a>
+            <md-tooltip>
+                See updates
+            </md-tooltip>
         </md-item>
         <md-item></md-item>
     </md-list>
 
     <md-divider></md-divider>
-    <section class="vnb-notice-footer" layout="column">
+    <section class="vnb-notice-footer" layout="column" ng-if="!editing">
         <section layout="row">
             <section class="vnb-notice-actions-left">
                 <md-list layout="row">
@@ -142,11 +145,13 @@
                               autofocus="true"
                               ng-model="commentsCtrl.comment"
                               flex></textarea>
-                    <md-button
-                        class="vnb-button-round"
-                        ng-click="commentsCtrl.postComment()">
-                        <i class="fa fa-comment"></i>
-                    </md-button>
+                    <section layout="row" flex layout-align="end center">
+                        <md-button
+                            class="vnb-button-round"
+                            ng-click="commentsCtrl.postComment()">
+                            <i class="fa fa-comment"></i>
+                        </md-button>
+                    </section>
                 </form>
             </div>
             <div layout="row" layout-sm="column"

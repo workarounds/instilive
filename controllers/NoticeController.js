@@ -52,7 +52,8 @@
         '$modal',
         '$state',
         'VnbModal',
-        function ($scope, VnbRestangular, StateService, $modal, $state, VnbModal) {
+        '$rootScope',
+        function ($scope, VnbRestangular, StateService, $modal, $state, VnbModal, $rootScope) {
             /* initialising the variables */
             function initialise() {
                 var emptyUser = {
@@ -67,6 +68,7 @@
                 $scope.comment = '';
                 $scope.commentsVisible = false;
                 $scope.showCommentBox = false;
+                $scope.editing = false;
 
                 $scope.currentStateTag = StateService.getState().tag;
                 StateService.getUserData().then(
@@ -80,21 +82,33 @@
                     }
                 );
 
+
+                if(!$scope.hideUpdate){
+                    $scope.hideUpdate = false;
+                }
+
                 if($scope.notice.created) {
                     var created = getDate($scope.notice.created);
                     $scope.notice.ago = getAgo(created);
                 }
                 else{
+                    $scope.editing = true;
                     $scope.notice.ago = '0m';
                 }
 
-                if ($scope.notice.start_time !== "") {
-                    var from = getDate($scope.notice.start_time);
-                    var to = getDate($scope.notice.end_time);
+                if($scope.notice.id){
+                    $scope.editing = true;
+                }
 
-                    $scope.notice.from = from;
-                    $scope.notice.to = to;
-                    $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                if ($scope.notice.start_time) {
+                    if($scope.notice.start_time != "") {
+                        var from = getDate($scope.notice.start_time);
+                        var to = getDate($scope.notice.end_time);
+
+                        $scope.notice.from = from;
+                        $scope.notice.to = to;
+                        $scope.notice.duration = getDuration(to.getTime() - from.getTime());
+                    }
                 }
 
                 if(typeof $scope.notice.corners === "string") {
@@ -317,22 +331,24 @@
                 });
             };
             $scope.addUpdate = function () {
-                var modalInstance = $modal.open({
-                    templateUrl: 'components/notice/create-event.html',
-                    controller: 'UpdateEventController as createEventCtrl',
-                    size: 'lg',
-                    resolve: {
-                        parentData: function () {
-                            return $scope.notice;
-                        }
-                    }
-                });
-
-                modalInstance.result.then(function () {
-                    console.log('modal closed with success');
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                });
+                //var modalInstance = $modal.open({
+                //    templateUrl: 'components/notice/create-event.html',
+                //    controller: 'UpdateEventController as createEventCtrl',
+                //    size: 'lg',
+                //    resolve: {
+                //        parentData: function () {
+                //            return $scope.notice;
+                //        }
+                //    }
+                //});
+                //
+                //modalInstance.result.then(function () {
+                //    console.log('modal closed with success');
+                //}, function () {
+                //    console.log('Modal dismissed at: ' + new Date());
+                //});
+                $rootScope.parentNotice = $scope.notice;
+                $state.go('create', {parentNotice: $scope.notice});
             };
             $scope.showUpdates = function() {
                 var modalParams = {

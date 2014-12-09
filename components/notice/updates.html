@@ -1,11 +1,9 @@
-<div class="modal-header">
-    {{updatesCtrl.notice.data.title}}
-</div>
-<div class="modal-body">
-    <div ng-repeat="update in updatesCtrl.updates">
-        <notice data="update"></notice>
-    </div>
-</div>
-<div class="modal-footer">
+<div layout="column" flex layout-align="start center">
+    <div layout="row" flex layout-align="center start"
+         ng-repeat="update in updatesCtrl.updates">
+        <notice data="update" hide-update="true"
+                ng-class="{'vnb-current-notice': updatesCtrl.isCurrentNotice(update)}">
 
+        </notice>
+    </div>
 </div>
