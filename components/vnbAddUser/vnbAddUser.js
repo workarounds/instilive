@@ -66,6 +66,6 @@
             },
             restrict: 'E',
             templateUrl: 'components/vnbAddUser/vnb-add-user.html'
-        }
+        };
     });
 })();

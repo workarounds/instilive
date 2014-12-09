@@ -118,7 +118,7 @@
                 createEventCtrl.range = function (min, max, step) {
                     step = step || 1;
                     var input = [];
-                    for (var i = min; i <= max; i += step) input.push(i);
+                    for (var i = min; i <= max; i += step) {input.push(i);}
                     return input;
                 };
                 createEventCtrl.upload = function () {
@@ -133,7 +133,7 @@
                     } else if (!file.type.match(/image.*/)) {
                         deferred.reject('file not image');
                         return deferred.promise;
-                    } else if (createEventCtrl.lastUploadImage == createEventCtrl.image) {
+                    } else if (createEventCtrl.lastUploadImage === createEventCtrl.image) {
                         deferred.resolve();
                         console.log('uploaded');
                         return deferred.promise;

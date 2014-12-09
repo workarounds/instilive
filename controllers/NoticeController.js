@@ -88,7 +88,7 @@
                     $scope.notice.ago = '0m';
                 }
 
-                if ($scope.notice.start_time != "") {
+                if ($scope.notice.start_time !== "") {
                     var from = getDate($scope.notice.start_time);
                     var to = getDate($scope.notice.end_time);
 
@@ -159,7 +159,7 @@
                     for (var i in editPositions) {
                         var corners = editPositions[i].corners;
                         for (var j in corners) {
-                            if(corners[j].tag == corner.tag) {
+                            if(corners[j].tag === corner.tag) {
                                 return true;
                             }
                         }
@@ -247,7 +247,7 @@
             $scope.range = function (min, max, step) {
                 step = step || 1;
                 var input = [];
-                for (var i = min; i <= max; i += step) input.push(i);
+                for (var i = min; i <= max; i += step) {input.push(i);}
                 return input;
             };
 
@@ -269,7 +269,7 @@
                         console.log('Modal dismissed at: ' + new Date());
                     });
                 }
-            }
+            };
             /* End Like Functions */
 
             /* Functions to handle comments */

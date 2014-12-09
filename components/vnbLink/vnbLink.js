@@ -20,7 +20,7 @@
                     }
                 }
                 else {
-                    console.log('No Hash data')
+                    console.log('No Hash data');
                 }
             };
 

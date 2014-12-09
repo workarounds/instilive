@@ -130,8 +130,9 @@
 
                 var deferred = $q.defer();
                 var result = deferred.promise;
+                var request;
                 if (!state.tag) {
-                    var request = VnbRestangular.all('notices');
+                    request = VnbRestangular.all('notices');
                     VnbRestangular.setJsonp(true);
                     result = request.customGET('index', options);
                     VnbRestangular.setJsonp(false);
@@ -139,7 +140,7 @@
                 else {
                     var params = {tag: state.tag};
                     $.extend(params, options);
-                    var request = VnbRestangular.all('notices');
+                    request = VnbRestangular.all('notices');
                     VnbRestangular.setJsonp(true);
                     result = request.customGET('data', params);
                     VnbRestangular.setJsonp(false);

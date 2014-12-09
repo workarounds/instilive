@@ -75,7 +75,7 @@
 
                     }, function(){
                         manageCtrl.position.users.push(user);
-                    })
+                    });
             }
         };
 

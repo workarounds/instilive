@@ -22,7 +22,7 @@
                 function init() {
                     $scope.selectableCorners = [];
                     for (var i = 0; i < $scope.allCorners.length; i++) {
-                        if (!($scope.selectedCorners.indexOf($scope.allCorners[i]) > -1)) {
+                        if ($scope.selectedCorners.indexOf($scope.allCorners[i]) === -1) {
                             $scope.selectableCorners.push($scope.allCorners[i]);
                         }
                     }
