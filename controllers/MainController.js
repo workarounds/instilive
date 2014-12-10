@@ -6,8 +6,14 @@
         '$mdSidenav',
         '$scope',
         '$rootScope',
-        function (StateService, $modal, $mdSidenav, $scope, $rootScope) {
+        'matchmedia',
+        function (StateService, $modal, $mdSidenav, $scope, $rootScope, matchmedia) {
             var mainCtrl = this;
+            mainCtrl.isDesktop = matchmedia.is('min-width: 961px');
+            var unregister = matchmedia.on('(min-width: 961px)', function(mediaQueryList){
+                mainCtrl.isDesktop = mediaQueryList.matches;
+            }, $scope);
+
 
             mainCtrl.loading = 1;
 
