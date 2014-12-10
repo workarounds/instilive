@@ -68,14 +68,16 @@
                 </div>
 
                 <div ng-repeat="corner in sidebarCtrl.hashData">
-                    <button
-                        class="menu-item menu-title md-menu-item"
-                        md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
-                        ng-click="mainCtrl.closeLeftSidebar()"
-                        ng-if="(corner.tag.indexOf('interIIT-') > -1) && !corner.is_board"
-                        md-ink-ripple="#bbb">
-                        <span vnb-link="corner.tag"></span>
-                    </button>
+                    <div ng-click="mainCtrl.closeLeftSidebar()">
+                        <button
+                            class="menu-item menu-title md-menu-item"
+                            md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
+                            ng-click="sidebarCtrl.toggleCurrentMenu(corner.tag)"
+                            ng-if="(corner.tag.indexOf('interIIT-') > -1) && !corner.is_board"
+                            md-ink-ripple="#bbb">
+                            <span vnb-link="corner.tag"></span>
+                        </button>
+                    </div>
                 </div>
 
                 <div ng-repeat="parent in sidebarCtrl.displayHierarchy">
