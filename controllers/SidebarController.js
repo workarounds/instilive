@@ -116,18 +116,19 @@
             sidebarCtrl.displayHierarchy = [];
             sidebarCtrl.displayHierarchy[0] = {
                 name: 'Sports',
-                subtitle: 'Men',
+                subtitle: ' (men)',
                 prefix: 'men',
                 selected: false
             };
             sidebarCtrl.displayHierarchy[1] = {
                 name: 'Sports',
-                subtitle: 'Women',
+                subtitle: ' (women)',
                 prefix: 'women',
                 selected: false
             };
             sidebarCtrl.displayHierarchy[2] = {
-                name: 'IITs',
+                name: 'IIT',
+                subtitle:'s',
                 prefix: 'iit',
                 selected: false
             };

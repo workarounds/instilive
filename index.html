@@ -73,20 +73,20 @@
                             class="menu-item menu-title md-menu-item"
                             md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
                             ng-click="sidebarCtrl.toggleCurrentMenu(corner.tag)"
-                            ng-if="(corner.tag.indexOf('interIIT-') > -1) && !corner.is_board"
+                            ng-if="corner.tag.indexOf('interIIT-') > -1"
                             md-ink-ripple="#bbb">
-                            <span vnb-link="corner.tag"></span>
+                            <span vnb-link="corner.tag" ng-bind="corner.name"></span>
                         </button>
                     </div>
                 </div>
-
+                <md-divider></md-divider>
                 <div ng-repeat="parent in sidebarCtrl.displayHierarchy">
                     <button
                         class="menu-item menu-title md-menu-item"
                         ng-click="sidebarCtrl.toggleCurrentMenu(parent.prefix)"
                         md-highlight="sidebarCtrl.isCurrentMenu(parent.prefix)"
                         md-ink-ripple="#bbb">
-                        <span ng-bind="parent.name"></span> <span class="vnb-sidebar-small" ng-if="parent.subtitle">({{parent.subtitle}})</span>
+                        <span ng-bind="parent.name"></span><span class="vnb-sidebar-small" ng-if="parent.subtitle" ng-bind="parent.subtitle"></span>
                     </button>
 
                     <a class="menu-item menu-sub-item md-menu-item"
