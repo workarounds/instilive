@@ -18,6 +18,9 @@
             mainCtrl.toggleLeftSidebar = function () {
                 $mdSidenav('left').toggle();
             };
+            mainCtrl.closeLeftSidebar = function () {
+                $mdSidenav('left').close();
+            };
 
             // function to toggle filter
             mainCtrl.toggleRightSidebar = function () {

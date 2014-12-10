@@ -4,7 +4,7 @@
 <head>
     <title>Instlive</title>
     <meta name="description" content="The omnipresent virtual notice board for the campus.
-    Know what's going on in the campus. Currently featuring updates for Inter IIT" />
+    Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Instilive">
@@ -24,14 +24,14 @@
 
     <!-- Open Graph data -->
     <meta property="og:title" content="Instilive"/>
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://www.instilive.com" />
-    <meta property="og:image" content="" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://www.instilive.com"/>
+    <meta property="og:image" content=""/>
     <meta property="og:description" content="The omnipresent virtual notice board for the campus.
-    Know what's going on in the campus. Currently featuring updates for Inter IIT" />
-    <meta property="og:site_name" content="Instilive" />
-    <meta property="fb:admins" content="100007193532033" />
-    <meta property="fb:admins" content="100001227876276" />
+    Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
+    <meta property="og:site_name" content="Instilive"/>
+    <meta property="fb:admins" content="100007193532033"/>
+    <meta property="fb:admins" content="100001227876276"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
@@ -53,43 +53,71 @@
             </md-toolbar>
             <md-content
                 ng-controller="SidebarController as sidebarCtrl">
+
                 <button
                     class="menu-item menu-title md-menu-item"
-                    ng-click="sidebarCtrl.removeSelectBoard()"
-                    md-highlight="sidebarCtrl.isHomeCurrent()"
+                    md-highlight="sidebarCtrl.isCurrentMenu('home')"
                     ui-sref="home.all"
+                    ng-click="mainCtrl.closeLeftSidebar()"
                     md-ink-ripple="#bbb">
                     Home
                 </button>
-                <button ng-repeat="tag in sidebarCtrl.hash"
-                    class="menu-item menu-title md-menu-item"
-                    ng-click="sidebarCtrl.removeSelectBoard()"
-                    md-highlight="sidebarCtrl.isHomeCurrent()"
-                    ui-sref="home.all"
-                    md-ink-ripple="#bbb">
-                    Home
-                </button>
-                <div ng-repeat="board in sidebarCtrl.boards">
 
+                <div>
+                    <button
+                        ng-repeat="corner in sidebarCtrl.hashData"
+                        class="menu-item menu-title md-menu-item"
+                        md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
+                        ng-click="mainCtrl.closeLeftSidebar()"
+                        ng-if="(corner.tag.indexOf('interIIT-') > -1) && !corner.is_board"
+                        md-ink-ripple="#bbb">
+                        <span vnb-link="corner.name | removeTextInBrackets"></span>
+                    </button>
+                </div>
+
+                <div ng-repeat="parent in sidebarCtrl.displayHierarchy">
                     <button
                         class="menu-item menu-title md-menu-item"
-                        ng-click="sidebarCtrl.openSelectBoard(board)"
-                        md-highlight="sidebarCtrl.isBoardSelected(board)"
-                        vnb-link="board.tag" md-ink-ripple="#bbb">
-                        {{board.title}}
+                        ng-click="sidebarCtrl.updateCurrentMenu(parent.prefix)"
+                        md-highlight="sidebarCtrl.isCurrentMenu(parent.prefix)"
+                        md-ink-ripple="#bbb">
+                        <span ng-bind="parent.name"></span> <span class="vnb-sidebar-small" ng-if="parent.subtitle">({{parent.subtitle}})</span>
                     </button>
 
                     <a class="menu-item menu-sub-item md-menu-item"
-                       ng-show="sidebarCtrl.isBoardSelected(board)"
-                       ng-repeat="corner in board.corners"
+                       ng-show="sidebarCtrl.isCurrentMenu(parent.prefix)"
+                       ng-repeat="corner in sidebarCtrl.hashData"
+                       ng-click="mainCtrl.closeLeftSidebar()"
                        vnb-link="corner.tag"
-                       md-highlight="sidebarCtrl.isCornerSelected(corner)"
+                       ng-if="(corner.tag.indexOf(parent.prefix+'-') > -1) && !corner.is_board"
+                       md-highlight="sidebarCtrl.isCurrentSubMenu(corner.tag)"
+                       md-ink-ripple="#bbb">
+                        <span ng-bind="corner.name | removeTextInBrackets"></span>
+                    </a>
+                </div>
+
+                <div>
+                    <button
+                        class="menu-item menu-title md-menu-item"
+                        ng-click="sidebarCtrl.updateCurrentMenu('more')"
+                        md-highlight="sidebarCtrl.isCurrentMenu('more')"
+                        md-ink-ripple="#bbb">
+                        More
+                    </button>
+
+                    <a class="menu-item menu-sub-item md-menu-item"
+                       ng-show="sidebarCtrl.isCurrentMenu('more')"
+                       ng-repeat="corner in sidebarCtrl.hashData"
+                       ng-click="mainCtrl.closeLeftSidebar()"
+                       vnb-link="corner.tag"
+                       ng-if="(corner.tag.indexOf('-') == -1) && !corner.is_board"
+                       md-highlight="sidebarCtrl.isCurrentSubMenu(corner.tag)"
                        md-ink-ripple="#bbb">
                         <span ng-bind="corner.name"></span>
                     </a>
-
                 </div>
             </md-content>
+
             <section layout="row" flex layout-align="start end">
                 <section layout="row" flex layout-align="center center">
                     <md-button md-primary ng-click="mainCtrl.login()" flex ng-if="!mainCtrl.user">
