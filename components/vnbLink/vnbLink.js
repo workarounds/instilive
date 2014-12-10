@@ -28,15 +28,20 @@
                 restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
                 link: function (scope, elm, attrs) {
                     var tag = scope.$eval(attrs.vnbLink);
-                    if (hashData[tag].is_board) {
-                        scope.vnbLinkName = hashData[tag].title;
+                    if(hashData[tag]) {
+                        if (hashData[tag].is_board) {
+                            scope.vnbLinkName = hashData[tag].title;
+                        }
+                        else {
+                            scope.vnbLinkName = hashData[tag].name;
+                        }
+                        elm.bind('click', function () {
+                            go(tag);
+                        });
                     }
-                    else {
-                        scope.vnbLinkName = hashData[tag].name;
+                    else{
+                        console.log(tag + 'not found');
                     }
-                    elm.bind('click', function () {
-                        go(tag);
-                    });
                 }
             };
         }]);
