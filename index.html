@@ -61,6 +61,14 @@
                     md-ink-ripple="#bbb">
                     Home
                 </button>
+                <button ng-repeat="tag in sidebarCtrl.hash"
+                    class="menu-item menu-title md-menu-item"
+                    ng-click="sidebarCtrl.removeSelectBoard()"
+                    md-highlight="sidebarCtrl.isHomeCurrent()"
+                    ui-sref="home.all"
+                    md-ink-ripple="#bbb">
+                    Home
+                </button>
                 <div ng-repeat="board in sidebarCtrl.boards">
 
                     <button
@@ -125,6 +133,8 @@
 <script
     src="/bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/ng-imgur/module/Imgur.js"></script>
+<script src="bower_components/matchmedia/matchMedia.js"></script>
+<script src="bower_components/matchmedia-ng/matchmedia-ng.js"></script>
 <!-- Add New Bower Component JS Above -->
 
 <!--IMPORTANT:This script should be the placed below angular.js for loading-->

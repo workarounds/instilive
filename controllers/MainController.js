@@ -5,8 +5,14 @@
         '$modal',
         '$mdSidenav',
         '$scope',
-        function (StateService, $modal, $mdSidenav, $scope) {
+        'matchmedia',
+        function (StateService, $modal, $mdSidenav, $scope, matchmedia) {
             var mainCtrl = this;
+            mainCtrl.isDesktop = matchmedia.is('min-width: 961px');
+            var unregister = matchmedia.on('(min-width: 961px)', function(mediaQueryList){
+                mainCtrl.isDesktop = mediaQueryList.matches;
+            }, $scope);
+
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {

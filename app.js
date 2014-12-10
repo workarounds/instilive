@@ -13,7 +13,8 @@
             'vnb.directives',
             'restangular',
             'ngMaterial',
-            'ngImgur'
+            'ngImgur',
+            'matchmedia-ng'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {

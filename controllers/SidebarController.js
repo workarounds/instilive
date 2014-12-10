@@ -37,20 +37,37 @@
             var initialiseSidebar = function () {
                 console.log('sidebar boards');
                 console.log(sidebarCtrl.boards);
+                sidebarCtrl.hashData = StateService.getHashData();
+                console.log(sidebarCtrl.hashData);
                 var state = StateService.getState();
-                if(state.tag) {
-                    var hashData = StateService.getHashData();
-                    console.log('hashData');
-                    console.log(hashData);
-                    if(hashData[state.tag].is_board) {
+                if (state.tag) {
+                    if (sidebarCtrl.hashData[state.tag].is_board) {
                         sidebarCtrl.currentBoard = sidebarCtrl.boards[state.tag];
                         sidebarCtrl.currentBoard.selected = true;
                     } else {
-                        sidebarCtrl.currentBoard = sidebarCtrl.boards[hashData[state.tag].board_tag];
+                        sidebarCtrl.currentBoard = sidebarCtrl.boards[sidebarCtrl.hashData[state.tag].board_tag];
                         sidebarCtrl.currentBoard.selected = true;
                     }
                 }
             };
+
+            sidebarCtrl.displayHierarchy = {};
+            sidebarCtrl.displayHierarchy['sports'] = {
+                name: 'Sports',
+                prefix: 'sports',
+                selected: false
+            };
+            sidebarCtrl.displayHierarchy['iit'] = {
+                name: 'IITs',
+                prefix: 'iit',
+                selected: false
+            };
+            sidebarCtrl.displayHierarchy['day'] = {
+                name: 'Days',
+                prefix: 'day',
+                selected: false
+            };
+
 
             sidebarCtrl.removeSelectBoard = function () {
                 sidebarCtrl.currentBoard.selected = false;
