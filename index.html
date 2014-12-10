@@ -117,15 +117,6 @@
                     </a>
                 </div>
             </md-content>
-
-            <section layout="row" flex layout-align="start end">
-                <section layout="row" flex layout-align="center center">
-                    <md-button md-primary ng-click="mainCtrl.login()" flex ng-if="!mainCtrl.user">
-                        Login
-                    </md-button>
-                    <span ng-if="mainCtrl.user">Logged in as: {{mainCtrl.user.name}}</span>
-                </section>
-            </section>
         </md-sidenav>
         <section ui-view="main" flex layout="row"></section>
     </section>
