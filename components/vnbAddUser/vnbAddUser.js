@@ -6,19 +6,22 @@
 
     app.directive('vnbAddUser', function(){
         return {
-            controller:['$scope', 'VnbRestangular', '$http', function($scope, VnbRestangular, $http){
+            controller:['StateService','$scope', 'VnbRestangular', '$http', function(StateService, $scope, VnbRestangular, $http){
                 $scope.message = "";
                 $scope.profileLink = "";
                 $scope.user = false;
                 var userData = false;
 
                 var sendGraphData = function(data){
+                    StateService.startLoading();
                     VnbRestangular.all('users')
                         .customPOST(data, 'graph')
                         .then(function(data){
+                            StateService.stopLoading();
                             $scope.message = "";
                             $scope.callback({user: data});
                         }, function(){
+                            StateService.stopLoading();
                             $scope.message = "Some error occured. Please try again";
                         });
                 };

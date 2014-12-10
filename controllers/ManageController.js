@@ -4,24 +4,29 @@
         var manageCtrl = this;
 
         var showPositions = function(data){
-            console.log(data);
+            StateService.stopLoading();
             manageCtrl.loading = false;
             manageCtrl.positions = data;
             if(manageCtrl.positions.length > 0) {
                 manageCtrl.position = manageCtrl.positions[0];
+            }
+            else {
+                StateService.showToast('You don\'t seem to have any positions to manage');
             }
         };
 
         var showError = function(err){
             //Couldn't load positions
             console.log(err);
-            //TODO: show some error msg
+            StateService.stopLoading();
+            StateService.showToast('Could load positions');
         };
 
         var getPositions = function() {
             manageCtrl.loggedIn = true;
             manageCtrl.loading = true;
             VnbRestangular.setJsonp(false);
+            StateService.startLoading();
             VnbRestangular.all('positions').get('manage').then(
                 showPositions,showError
             );
@@ -69,17 +74,24 @@
                     position_id: manageCtrl.position.id,
                     user_id: user.id
                 };
+                StateService.startLoading();
                 VnbRestangular.all('positions')
                     .customPOST(postData, 'removeUser')
                     .then(function(){
-
+                        StateService.stopLoading();
+                        StateService.showToast('User removed');
                     }, function(){
                         manageCtrl.position.users.push(user);
+                        StateService.stopLoading();
+                        StateService.showToast('Remove failed');
                     });
             }
         };
 
         manageCtrl.showAddUser = function(){
+            if(!manageCtrl.addUserCollapsed){
+                StateService.showToast('Please paste the users facebook profile link');
+            }
             manageCtrl.addUserCollapsed = false;
         };
 
@@ -91,14 +103,17 @@
                     position_id: manageCtrl.position.id,
                     user_id: user.id
                 };
+                StateService.startLoading();
                 VnbRestangular.all('positions')
                     .customPOST(postData, 'user')
                     .then(function(){
+                        StateService.stopLoading();
                         console.log('User added');
-                        //TODO: show feedback
+                        StateService.showToast('User added');
                     }, function(){
                         manageCtrl.position.users.pop();
-                        //TODO: show error msg
+                        StateService.stopLoading();
+                        StateService.showToast('Adding user failed. Please try again.');
                     });
             }
             manageCtrl.addUserCollapsed = true;

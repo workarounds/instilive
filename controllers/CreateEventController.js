@@ -11,7 +11,7 @@
             '$modalInstance',
             '$state',
             '$rootScope',
-            function (VnbRestangular, StateService, $scope, noticeData, imgur, $q, $modalInstance,$state, $rootScope) {
+            function (VnbRestangular, StateService, $scope, noticeData, imgur, $q, $modalInstance, $state, $rootScope) {
                 var createEventCtrl = this;
                 var initialise = function () {
                     // initialising the booleans
@@ -49,8 +49,8 @@
                     createEventCtrl.parent = $rootScope.parentNotice;
                     console.log(createEventCtrl.parent);
                     $rootScope.parentNotice = null;
-                    if(createEventCtrl.parent) {
-                        if(createEventCtrl.parent.parent) {
+                    if (createEventCtrl.parent) {
+                        if (createEventCtrl.parent.parent) {
                             $scope.notice.parent = createEventCtrl.parent.parent;
                             $scope.notice.data.parent_title = createEventCtrl.parent.data.parent_title;
                         } else {
@@ -136,13 +136,15 @@
                 createEventCtrl.range = function (min, max, step) {
                     step = step || 1;
                     var input = [];
-                    for (var i = min; i <= max; i += step) {input.push(i);}
+                    for (var i = min; i <= max; i += step) {
+                        input.push(i);
+                    }
                     return input;
                 };
                 createEventCtrl.upload = function () {
                     var deferred = $q.defer();
                     var file = false;
-                    if(createEventCtrl.image) {
+                    if (createEventCtrl.image) {
                         file = createEventCtrl.image.file;
                     }
                     if (!file) {
@@ -187,7 +189,7 @@
                     }
                 };
 
-                createEventCtrl.login = function(){
+                createEventCtrl.login = function () {
                     StateService.fbLogin();
                 };
 
@@ -251,7 +253,7 @@
                             return false;
                         }
                     }
-                    if(createEventCtrl.uploading){
+                    if (createEventCtrl.uploading) {
                         return false;
                     }
                     return (hasCorners) && ((hasBlocks) || (isEvent));
@@ -259,9 +261,9 @@
 
                 createEventCtrl.test = function () {
                     var result = StateService.getLoginStatus();
-                    result.then(function(data){
+                    result.then(function (data) {
                         console.log(data);
-                    }, function(err){
+                    }, function (err) {
                         console.log(err);
                     });
                 };
@@ -270,7 +272,7 @@
                     if (createEventCtrl.hasImage) {
                         createEventCtrl.upload().then(createEventCtrl.post);
                     }
-                    else{
+                    else {
                         createEventCtrl.post();
                     }
                 };
@@ -287,10 +289,13 @@
                     }
 
                     console.log(data);
+                    StateService.startLoading();
                     var request = VnbRestangular.all('notices');
                     request.customPOST(data, 'add').then(
                         function (result) {
-                            if($modalInstance) {
+                            StateService.showToast('Post added');
+                            StateService.stopLoading();
+                            if ($modalInstance) {
                                 $modalInstance.close();
                             } else {
                                 $state.go($state.current, {}, {reload: true});
@@ -298,6 +303,8 @@
                             console.log(result);
                         },
                         function (err) {
+                            StateService.stopLoading();
+                            StateService.showToast('Sorry some error occurred. Please try again');
                             console.log(err);
                         }
                     );

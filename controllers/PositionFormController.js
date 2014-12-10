@@ -1,8 +1,8 @@
 (function () {
     var app = angular.module('Vnb');
 
-    app.controller('PositionFormController', ['$scope', '$modalInstance','VnbRestangular','positionData','allCorners',
-        function($scope, $modalInstance, VnbRestangular, positionData, allCorners){
+    app.controller('PositionFormController', ['StateService','$scope', '$modalInstance','VnbRestangular','positionData','allCorners',
+        function(StateService,$scope, $modalInstance, VnbRestangular, positionData, allCorners){
             var posFormCtrl = this;
             var emptyPosition = {
                 name: '',
@@ -14,6 +14,7 @@
             posFormCtrl.addUsersCollapsed = true;
 
             posFormCtrl.close = function(){
+                StateService.showToast('Position saved');
                 $modalInstance.close();
             };
 
