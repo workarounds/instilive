@@ -38,7 +38,7 @@
                         templateUrl: 'components/layout/plain-header.html'
                     },
                     "content@manage": {
-                        templateUrl: 'manage/manage-aliases.html',
+                        templateUrl: 'components/manage/manage-aliases.html',
                         controller: 'ManageController as manageCtrl'
                     }
                 }
