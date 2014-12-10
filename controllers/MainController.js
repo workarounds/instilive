@@ -5,8 +5,11 @@
         '$modal',
         '$mdSidenav',
         '$scope',
-        function (StateService, $modal, $mdSidenav, $scope) {
+        '$rootScope',
+        function (StateService, $modal, $mdSidenav, $scope, $rootScope) {
             var mainCtrl = this;
+
+            mainCtrl.loading = 1;
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {
@@ -55,9 +58,21 @@
                 }
             );
 
+
+
             $scope.$on('userDataEvent', function (event, data) {
                 mainCtrl.user = data;
             });
+
+            $rootScope.$on('vnbLoading', function(event, loading){
+                if(loading){
+                    mainCtrl.loading++;
+                }
+                else{
+                    mainCtrl.loading--;
+                }
+            });
+
         }
     ]);
 })();

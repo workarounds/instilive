@@ -54,6 +54,14 @@
                 $rootScope.$emit('VNB_HASH_DATA', hashData);
             };
 
+            stateService.startLoading = function(){
+                $rootScope.emit('vnbLoading', true);
+            };
+
+            stateService.stopLoading = function(){
+                $rootScope.emit('vnbLoading', false);
+            };
+
             stateService.getHashData = function () {
                 return hashData;
             };

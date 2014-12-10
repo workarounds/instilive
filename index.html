@@ -39,7 +39,7 @@
                         ng-click="sidebarCtrl.openSelectBoard(board)"
                         md-highlight="sidebarCtrl.isBoardSelected(board)"
                         vnb-link="board.tag" md-ink-ripple="#bbb">
-                        {{board.title}}
+                        <span ng-bind="board.title"></span>
                     </button>
 
                     <a class="menu-item menu-sub-item md-menu-item"
@@ -58,11 +58,17 @@
                     <md-button md-primary ng-click="mainCtrl.login()" flex ng-if="!mainCtrl.user">
                         Login
                     </md-button>
-                    <span ng-if="mainCtrl.user">Logged in as: {{mainCtrl.user.name}}</span>
+                    <span ng-if="mainCtrl.user" ng-bind="'Logged in as:'+ mainCtrl.user.name"></span>
                 </section>
             </section>
         </md-sidenav>
-        <section ui-view="main" flex layout="row"></section>
+        <section layout="column" flex>
+            <section flex>
+                <md-progress-linear ng-show="mainCtrl.loading > 0"
+                    md-mode="indeterminate"></md-progress-linear>
+            </section>
+            <section ui-view="main" flex layout="row"></section>
+        </section>
     </section>
 </div>
 
