@@ -1,0 +1,10 @@
+<div ng-controller="NoticesController as noticesCtrl">
+    <!--tabs(upcoming/recent)-->
+
+    <!--list of notices-->
+    <notice ng-repeat="notice in noticesCtrl.notices" data="notice">
+
+    </notice>
+    <button ng-click="noticesCtrl.loadMore()">Load more</button>
+
+</div>

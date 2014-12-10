@@ -122,7 +122,7 @@
 
         manageCtrl.openPosition = function(position){
             var modalInstance = $modal.open({
-                templateUrl: 'manage/position-form.html',
+                templateUrl: 'components/manage/position-form.html',
                 controller: 'PositionFormController as posFormCtrl',
                 resolve: {
                     positionData: function () {

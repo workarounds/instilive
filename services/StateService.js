@@ -107,10 +107,12 @@
 
             stateService.fbLogin = function () {
                 var deferred = $q.defer();
+                console.log('entered fblogin');
                 if (FB_LOADED) {
                     FB.getLoginStatus(function (response) {
                         if (response.status === "connected") {
                             deferred.resolve();
+                            console.log('response connected');
                             $(document).trigger('FB_LOGGED_IN');
                             stateService.getUserData();
                         } else {
@@ -123,7 +125,7 @@
                                     $(document).trigger('FB_LOGGED_IN');
                                     stateService.getUserData(true);
                                 } else {
-                                    //TODO: show toast
+                                    stateService.showToast('Could not login. Please try again');
                                     deferred.reject('could not login');
                                 }
                             }, {scope: 'email'});
