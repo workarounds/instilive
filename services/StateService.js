@@ -5,8 +5,8 @@
         '$rootScope',
         '$q',
         'VnbRestangular',
-        '$state',
-        function ($rootScope, $q, VnbRestangular, $state) {
+        '$mdToast',
+        function ($rootScope, $q, VnbRestangular, $mdToast) {
             var currentState = {};
             var userDetails = false;
             var hashData = false;
@@ -95,6 +95,16 @@
                 return deferred.promise;
             };
 
+            stateService.showToast = function(content){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content(content)
+                        .position('bottom right')
+                        .hideDelay(5000)
+                        .action('OK')
+                );
+            };
+
             stateService.fbLogin = function () {
                 var deferred = $q.defer();
                 if (FB_LOADED) {
@@ -109,6 +119,7 @@
                                 stateService.stopLoading();
                                 if (result.authResponse) {
                                     deferred.resolve();
+                                    stateService.showToast('Logged in');
                                     $(document).trigger('FB_LOGGED_IN');
                                     stateService.getUserData(true);
                                 } else {

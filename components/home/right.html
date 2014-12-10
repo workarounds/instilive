@@ -1,13 +1,23 @@
 <section ng-controller="ScheduleController as scheduleCtrl">
-    <h2 class="pinned-heading" ng-if="mainCtrl.isDesktop">Schedule</h2>
+    <section layout="row" layout-align="center end">
+        <h2 flex class="pinned-heading" ng-if="mainCtrl.isDesktop"
+            >Schedule</h2>
+        <span class="font-small text-muted vnb-text-link"
+              style="margin-right: 8px;"
+              ng-hide="scheduleCtrl.showPrevious"
+              ng-click="scheduleCtrl.showPrevious = true"
+            >show previous
+        </span>
+    </section>
     <md-card style="padding: 0px" class="vnb-schedule"
              ng-if="scheduleCtrl.notices.length">
         <md-divider></md-divider>
         <div
             layout="column" flex layout-fill
             style="position: relative; overflow: hidden">
-            <md-content style="max-height: 360px; width: 100%">
-                <section ng-repeat="day in scheduleCtrl.eventDays">
+            <md-content style="width: 100%">
+                <section ng-repeat="day in scheduleCtrl.eventDays"
+                         id="{{day.anchor}}" ng-show="scheduleCtrl.showPrevious || day.next">
                     <md-subheader class="schedule-day">
                         {{day.date | date:'MMMM d'}}
                     </md-subheader>
@@ -17,8 +27,10 @@
                                  ng-repeat="event in day.events"
                                  layout="column">
                             <div>
-                            <span class="event-title">
-                                {{event.data.title}}</span>
+                            <span class="event-title vnb-text-link"
+                                ng-click="scheduleCtrl.showEvent(event)">
+                                {{event.data.title}}
+                            </span>
                             </div>
                             <div class="event-meta">
                             <span class="event-time">

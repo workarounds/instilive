@@ -1,10 +1,18 @@
 <md-card layout="column" class="vnb-notice" md-theme="indigo">
+    <section flex class="vnb-notice-update-to" ng-if="notice.data.parent_title.length">
+        update to
+        <span class="vnb-text-link" ng-click="showUpdates()">
+            {{notice.data.parent_title}}
+        </span>
+    </section>
     <section layout="row" flex class="vnb-notice-header">
 
         <section layout="column" flex
                  class="vnb-notice-title-container">
             <div class="vnb-notice-title">
-                <span class="">{{notice.data.title}}</span>
+                <span class="vnb-text-link" ng-click="showUpdates()">
+                    {{notice.data.title}}
+                </span>
             </div>
             <div class="vnb-notice-signature">
                 {{notice.data.position_name}}&nbsp;

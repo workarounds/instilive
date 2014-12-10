@@ -10,29 +10,53 @@
         return d;
     }
 
+    function isNextDay(d){
+        var now = new Date();
+        return (now.toDateString() <= d.toDateString());
+    }
+
+    function toDateId(d){
+        var date = d.getDate();
+        var month = d.getMonth();
+        var year = d.getYear();
+        return year*366 + month*31 + date;
+    }
+
     app.controller('ScheduleController', [
         'StateService',
-        function (StateService) {
+        'VnbModal',
+        function (StateService, VnbModal) {
             var scheduleCtrl = this;
 
             scheduleCtrl.notices = [];
             scheduleCtrl.eventDays = {};
+            scheduleCtrl.nextDaySet = false;
+            scheduleCtrl.showPrevious = false;
 
             function generateEvents() {
                 var notices = scheduleCtrl.notices;
                 var eventDays = scheduleCtrl.eventDays;
                 for (var i = 0; i < notices.length; i++) {
                     var start = getDateObj(notices[i].start_time);
-                    if (eventDays[start.toDateString()] === undefined) {
-                        eventDays[start.toDateString()] = {
+                    if (eventDays[toDateId(start)] === undefined) {
+                        eventDays[toDateId(start)] = {
                             date: start,
+                            anchor:'',
+                            next:false,
                             events: []
                         };
                     }
                     notices[i].start = start;
                     notices[i].data = JSON.parse(notices[i].data);
                     notices[i].corners = JSON.parse(notices[i].corners);
-                    eventDays[start.toDateString()].events.push(notices[i]);
+                    eventDays[toDateId(start)].events.push(notices[i]);
+                    eventDays[toDateId(start)].next = isNextDay(start);
+                    if(!scheduleCtrl.nextDaySet){
+                        if(isNextDay(start)){
+                            eventDays[toDateId(start)].anchor = 'vnb-schedule-next-day';
+                            scheduleCtrl.nextDaySet = true;
+                        }
+                    }
                 }
             }
 
@@ -40,11 +64,28 @@
                 function (data) {
                     scheduleCtrl.notices = data.Notice;
                     generateEvents();
+                    console.log(scheduleCtrl.eventDays);
                 },
                 function (err) {
                     console.log(err);
                 }
             );
+
+            scheduleCtrl.showEvent = function(event) {
+                var modalParams = {
+                    templateUrl: 'components/notice/updates.html',
+                    controller: 'UpdatesController as updatesCtrl',
+                    size: 'lg',
+                    resolve: {
+                        notice: function () {
+                            return event;
+                        }
+                    },
+                    state: '^.notice',
+                    params: {notice: event.id}
+                };
+                VnbModal.openModal(modalParams);
+            };
         }
     ]);
 })();
