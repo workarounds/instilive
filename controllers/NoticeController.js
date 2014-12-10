@@ -67,6 +67,7 @@
                 $scope.comment = '';
                 $scope.commentsVisible = false;
                 $scope.showCommentBox = false;
+                $scope.showCopyBox = false;
                 $scope.editing = false;
 
                 $scope.currentStateTag = StateService.getState().tag;
@@ -209,13 +210,25 @@
             /* End pin functions */
 
             /* Function to copy direct link of the notice to clipboard*/
-            $scope.copyLink = function(){
-
-            };
 
             //Funtion to share the notice to facebook
             $scope.share = function(){
+                if(FB_LOADED){
+                    var winHeight = 360;
+                    var winWidth = 560;
+                    var winTop = (screen.height / 2) - (winHeight / 2);
+                    var winLeft = (screen.width / 2) - (winWidth / 2);
+                    var title = $scope.notice.data.title;
+                    var url = $scope.getShareLink();
+                    window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[url]=' + url, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                }
+                else{
+                    StateService.showToast('Could not connect facebook. Try relaoding the page');
+                }
+            };
 
+            $scope.getShareLink = function(){
+                return 'http://instilive.com/share.php?notice=' + $scope.notice.id;
             };
 
             /* Functions to handle likes */

@@ -128,7 +128,7 @@
                         <md-button class="vnb-button-round" ng-click="copyLink()">
                             <i class="fa fa-link"></i>
                             <md-tooltip>
-                                Copy Link
+                                Link
                             </md-tooltip>
                         </md-button>
                     </md-item>
@@ -149,6 +149,9 @@
                         class="fake-comment-box"
                         type="text" flex>Comment</button>
             </section>
+        </section>
+        <section ng-show="showCopyBox">
+            <input class="vnb-text-box" type="text" ng-value="getShareLink()"/>
         </section>
         <section class="vnb-notice-comments"
                  ng-controller="CommentsController as commentsCtrl">

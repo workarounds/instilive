@@ -14,7 +14,7 @@
             'restangular',
             'ngMaterial',
             'ngImgur',
-            'matchmedia-ng'
+            'matchmedia-ng',
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
@@ -145,7 +145,6 @@
             ;
         /* Add New States Above */
         $urlRouterProvider.otherwise('/home');
-
     });
 
     app.run(function ($rootScope, $window) {
