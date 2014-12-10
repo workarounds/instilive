@@ -85,6 +85,14 @@
                 sidebarCtrl.currentMenu = newMenu;
             };
 
+            sidebarCtrl.toggleCurrentMenu = function (menu) {
+                if(sidebarCtrl.isCurrentMenu(menu)) {
+                    sidebarCtrl.currentMenu = '';
+                } else {
+                    sidebarCtrl.updateCurrentMenu(menu);
+                }
+            };
+
             sidebarCtrl.isCurrentMenu = function(menu) {
                 return sidebarCtrl.currentMenu == menu;
             };

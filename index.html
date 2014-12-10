@@ -56,31 +56,32 @@
             <md-content
                 ng-controller="SidebarController as sidebarCtrl">
 
-                <button
-                    class="menu-item menu-title md-menu-item"
-                    md-highlight="sidebarCtrl.isCurrentMenu('home')"
-                    ui-sref="home.all"
-                    ng-click="mainCtrl.closeLeftSidebar()"
-                    md-ink-ripple="#bbb">
-                    Home
-                </button>
-
-                <div>
+                <div ng-click="sidebarCtrl.toggleCurrentMenu('home')">
                     <button
-                        ng-repeat="corner in sidebarCtrl.hashData"
+                        class="menu-item menu-title md-menu-item"
+                        md-highlight="sidebarCtrl.isCurrentMenu('home')"
+                        ui-sref="home.all"
+                        ng-click="mainCtrl.closeLeftSidebar()"
+                        md-ink-ripple="#bbb"
+                        ng-bind="'Home'">
+                    </button>
+                </div>
+
+                <div ng-repeat="corner in sidebarCtrl.hashData">
+                    <button
                         class="menu-item menu-title md-menu-item"
                         md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
                         ng-click="mainCtrl.closeLeftSidebar()"
                         ng-if="(corner.tag.indexOf('interIIT-') > -1) && !corner.is_board"
                         md-ink-ripple="#bbb">
-                        <span vnb-link="corner.name | removeTextInBrackets"></span>
+                        <span vnb-link="corner.tag"></span>
                     </button>
                 </div>
 
                 <div ng-repeat="parent in sidebarCtrl.displayHierarchy">
                     <button
                         class="menu-item menu-title md-menu-item"
-                        ng-click="sidebarCtrl.updateCurrentMenu(parent.prefix)"
+                        ng-click="sidebarCtrl.toggleCurrentMenu(parent.prefix)"
                         md-highlight="sidebarCtrl.isCurrentMenu(parent.prefix)"
                         md-ink-ripple="#bbb">
                         <span ng-bind="parent.name"></span> <span class="vnb-sidebar-small" ng-if="parent.subtitle">({{parent.subtitle}})</span>
@@ -101,7 +102,7 @@
                 <div>
                     <button
                         class="menu-item menu-title md-menu-item"
-                        ng-click="sidebarCtrl.updateCurrentMenu('more')"
+                        ng-click="sidebarCtrl.toggleCurrentMenu('more')"
                         md-highlight="sidebarCtrl.isCurrentMenu('more')"
                         md-ink-ripple="#bbb">
                         More
@@ -122,8 +123,8 @@
         </md-sidenav>
         <section layout="column" flex>
             <md-progress-linear class="vnb-progress-bar"
-                ng-if="mainCtrl.loading > 0"
-                md-mode="indeterminate"></md-progress-linear>
+                                ng-if="mainCtrl.loading > 0"
+                                md-mode="indeterminate"></md-progress-linear>
             <section ui-view="main" flex layout="row"></section>
         </section>
     </section>
