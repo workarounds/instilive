@@ -111,6 +111,7 @@
                 resolve: commonResolve
             })
         ;
+        $urlRouterProvider.when('/', '/home/all');
         $urlRouterProvider.when('/:tag', '/:tag/all');
         $urlRouterProvider.when('/:tag/', '/:tag/all');
         $stateProvider
@@ -147,7 +148,7 @@
         $urlRouterProvider.otherwise('/home');
     });
 
-    app.run(function ($rootScope, $window) {
+    app.run(['$rootScope','$state', function ($rootScope, $state) {
         $rootScope.safeApply = function (fn) {
             var phase = $rootScope.$$phase;
             if (phase === '$apply' || phase === '$digest') {
@@ -159,6 +160,7 @@
             }
         };
 
-    });
+        $rootScope.$state = $state;
+    }]);
 
 })();

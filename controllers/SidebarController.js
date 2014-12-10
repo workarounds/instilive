@@ -2,11 +2,11 @@
     var app = angular.module('Vnb');
     app.controller('SidebarController', [
         'StateService',
+        '$rootScope',
         '$state',
-        function (StateService, $state) {
+        function (StateService, $rootScope, $state) {
             var sidebarCtrl = this;
-            sidebarCtrl.currentBoardId = 1;
-            sidebarCtrl.currentBoard = {};
+
             var populateSidebar = function (boards) {
                 sidebarCtrl.boards = boards;
                 sidebarCtrl.error = false;
@@ -35,79 +35,8 @@
             };
 
             var initialiseSidebar = function () {
-                console.log('sidebar boards');
-                console.log(sidebarCtrl.boards);
                 sidebarCtrl.hashData = StateService.getHashData();
-                console.log(sidebarCtrl.hashData);
-                var state = StateService.getState();
-                if (state.tag) {
-                    if (sidebarCtrl.hashData[state.tag].is_board) {
-                        sidebarCtrl.currentBoard = sidebarCtrl.boards[state.tag];
-                        sidebarCtrl.currentBoard.selected = true;
-                    } else {
-                        sidebarCtrl.currentBoard = sidebarCtrl.boards[sidebarCtrl.hashData[state.tag].board_tag];
-                        sidebarCtrl.currentBoard.selected = true;
-                    }
-                }
-            };
-
-            sidebarCtrl.displayHierarchy = {};
-            sidebarCtrl.displayHierarchy['sports'] = {
-                name: 'Sports',
-                prefix: 'sports',
-                selected: false
-            };
-            sidebarCtrl.displayHierarchy['iit'] = {
-                name: 'IITs',
-                prefix: 'iit',
-                selected: false
-            };
-            sidebarCtrl.displayHierarchy['day'] = {
-                name: 'Days',
-                prefix: 'day',
-                selected: false
-            };
-
-
-            sidebarCtrl.removeSelectBoard = function () {
-                sidebarCtrl.currentBoard.selected = false;
-            };
-
-            sidebarCtrl.updateCurrentBoardId = function (boardId) {
-                sidebarCtrl.currentBoardId = boardId;
-            };
-
-            sidebarCtrl.openSelectBoard = function (board) {
-                if (board == sidebarCtrl.currentBoard) {
-                    if (board.selected) {
-                        // board.selected = false;
-                    }
-                    else {
-                        board.selected = true;
-                    }
-                }
-                else {
-                    sidebarCtrl.currentBoard.selected = false;
-                    board.selected = true;
-                }
-                sidebarCtrl.currentBoard = board;
-            };
-
-            sidebarCtrl.isBoardCurrent = function (board) {
-                return sidebarCtrl.currentBoard == board;
-            };
-
-            sidebarCtrl.isHomeCurrent = function () {
-                return ($state.current.name == 'home') || ($state.current.name == 'home.all');
-            };
-
-            sidebarCtrl.isBoardSelected = function (board) {
-                return board.selected;
-            };
-
-            sidebarCtrl.isCornerSelected = function (corner) {
-                var state = StateService.getState();
-                return corner.tag == state.tag;
+                sidebarCtrl.updateSidebarSelection();
             };
 
 
@@ -122,12 +51,106 @@
                 );
             };
 
-            //Initilise all data bound vars
+            sidebarCtrl.updateSidebarSelection = function () {
+                if(($state.current.name === "home.all") || ($state.current.name === "home")) {
+                    sidebarCtrl.currentMenu = 'home';
+                    sidebarCtrl.currentSubMenu = '';
+                    return;
+                } else {
+                    var state = StateService.getState();
+                    if (state.tag) {
+                        if(state.tag.indexOf('-') > -1) {
+                            var prefix = state.tag.split('-')[0];
+                            if(prefix == 'interIIT') {
+                                sidebarCtrl.updateCurrentMenu(state.tag);
+                                return;
+                            } else {
+                                sidebarCtrl.currentMenu = state.tag.split('-')[0];
+                                sidebarCtrl.currentSubMenu = state.tag;
+                                return;
+                            }
+                        } else {
+                            sidebarCtrl.currentMenu = 'more';
+                            sidebarCtrl.currentSubMenu = state.tag;
+                            return;
+                        }
+                    }
+                }
+                sidebarCtrl.currentMenu = '';
+                sidebarCtrl.currentSubMenu = '';
+            };
+
+            sidebarCtrl.updateCurrentMenu = function (newMenu) {
+                console.log('UpdateCurrentMenu');
+                sidebarCtrl.currentMenu = newMenu;
+            };
+
+            sidebarCtrl.isCurrentMenu = function(menu) {
+                return sidebarCtrl.currentMenu == menu;
+            };
+
+            sidebarCtrl.updateCurrentSubMenu = function (newSubMenu) {
+                console.log('updateSubMenu');
+                sidebarCtrl.currentSubMenu = newSubMenu;
+            };
+
+            sidebarCtrl.isCurrentSubMenu = function(subMenu) {
+                return sidebarCtrl.currentSubMenu == subMenu;
+            };
+
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                console.log('StateChange');
+                $state.current= toState;
+                sidebarCtrl.updateSidebarSelection();
+            });
+
+            // Initialise all data bound vars
+            sidebarCtrl.displayHierarchy = [];
+            sidebarCtrl.displayHierarchy[0] = {
+                name: 'Sports',
+                subtitle: 'Men',
+                prefix: 'men',
+                selected: false
+            };
+            sidebarCtrl.displayHierarchy[1] = {
+                name: 'Sports',
+                subtitle: 'Women',
+                prefix: 'women',
+                selected: false
+            };
+            sidebarCtrl.displayHierarchy[2] = {
+                name: 'IITs',
+                prefix: 'iit',
+                selected: false
+            };
+            sidebarCtrl.displayHierarchy[3] = {
+                name: 'Days',
+                prefix: 'day',
+                selected: false
+            };
             sidebarCtrl.boards = [];
             sidebarCtrl.error = false;
             sidebarCtrl.errorMsg = "";
 
+            sidebarCtrl.currentMenu = 'home';
+            sidebarCtrl.currentSubMenu = '';
 
             loadSidebar();
         }]);
+
+    app.filter('removeTextInBrackets', function () {
+        return function(text) {
+            if(text) {
+                if((text.indexOf('(')>-1)&&(text.indexOf(')')>-1)) {
+                    var start = text.indexOf('(');
+                    var end = text.indexOf(')');
+                    return text.substring(0, start) + text.substring(end+1, text.length);
+                } else {
+                    return text;
+                }
+            } else {
+                return '';
+            }
+        };
+    });
 })();
