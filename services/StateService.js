@@ -14,15 +14,26 @@
 
             var stateService = {};
 
+            stateService.startLoading = function(){
+                $rootScope.$emit('vnbLoading', true);
+            };
+
+            stateService.stopLoading = function(){
+                $rootScope.$emit('vnbLoading', false);
+            };
+
             var fetchUserData = function () {
                 var deferred = $q.defer();
                 VnbRestangular.setJsonp(false);
+                stateService.startLoading();
                 VnbRestangular.all('users').get('index').then(
                     function (data) {
+                        stateService.stopLoading();
                         userDetails = data;
                         deferred.resolve(data);
                     },
                     function (err) {
+                        stateService.stopLoading();
                         deferred.reject(err);
                     }
                 );
@@ -52,14 +63,6 @@
                 }
                 deferred.resolve(data);
                 $rootScope.$emit('VNB_HASH_DATA', hashData);
-            };
-
-            stateService.startLoading = function(){
-                $rootScope.emit('vnbLoading', true);
-            };
-
-            stateService.stopLoading = function(){
-                $rootScope.emit('vnbLoading', false);
             };
 
             stateService.getHashData = function () {
@@ -94,23 +97,22 @@
 
             stateService.fbLogin = function () {
                 var deferred = $q.defer();
-                console.log('entered StateService.fbLogin()');
                 if (FB_LOADED) {
-                    console.log('fb-loaded = true');
                     FB.getLoginStatus(function (response) {
                         if (response.status === "connected") {
-                            console.log('fb-connected');
                             deferred.resolve();
                             $(document).trigger('FB_LOGGED_IN');
                             stateService.getUserData();
                         } else {
-                            console.log('fb-loggin in');
+                            stateService.startLoading();
                             FB.login(function (result) {
+                                stateService.stopLoading();
                                 if (result.authResponse) {
                                     deferred.resolve();
                                     $(document).trigger('FB_LOGGED_IN');
                                     stateService.getUserData(true);
                                 } else {
+                                    //TODO: show toast
                                     deferred.reject('could not login');
                                 }
                             }, {scope: 'email'});
@@ -161,13 +163,15 @@
             };
 
             stateService.getSidebar = function () {
+                stateService.startLoading();
                 var request = VnbRestangular.all('boards').customGET('sidebar');
                 var deferred = $q.defer();
                 request.then(
                     function (data) {
                         generateHashData(data, deferred);
+                        stateService.stopLoading();
                     }, function (err) {
-                        console.log(err);
+                        stateService.stopLoading();
                         deferred.reject(err);
                     });
 

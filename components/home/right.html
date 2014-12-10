@@ -1,6 +1,7 @@
 <section ng-controller="ScheduleController as scheduleCtrl">
-    <md-card style="padding: 0px" ng-if="scheduleCtrl.notices.length">
-        <h2 class="schedule-heading">Schedule</h2>
+    <h2 class="pinned-heading" ng-if="mainCtrl.isDesktop">Schedule</h2>
+    <md-card style="padding: 0px" class="vnb-schedule"
+             ng-if="scheduleCtrl.notices.length">
         <md-divider></md-divider>
         <div
             layout="column" flex layout-fill
@@ -34,14 +35,5 @@
                 <!--</section>-->
             </md-content>
         </div>
-    </md-card>
-</section>
-<section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">
-    <md-card style="padding: 0px;" ng-if="pinnedNoticesCtrl.notices.length">
-        <h2 class="schedule-heading">Pinned</h2>
-        <section ng-repeat="notice in pinnedNoticesCtrl.notices">
-            <md-divider></md-divider>
-            <pinned-notice data="notice"></pinned-notice>
-        </section>
     </md-card>
 </section>

@@ -15,7 +15,7 @@
             }, $scope);
 
 
-            mainCtrl.loading = 1;
+            mainCtrl.loading = 0;
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {

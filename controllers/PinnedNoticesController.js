@@ -11,6 +11,9 @@
             var pinnedNoticesCtrl = this;
             function initialise() {
                 pinnedNoticesCtrl.notices = [];
+                pinnedNoticesCtrl.visibleNotices = [];
+                pinnedNoticesCtrl.canExpand = false;
+                pinnedNoticesCtrl.canCompress = false;
                 var state = StateService.getState();
 
                 if (state.tag) {
@@ -23,10 +26,32 @@
                     .customGET('pinned', {tag: tag})
                     .then(function(data){
                         pinnedNoticesCtrl.notices = data.Notice;
+                        pinnedNoticesCtrl.compress();
                     }, function(err){
                         console.log(err);
                     });
             }
+
+            pinnedNoticesCtrl.compress = function(){
+                pinnedNoticesCtrl.visibleNotices = [];
+                if(pinnedNoticesCtrl.notices.length>0){
+                    pinnedNoticesCtrl.visibleNotices.push(
+                        pinnedNoticesCtrl.notices[0]
+                    );
+                }
+                if(pinnedNoticesCtrl.notices.length>1){
+                    pinnedNoticesCtrl.canExpand = true;
+                }
+                pinnedNoticesCtrl.canCompress = false;
+            };
+
+            pinnedNoticesCtrl.expand = function(){
+                pinnedNoticesCtrl.visibleNotices = pinnedNoticesCtrl.notices;
+                pinnedNoticesCtrl.canExpand = false;
+                if(pinnedNoticesCtrl.notices.length>1){
+                    pinnedNoticesCtrl.canCompress = true;
+                }
+            };
 
             initialise();
         }

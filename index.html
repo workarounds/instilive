@@ -4,7 +4,7 @@
 <head>
     <title>Instlive</title>
     <meta name="description" content="The omnipresent virtual notice board for the campus.
-    Know what's going on in the campus. Currently featuring updates for Inter IIT" />
+    Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Instilive">
@@ -24,14 +24,14 @@
 
     <!-- Open Graph data -->
     <meta property="og:title" content="Instilive"/>
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://www.instilive.com" />
-    <meta property="og:image" content="" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://www.instilive.com"/>
+    <meta property="og:image" content=""/>
     <meta property="og:description" content="The omnipresent virtual notice board for the campus.
-    Know what's going on in the campus. Currently featuring updates for Inter IIT" />
-    <meta property="og:site_name" content="Instilive" />
-    <meta property="fb:admins" content="100007193532033" />
-    <meta property="fb:admins" content="100001227876276" />
+    Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
+    <meta property="og:site_name" content="Instilive"/>
+    <meta property="fb:admins" content="100007193532033"/>
+    <meta property="fb:admins" content="100001227876276"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
@@ -48,8 +48,10 @@
         <md-sidenav class="md-sidenav-left md-whiteframe-z1"
                     md-component-id="left"
                     md-is-locked-open="$media('md')">
-            <md-toolbar class="md-theme-indigo" layout="row" layout-align="start center">
-                <img src="/images/logo.png" alt="instilive" class="vnb-logo"/>
+            <md-toolbar class="md-theme-indigo" layout="row"
+                        layout-align="start center">
+                <img src="/images/logo.png" alt="instilive"
+                     class="vnb-logo"/>
             </md-toolbar>
             <md-content
                 ng-controller="SidebarController as sidebarCtrl">
@@ -62,11 +64,11 @@
                     Home
                 </button>
                 <button ng-repeat="tag in sidebarCtrl.hash"
-                    class="menu-item menu-title md-menu-item"
-                    ng-click="sidebarCtrl.removeSelectBoard()"
-                    md-highlight="sidebarCtrl.isHomeCurrent()"
-                    ui-sref="home.all"
-                    md-ink-ripple="#bbb">
+                        class="menu-item menu-title md-menu-item"
+                        ng-click="sidebarCtrl.removeSelectBoard()"
+                        md-highlight="sidebarCtrl.isHomeCurrent()"
+                        ui-sref="home.all"
+                        md-ink-ripple="#bbb">
                     Home
                 </button>
                 <div ng-repeat="board in sidebarCtrl.boards">
@@ -92,18 +94,19 @@
             </md-content>
             <section layout="row" flex layout-align="start end">
                 <section layout="row" flex layout-align="center center">
-                    <md-button md-primary ng-click="mainCtrl.login()" flex ng-if="!mainCtrl.user">
+                    <md-button md-primary ng-click="mainCtrl.login()"
+                               flex ng-if="!mainCtrl.user">
                         Login
                     </md-button>
-                    <span ng-if="mainCtrl.user" ng-bind="'Logged in as:'+ mainCtrl.user.name"></span>
+                    <span ng-if="mainCtrl.user"
+                          ng-bind="'Logged in as:'+ mainCtrl.user.name"></span>
                 </section>
             </section>
         </md-sidenav>
         <section layout="column" flex>
-            <section flex>
-                <md-progress-linear ng-show="mainCtrl.loading > 0"
-                    md-mode="indeterminate"></md-progress-linear>
-            </section>
+            <md-progress-linear class="vnb-progress-bar"
+                ng-if="mainCtrl.loading > 0"
+                md-mode="indeterminate"></md-progress-linear>
             <section ui-view="main" flex layout="row"></section>
         </section>
     </section>
