@@ -26,6 +26,7 @@
                 },
                 function() {
                     console.log();
+                    StateService.showToast('Network error. Please check your connection');
                     noticesCtrl.dataLoaded = true;
                 }
             );
