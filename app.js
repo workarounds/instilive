@@ -64,8 +64,9 @@
                 }
             })
             ;
-        $urlRouterProvider.when('/home', '/home/all');
-        $urlRouterProvider.when('/home/', '/home/all');
+        $urlRouterProvider.when('/home', '/interIIT/all');
+        $urlRouterProvider.when('/home/', '/interIIT/all');
+        $urlRouterProvider.when('/home/all', '/interIIT/all');
         $stateProvider
             .state('home', {
                 url: '/home',
