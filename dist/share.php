@@ -1,6 +1,6 @@
 <?php
-$front_root = 'http://hashtalk.in/#/';
-$back_root = 'http://workaround.in/vnb/api';
+$front_root = 'http://instilive.com/#/';
+$back_root = 'http://workarounds.in/vnb/api/';
 
 
 function getData($type, $param) {
@@ -60,31 +60,28 @@ if(isset($_GET['notice'])) {
 
 <!-- Twitter Card data -->
 <meta name="twitter:card" content="summary_card">
-<meta name="twitter:site" content="@publisher_handle">
+<meta name="twitter:site" content="@instilive">
 <meta name="twitter:title" content=<?php echo '"'.$result['title'].'"'?>>
 <meta name="twitter:description" content=<?php echo '"'.$result['description'].'"'?>>
-<meta name="twitter:creator" content="@author_handle">
+<meta name="twitter:creator" content="@instilive">
 <!-- Twitter summary card with large image must be at least 280x150px -->
 <meta name="twitter:image:src" content=<?php echo '"'.$result['image_url'].'"'?>>
 
 <!-- Open Graph data -->
 <meta property="og:title" content=<?php echo '"'.$result['title'].'"'?> />
 <meta property="og:type" content="article" />
-<meta property="og:url" content=<?php echo '"'.$front_root.'"'?> />
+<meta property="og:url" content=<?php echo 'http://instilive.com/share.php?notice='.$notice_id ?> />
 <meta property="og:image" content=<?php echo '"'.$result['image_url'].'"'?> />
 <meta property="og:description" content=<?php echo '"'.$result['description'].'"'?> />
 <meta property="og:site_name" content=<?php echo '"' .$name.'"' ?> />
 <meta property="article:published_time" content=<?php echo '"' .$result['created'].'"' ?> />
 <meta property="article:modified_time" content=<?php echo '"' .$result['modified'].'"' ?> />
-<meta property="fb:admins" content="100007193532033" />
-<meta property="fb:admins" content="100001227876276" />
 </head>
 
 <body>
-    <?php print_r($result);?>
     <script type="text/javascript">
         (function(){
-            //window.location.href = '<?php echo($front_root.'home/direct/'.$notice_id); ?>';
+            window.location.href = '<?php echo($front_root.'home/direct/'.$notice_id); ?>';
         })();
     </script>
 </body>
