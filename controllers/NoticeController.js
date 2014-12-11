@@ -162,7 +162,7 @@
                     if($scope.existsInEditPositions(corners[i])) {
                         $scope.pinCorners.push(corners[i]);
                     }
-                    if(corners[i].tag = $scope.currentStateTag){
+                    if(corners[i].tag == $scope.currentStateTag){
                         $scope.currentStateCorner = corners[i];
                     }
                 }
