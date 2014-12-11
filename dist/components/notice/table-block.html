@@ -1,11 +1,11 @@
-<table class="vnb-notice-table">
-    <tr layout="row" layout-align="space-around start" flex
+<table class="vnb-notice-table"
+       ng-class="{'vnb-horizontal': block.content.row_layout, 'vnb-vertical': block.content.column_layout, 'vnb-heavy': isTableHeavy(block.content)}"
+       flex>
+    <tr
         ng-repeat="row in $parent.$parent.range(0,block.content.rows -1)">
-        <td layout="column"
+        <td
             ng-repeat="col in $parent.$parent.$parent.range(0, block.content.columns -1)">
-            <span class="vnb-notice-table-cell">
                 {{block.content.table[col][row]}}
-            </span>
         </td>
     </tr>
 </table>

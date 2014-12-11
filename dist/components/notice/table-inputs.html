@@ -23,6 +23,15 @@
         </div>
     </div>
 
+    <div>
+        <md-checkbox ng-model="data.content.row_layout" aria-label="Checkbox row_layout">
+            Row Layout
+        </md-checkbox>
+        <md-checkbox ng-model="data.content.column_layout" aria-label="Checkbox column_layout">
+            Column Layout
+        </md-checkbox>
+    </div>
+
     <section layout="row">
         <section layout="column" ng-repeat="col in createEventCtrl.range(0, data.content.columns -1)" flex>
             <section layout="row" ng-repeat="row in createEventCtrl.range(0, data.content.rows -1)" flex>

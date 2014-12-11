@@ -4,7 +4,7 @@
             md-swipe-right="mainCtrl.toggleLeftSidebar()" ng-if="mainCtrl.isDesktop"
             xmlns="http://www.w3.org/1999/html">
     <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
-                ng-class="tagsCtrl.header.image? 'md-tall': ''">
+                ng-class="{'md-tall': tagsCtrl.header.image}">
         <section layout="row"
                  flex layout-align="start end"
                  style="padding-bottom: 19px; z-index: 20" back-img="{{tagsCtrl.header.image.link}}">
@@ -19,14 +19,8 @@
 
             </section>
             <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
-                <span>
-                    {{tagsCtrl.board}}
-                </span>
                 <span ng-if="tagsCtrl.home">
                     Home
-                </span>
-                <span ng-if="tagsCtrl.board && tagsCtrl.corner" style="padding: 0px 5px">
-                    <i class="fa fa-caret-right"></i>
                 </span>
                 <span>
                     {{tagsCtrl.corner}}
@@ -90,9 +84,7 @@
                     <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
                 </section>
                 <section layout="row" flex layout-align="center center" style="height: 400px;"
-                         ng-hide="noticesCtrl.notices.length">
-                    <i class="fa fa-exclamation-circle" style="color: #ccc; font-size: 144px"></i>
-
+                         ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
                     <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
                 </section>
             </div>
@@ -126,14 +118,8 @@
 
             </section>
             <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
-                <span>
-                    {{tagsCtrl.board}}
-                </span>
                 <span ng-if="tagsCtrl.home">
                     Home
-                </span>
-                <span ng-if="tagsCtrl.board && tagsCtrl.corner" style="padding: 0px 5px">
-                    <i class="fa fa-caret-right"></i>
                 </span>
                 <span>
                     {{tagsCtrl.corner}}
@@ -163,10 +149,10 @@
 
     <md-content class="background-container">
         <md-tabs md-selected="data.selectedIndex">
-            <md-tab id="tab1" aria-controls="tab1-content">
+            <md-tab id="tab1" aria-controls="tab1-content" md-ink-ripple="#D1E8FF">
                 New Posts
             </md-tab>
-            <md-tab id="tab2" aria-controls="tab2-content" ng-disabled="data.secondLocked">
+            <md-tab id="tab2" aria-controls="tab2-content" ng-disabled="data.secondLocked" md-ink-ripple="#FFF">
                 Schedule
             </md-tab>
         </md-tabs>
