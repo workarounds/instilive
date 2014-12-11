@@ -100,8 +100,7 @@
                     $mdToast.simple()
                         .content(content)
                         .position('bottom right')
-                        .hideDelay(5000)
-                        .action('OK')
+                        .hideDelay(3000)
                 );
             };
 

@@ -8,6 +8,7 @@
             //intialize
             var noticesCtrl = this;
             noticesCtrl.notices = [];
+            noticesCtrl.dataLoaded = false;
 
             // check for redirect
             var currentState = StateService.getState();
@@ -21,8 +22,12 @@
                 function (data) {
                     var notices = data.Notice;
                     noticesCtrl.notices = notices;
+                    noticesCtrl.dataLoaded = true;
                 },
-                console.log
+                function() {
+                    console.log();
+                    noticesCtrl.dataLoaded = true;
+                }
             );
 
             noticesCtrl.loadMore = function () {

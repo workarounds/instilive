@@ -124,10 +124,10 @@
             </md-content>
         </md-sidenav>
         <section layout="column" flex>
+            <section ui-view="main" flex layout="row"></section>
             <md-progress-linear class="vnb-progress-bar"
                                 ng-if="mainCtrl.loading > 0"
                                 md-mode="indeterminate"></md-progress-linear>
-            <section ui-view="main" flex layout="row"></section>
         </section>
     </section>
 </div>

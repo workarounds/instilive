@@ -22,7 +22,7 @@
                     createEventCtrl.uploading = false;
 
                     createEventCtrl.corners = [];
-                    createEventCtrl.format = "dd/MM/yyyy";
+                    createEventCtrl.format = "dd.MM.yyyy";
 
                     if (!noticeData) {
                         var emptyNotice = {

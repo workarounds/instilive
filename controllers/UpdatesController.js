@@ -75,8 +75,9 @@
             }
 
 
-            updatesCtrl.isCurrentNotice = function (tempNotice) {
-                return tempNotice.id == updatesCtrl.notice.id;
+            updatesCtrl.highlightNotice = function (tempNotice) {
+                var current =  tempNotice.id == updatesCtrl.notice.id;
+                return current && (updatesCtrl.updates.length>1);
             };
         }
     ]);

@@ -53,11 +53,16 @@
                     posFormCtrl.postTo = 'edit';
 
                     posFormCtrl.position = emptyPosition;
+                    StateService.startLoading();
                     //Request for position data
                     VnbRestangular.all('positions')
                         .customPOST({id:positionData.id}, 'view')
                         .then(function(data){
+                            StateService.stopLoading();
                             posFormCtrl.position = data;
+                        }, function(){
+                            StateService.stopLoading();
+                            StateService.showToast('Sorry some error occurred. Please try again');
                         });
 
                     posFormCtrl.loading = false;
