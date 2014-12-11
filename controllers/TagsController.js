@@ -20,7 +20,7 @@
                 if(($state.current.name == 'home.all') || ($state.current.name == 'home.all')) {
                     tagsCtrl.header = {
                         image: {
-                            link: '/images/home.png'
+                            link: 'http://i.imgur.com/0fPX4xi.png'
                         }
                     };
                     tagsCtrl.home = true;

@@ -299,15 +299,9 @@
             /* End Like Functions */
 
             $scope.isTableHeavy = function(table){
-                if(table.row_layout){
-                    return table.rows >= 3;
-                }
-                else if(table.column_layout){
-                    return table.columns >=3;
-                }
-                else{
-                    return false;
-                }
+                var column_heavy = (table.column_layout && (table.rows >= 3));
+                var row_heavy = (table.row_layout && (table.columns >= 3));
+                return column_heavy || row_heavy;
             };
 
             /* Functions to handle comments */
