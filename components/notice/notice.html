@@ -122,13 +122,13 @@
                 <md-list layout="row">
                     <md-item>
                         <md-button ng-class="{highlighted: user.likes.indexOf(notice.id) > -1}"
-                            class="vnb-button-round" ng-click="postLike()">
+                            class="vnb-button-round" ng-click="postLike()" aria-label="heart button">
                             <i class="fa fa-heart"></i>
                         </md-button>
                     </md-item>
                     <md-item>
                         <md-button class="vnb-button-round"
-                                   ng-click="copyLink()">
+                                   ng-click="copyLink()" aria-label="link button">
                             <i class="fa fa-link"></i>
                             <md-tooltip>
                                 Link
@@ -136,7 +136,7 @@
                         </md-button>
                     </md-item>
                     <md-item>
-                        <md-button class="vnb-button-round" ng-click="share()">
+                        <md-button class="vnb-button-round" ng-click="share()" aria-label="share button">
                             <i class="fa fa-share"></i>
                             <md-tooltip>
                                 Share
@@ -150,7 +150,7 @@
                      flex layout-align="center center">
                 <button ng-click="showCommentBox = true;"
                         class="fake-comment-box"
-                       type="text" flex>Comment</button>
+                       type="text" flex>What do you think?</button>
             </section>
         </section>
         <section ng-show="showCopyBox">
