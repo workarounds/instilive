@@ -41,7 +41,8 @@
                         templateUrl: 'components/manage/manage-aliases.html',
                         controller: 'ManageController as manageCtrl'
                     }
-                }
+                },
+                resolve: commonResolve
             })
             .state('create', {
                 url: '/create',
@@ -55,6 +56,11 @@
                     }
                 },
                 resolve: {
+                    setStateFunc: ['StateService', '$stateParams',
+                        function (StateService, $stateParams) {
+                            return StateService.setState($stateParams);
+                        }
+                    ],
                     noticeData: function () {
                         return null;
                     },

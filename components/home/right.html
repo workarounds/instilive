@@ -26,10 +26,9 @@
                     <md-list layout="column" class="schedule-list">
                         <md-item class="event-item"
                                  ng-repeat="event in day.events"
-                                 layout="column">
+                                 layout="column" ng-click="scheduleCtrl.showEvent(event)">
                             <div>
-                            <span class="event-title vnb-text-link"
-                                ng-click="scheduleCtrl.showEvent(event)">
+                            <span class="event-title">
                                 {{event.data.title}}
                             </span>
                             </div>

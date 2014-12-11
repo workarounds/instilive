@@ -70,6 +70,11 @@
                                 return;
                             }
                         } else {
+                            if(state.tag == 'interIIT') {
+                                sidebarCtrl.currentMenu = 'home';
+                                sidebarCtrl.currentSubMenu = '';
+                                return;
+                            }
                             sidebarCtrl.currentMenu = 'more';
                             sidebarCtrl.currentSubMenu = state.tag;
                             return;

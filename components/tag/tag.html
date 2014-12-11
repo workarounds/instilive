@@ -87,6 +87,11 @@
                          ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
                     <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
                 </section>
+                <section layout="row" flex layout-align="center center" style="height: 400px;"
+                         ng-hide="noticesCtrl.notices.length || noticesCtrl.dataLoaded">
+
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </section>
             </div>
         </section>
         <md-sidenav class="md-sidenav-right"
@@ -179,10 +184,14 @@
                             <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
                         </section>
                         <section layout="row" flex layout-align="center center" style="height: 400px;"
-                                 ng-hide="noticesCtrl.notices.length">
-                            <i class="fa fa-exclamation-circle" style="color: #ccc; font-size: 144px"></i>
+                                 ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
 
                             <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
+                        </section>
+                        <section layout="row" flex layout-align="center center" style="height: 400px;"
+                                 ng-hide="noticesCtrl.notices.length || noticesCtrl.dataLoaded">
+
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                         </section>
                     </div>
                 </section>

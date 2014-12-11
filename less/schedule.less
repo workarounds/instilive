@@ -25,12 +25,15 @@
 .schedule-list{
     padding-top:0px;
 }
-.schedule-list md-item {
-    padding-top: 4px;
+
+.event-item {
+    padding: 4px 16px;
+    cursor: pointer;
+
 }
 
-.schedule-list md-item:last-child {
-    padding-bottom: 4px;
+.event-item:hover,.event-item:active {
+    background: #F7F7F7;
 }
 
 .event-item .event-item-left{
@@ -39,7 +42,6 @@
 .event-item .event-time{
     color: #999;
     font-size: small;
-    margin-left: 16px;
     font-weight: 300;
     line-height: 18px;
 }
@@ -50,8 +52,6 @@
     line-height: 18px;
 }
 .event-item .event-title{
-    padding-left: 16px;
-    padding-right: 16px;
     line-height: 20px;
     font-weight: normal;
     font-size: 14px;
