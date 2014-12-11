@@ -298,6 +298,18 @@
             };
             /* End Like Functions */
 
+            $scope.isTableHeavy = function(table){
+                if(table.row_layout){
+                    return table.rows >= 3;
+                }
+                else if(table.column_layout){
+                    return table.columns >=3;
+                }
+                else{
+                    return false;
+                }
+            };
+
             /* Functions to handle comments */
             $scope.postComment = function () {
                 if ($scope.comment !== '') {
