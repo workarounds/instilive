@@ -14,7 +14,7 @@
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary_card">
-    <meta name="twitter:site" content="@publisher_handle">
+    <meta name="twitter:site" content="@instilive">
     <meta name="twitter:title" content="Instilive">
     <meta name="twitter:description" content="The omnipresent virtual notice board for the campus.
     Know what's going on in the campus. Currently featuring updates for Inter IIT">
@@ -30,8 +30,6 @@
     <meta property="og:description" content="The omnipresent virtual notice board for the campus.
     Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
     <meta property="og:site_name" content="Instilive"/>
-    <meta property="fb:admins" content="100007193532033"/>
-    <meta property="fb:admins" content="100001227876276"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
@@ -74,8 +72,9 @@
                             md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
                             ng-click="sidebarCtrl.toggleCurrentMenu(corner.tag)"
                             ng-if="corner.tag.indexOf('interIIT-') > -1"
-                            md-ink-ripple="#bbb">
-                            <span vnb-link="corner.tag" ng-bind="corner.name"></span>
+                            md-ink-ripple="#bbb"
+                            vnb-link="corner.tag"
+                            ng-bind="corner.name">
                         </button>
                     </div>
                 </div>
@@ -86,7 +85,8 @@
                         ng-click="sidebarCtrl.toggleCurrentMenu(parent.prefix)"
                         md-highlight="sidebarCtrl.isCurrentMenu(parent.prefix)"
                         md-ink-ripple="#bbb">
-                        <span ng-bind="parent.name"></span><span class="vnb-sidebar-small" ng-if="parent.subtitle" ng-bind="parent.subtitle"></span>
+                        <span ng-bind="parent.name"></span>
+                        <span class="vnb-sidebar-small" ng-if="parent.subtitle" ng-bind="parent.subtitle"></span>
                     </button>
 
                     <a class="menu-item menu-sub-item md-menu-item"
@@ -94,14 +94,14 @@
                        ng-repeat="corner in sidebarCtrl.hashData"
                        ng-click="mainCtrl.closeLeftSidebar()"
                        vnb-link="corner.tag"
-                       ng-if="(corner.tag.indexOf(parent.prefix+'-') > -1) && !corner.is_board"
+                       ng-if="(corner.tag.indexOf(parent.prefix+'-') == 0) && !corner.is_board"
                        md-highlight="sidebarCtrl.isCurrentSubMenu(corner.tag)"
                        md-ink-ripple="#bbb">
                         <span ng-bind="corner.name | removeTextInBrackets"></span>
                     </a>
                 </div>
 
-                <div>
+                <!-- div>
                     <button
                         class="menu-item menu-title md-menu-item"
                         ng-click="sidebarCtrl.toggleCurrentMenu('more')"
@@ -120,7 +120,7 @@
                        md-ink-ripple="#bbb">
                         <span ng-bind="corner.name"></span>
                     </a>
-                </div>
+                </div -->
             </md-content>
         </md-sidenav>
         <section layout="column" flex>
