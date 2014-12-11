@@ -101,6 +101,7 @@
                         .content(content)
                         .position('bottom right')
                         .hideDelay(3000)
+                        .action('OK')
                 );
             };
 
