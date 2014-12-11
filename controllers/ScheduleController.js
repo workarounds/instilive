@@ -12,7 +12,7 @@
 
     function isNextDay(d){
         var now = new Date();
-        return (now.toDateString() <= d.toDateString());
+        return (toDateId(now) <= toDateId(d));
     }
 
     function toDateId(d){
@@ -32,6 +32,7 @@
             scheduleCtrl.eventDays = {};
             scheduleCtrl.nextDaySet = false;
             scheduleCtrl.showPrevious = false;
+            scheduleCtrl.previousExists = false;
 
             function generateEvents() {
                 var notices = scheduleCtrl.notices;
@@ -55,6 +56,9 @@
                         if(isNextDay(start)){
                             eventDays[toDateId(start)].anchor = 'vnb-schedule-next-day';
                             scheduleCtrl.nextDaySet = true;
+                        }
+                        else{
+                            scheduleCtrl.previousExists = true;
                         }
                     }
                 }

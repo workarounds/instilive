@@ -3,7 +3,7 @@
          layout-align="center start"
          ng-repeat="update in updatesCtrl.updates">
         <notice data="update" hide-update="true" flex
-                ng-class="{'vnb-current-notice': updatesCtrl.isCurrentNotice(update)}">
+                ng-class="{'vnb-current-notice': updatesCtrl.highlightNotice(update)}">
 
         </notice>
     </div>
