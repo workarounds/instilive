@@ -202,7 +202,8 @@
 
         <ng-switch on="data.selectedIndex" class="tabpanel-container"
                    layout="row" layout-align="center start" flex>
-            <div role="tabpanel" id="tab1-content"
+            <div layout="row" layout-align="center start"
+                role="tabpanel" id="tab1-content"
                  aria-labelledby="tab1" ng-switch-when="0"
                  md-swipe-left="next()"
                  md-swipe-right="previous()"
@@ -213,7 +214,8 @@
                         ng-include="'components/tag/coming_up.html'"></section>
                 </section>
             </div>
-            <div role="tabpanel" id="tab2-content"
+            <div layout="row" layout-align="center start"
+                role="tabpanel" id="tab2-content"
                  aria-labelledby="tab2" ng-switch-when="1"
                  md-swipe-left="next()"
                  md-swipe-right="previous()"
@@ -224,7 +226,7 @@
                         ng-include="'components/tag/whats_new.html'"></section>
                 </section>
             </div>
-            <div flex layout="row" layout-align="center start"
+            <div layout="row" layout-align="center start"
                  role="tabpanel" id="tab3-content"
                  aria-labelledby="tab3"
                  ng-switch-when="2" md-swipe-left="next()"
