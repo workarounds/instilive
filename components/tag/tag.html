@@ -55,7 +55,8 @@
 
     <section layout="row" flex layout-align="center start"
              class="background-container">
-        <section layout="column" flex style="max-width:620px" >
+        <section layout="column" flex
+                 style="max-width:620px; margin-left: 8px;" >
             <section layout="row"
                      layout-align="center center">
                 <md-button class="vnb-tab vnb-tab-left"
@@ -93,10 +94,12 @@
                 </ng-switch>
             </section>
         </section>
-        <section layout="column">
+        <section layout="column" style="margin-right:8px;">
             <md-content class="background-container">
                 <section ui-view="right"
-                         style="margin-top: 12px; max-width: 320px"></section>
+                         style="margin-top: 12px; max-width: 320px">
+
+                         </section>
             </md-content>
         </section>
     </section>

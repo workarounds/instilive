@@ -10,13 +10,13 @@
             <i class="fa fa-caret-up"></i> previous
         </span>
     </section>
-    <md-card style="padding: 0px" class="vnb-schedule"
+    <section style="padding: 0px" class="vnb-schedule"
              ng-if="scheduleCtrl.notices.length">
         <md-divider></md-divider>
         <div
             layout="column" flex layout-fill
             style="position: relative; overflow: hidden">
-            <md-content style="width: 100%; max-height: 640px">
+            <md-content style="width: 100%; max-height: 640px;">
                 <section ng-repeat="day in scheduleCtrl.eventDays"
                          id="{{day.anchor}}" ng-show="scheduleCtrl.showPrevious || day.next">
                     <md-subheader class="schedule-day">
@@ -47,5 +47,5 @@
                 <!--</section>-->
             </md-content>
         </div>
-    </md-card>
+    </section>
 </section>
