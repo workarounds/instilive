@@ -30,7 +30,7 @@
             md-mode="indeterminate"></md-progress-circular>
     </section>
     <!--list of notices-->
-    <notice ng-repeat="notice in noticesCtrl.notices" data="notice"
+    <notice ng-repeat="notice in noticesCtrl.notices | limitTo: noticesCtrl.limitTo" data="notice"
             hide-update="false">
 
     </notice>

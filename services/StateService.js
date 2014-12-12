@@ -303,10 +303,12 @@
 
                 var result;
                 var deferred = $q.defer();
+                result = deferred.promise;
                 if((state.tag == schedule.tag) && !force){
                     if(schedule.loading){
                         return schedule.request;
                     }
+                    console.log('here');
                     deferred.resolve(schedule.data);
                     return deferred.promise;
                 }

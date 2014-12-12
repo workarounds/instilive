@@ -35,6 +35,7 @@
             scheduleCtrl.showPrevious = false;
             scheduleCtrl.previousExists = false;
             scheduleCtrl.dataLoaded = false;
+            scheduleCtrl.limitTo = 10;
 
             function generateEvents() {
                 var notices = scheduleCtrl.notices;
@@ -71,9 +72,13 @@
             }
 
             function fillData(data){
+                console.log(data);
                 scheduleCtrl.notices = data.Notice;
                 generateEvents();
                 scheduleCtrl.dataLoaded = true;
+                setTimeout(function(){
+                    scheduleCtrl.limitTo = 20
+                }, 500);
             }
 
             function loadingFailed(){

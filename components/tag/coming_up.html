@@ -6,13 +6,11 @@
         <md-progress-circular
             md-mode="indeterminate"></md-progress-circular>
     </section>
-    <section ng-repeat="day in scheduleCtrl.eventDays">
-        <notice ng-repeat="event in day.events"
-                data="event" hide-update="false"
-            >
+    <notice ng-repeat="notice in scheduleCtrl.notices | limitTo:scheduleCtrl.limitTo"
+            data="notice" hide-update="false"
+        >
 
-        </notice>
-    </section>
+    </notice>
     <section layout="row" flex layout-align="center center"
              style="height: 400px;"
              ng-hide="(scheduleCtrl.notices.length) || !scheduleCtrl.dataLoaded">

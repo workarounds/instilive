@@ -10,6 +10,7 @@
             var noticesCtrl = this;
             noticesCtrl.notices = [];
             noticesCtrl.dataLoaded = false;
+            noticesCtrl.limitTo = 10;
 
             // check for redirect
             var currentState = StateService.getState();
@@ -18,9 +19,13 @@
             }
 
             function fillData(data){
+                console.log(data);
                 var notices = data.Notice;
                 noticesCtrl.notices = notices;
                 noticesCtrl.dataLoaded = true;
+                setTimeout(function(){
+                    noticesCtrl.limitTo = 20
+                }, 500);
             }
 
             function loadingFailded(){
