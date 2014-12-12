@@ -118,6 +118,39 @@ md-card{
     text-decoration: underline;
 }
 
+.md-button.vnb-tab{
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    border-left: 1px solid #777;
+    border-right: none;
+    margin: 16px 0px 0px 0px;
+    padding: 4px 16px;
+}
+
+.md-button.vnb-tab.vnb-tab-current{
+    background: lighten(#777, 5%) !important;
+    color: #fff;
+}
+
+.md-button.vnb-tab.vnb-tab-current:hover{
+    background: #777 !important;
+}
+
+.md-button.vnb-tab:hover{
+    background: lighten(#777, 40%) !important;
+}
+
+.md-button.vnb-tab-left{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.md-button.vnb-tab-right{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-right: 1px solid #777;
+}
+
 .vnb-progress-bar .md-container{
     top: 0;
 }

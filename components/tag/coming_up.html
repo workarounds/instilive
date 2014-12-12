@@ -1,0 +1,21 @@
+<div ng-controller="ScheduleController as scheduleCtrl">
+    <section ng-repeat="day in scheduleCtrl.eventDays">
+        <notice ng-repeat="event in day.events"
+                data="event" hide-update="false"
+            >
+
+        </notice>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="height: 400px;"
+             ng-hide="(scheduleCtrl.notices.length) || !scheduleCtrl.dataLoaded">
+        <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="height: 400px;"
+             ng-hide="(scheduleCtrl.notices.length) || scheduleCtrl.dataLoaded">
+
+        <md-progress-circular
+            md-mode="indeterminate"></md-progress-circular>
+    </section>
+</div>
