@@ -59,14 +59,15 @@
 
     <section layout="row" flex layout-align="center start"
              class="background-container">
-        <section layout="column" flex style="max-width:620px">
+        <section layout="column" flex
+                 style="max-width:620px; margin-left: 8px;" >
             <section layout="row"
                      layout-align="center center">
                 <md-button class="vnb-tab vnb-tab-left"
                            md-ink-ripple="#777"
                            id="dtab1" aria-controls="dtab1-content"
                            ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 0)}"
-                           ng-click="mainCtrl.selectedIndex = 0">
+                           ng-click="mainCtrl.changeTab(0)">
                     Coming up
                 </md-button>
                 <md-button class="vnb-tab vnb-tab-right"
@@ -74,8 +75,15 @@
                            id="dtab2" aria-controls="dtab2-content"
 
                            ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 1)}"
-                           ng-click="mainCtrl.selectedIndex = 1">
+                           ng-click="mainCtrl.changeTab(1)">
                     What's new
+                </md-button>
+                <md-button class="vnb-button-round"
+                           md-ink-ripple="#777"
+                           ng-click="mainCtrl.reloadData()"
+                           style="margin: 16px 8px 0px 8px"
+                    >
+                    <i class="fa fa-repeat"></i>
                 </md-button>
             </section>
             <section layout="row"
@@ -98,10 +106,12 @@
                 </ng-switch>
             </section>
         </section>
-        <section layout="column">
+        <section layout="column" style="margin-right:8px;">
             <md-content class="background-container">
                 <section ui-view="right"
-                         style="margin-top: 12px"></section>
+                         style="margin-top: 12px; max-width: 320px">
+
+                         </section>
             </md-content>
         </section>
     </section>

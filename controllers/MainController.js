@@ -69,7 +69,13 @@
                 }
             );
 
+            mainCtrl.changeTab = function(index){
+                mainCtrl.selectedIndex = index;
+            };
 
+            mainCtrl.reloadData = function(){
+                $scope.$broadcast('VnbReloadData');
+            };
 
             $scope.$on('userDataEvent', function (event, data) {
                 mainCtrl.user = data;

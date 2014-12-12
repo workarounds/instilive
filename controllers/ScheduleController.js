@@ -25,7 +25,8 @@
     app.controller('ScheduleController', [
         'StateService',
         'VnbModal',
-        function (StateService, VnbModal) {
+        '$scope',
+        function (StateService, VnbModal, $scope) {
             var scheduleCtrl = this;
 
             scheduleCtrl.notices = [];
@@ -69,17 +70,38 @@
                 }
             }
 
+            function fillData(data){
+                scheduleCtrl.notices = data.Notice;
+                generateEvents();
+                scheduleCtrl.dataLoaded = true;
+            }
+
+            function loadingFailed(){
+                console.log('error loading schedule');
+                scheduleCtrl.dataLoaded = true;
+                StateService.showToast('Could not load schedule');
+            }
+
             StateService.getSchedule().then(
                 function (data) {
-                    scheduleCtrl.notices = data.Notice;
-                    generateEvents();
-                    scheduleCtrl.dataLoaded = true;
+                    fillData(data);
                 },
-                function (err) {
-                    console.log(err);
-                    scheduleCtrl.dataLoaded = true;
+                function () {
+                    loadingFailed();
                 }
             );
+
+            $scope.$on('VnbReloadData', function(){
+                scheduleCtrl.dataLoaded = false;
+                StateService.getSchedule(false, false, true).then(
+                    function(data){
+                        fillData(data);
+                    },
+                    function(){
+                        loadingFailed();
+                    }
+                );
+            });
 
             scheduleCtrl.showEvent = function(event) {
                 var modalParams = {

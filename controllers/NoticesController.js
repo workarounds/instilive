@@ -4,7 +4,8 @@
     app.controller('NoticesController', [
         'StateService',
         '$state',
-        function (StateService, $state) {
+        '$scope',
+        function (StateService, $state, $scope) {
             //intialize
             var noticesCtrl = this;
             noticesCtrl.notices = [];
@@ -16,18 +17,26 @@
                 $state.go('home.direct', {notice: currentState.notice});
             }
 
+            function fillData(data){
+                var notices = data.Notice;
+                noticesCtrl.notices = notices;
+                noticesCtrl.dataLoaded = true;
+            }
+
+            function loadingFailded(){
+                console.log();
+                StateService.showToast('Network error. Please check your connection');
+                noticesCtrl.dataLoaded = true;
+            }
+
 
             //get the data
             StateService.getData().then(
                 function (data) {
-                    var notices = data.Notice;
-                    noticesCtrl.notices = notices;
-                    noticesCtrl.dataLoaded = true;
+                    fillData(data)
                 },
                 function() {
-                    console.log();
-                    StateService.showToast('Network error. Please check your connection');
-                    noticesCtrl.dataLoaded = true;
+                    loadingFailded();
                 }
             );
 
@@ -45,5 +54,17 @@
                     console.log
                 );
             };
+
+            $scope.$on('VnbReloadData', function(){
+                noticesCtrl.dataLoaded = false;
+                StateService.getData(false, false, true).then(
+                    function(data){
+                        fillData(data)
+                    },
+                    function(){
+                        loadingFailded();
+                    }
+                )
+            });
         }]);
 })();
