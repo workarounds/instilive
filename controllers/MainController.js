@@ -13,7 +13,7 @@
             var unregister = matchmedia.on('(min-width: 961px)', function(mediaQueryList){
                 mainCtrl.isDesktop = mediaQueryList.matches;
             }, $scope);
-            var defaultHeaderColor = '(33, 33, 33)';
+            var defaultHeaderColor = '(68, 68, 68)';
             mainCtrl.headerColor = defaultHeaderColor;
 
             mainCtrl.loading = 0;

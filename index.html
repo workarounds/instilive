@@ -3,15 +3,17 @@
 
 <head>
     <title>Instilive</title>
-    <meta name="description" content="The omnipresent virtual notice board for the campus.
-    Know what's going on in the campus. Currently featuring updates for Inter IIT"/>
+
+    <meta name="description" content="This is a small attempt to streamline the flow of information on campus.
+    The goal is to become an omnipresent virtual notice board for the campus. We hope it's a small start for a long way
+     to come. We are currently featuring updates (live?) for Inter IIT. Check them out."/>
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Instilive">
     <meta itemprop="description" content="This is a small attempt to streamline the flow of information on campus.
     The goal is to become an omnipresent virtual notice board for the campus. We hope it's a small start for a long way
      to come. We are currently featuring updates (live?) for Inter IIT. Check them out.">
-    <meta itemprop="image" content="http://i.imgur.com/2d1N1Rg.png?1">
+    <meta itemprop="image" content="http://i.imgur.com/KKB3Bb2.png">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary_card">
@@ -22,13 +24,13 @@
      to come. We are currently featuring updates (live?) for Inter IIT. Check them out">
     <meta name="twitter:creator" content="@instilive">
     <!-- Twitter summary card with large image must be at least 280x150px -->
-    <meta name="twitter:image:src" content="http://i.imgur.com/2d1N1Rg.png?1">
+    <meta name="twitter:image:src" content="http://i.imgur.com/KKB3Bb2.png">
 
     <!-- Open Graph data -->
     <meta property="og:title" content="Instilive"/>
     <meta property="og:type" content="article"/>
     <meta property="og:url" content="http://www.instilive.com"/>
-    <meta property="og:image" content="http://i.imgur.com/2d1N1Rg.png?1"/>
+    <meta property="og:image" content="http://i.imgur.com/KKB3Bb2.png"/>
     <meta property="og:description" content="This is a small attempt to streamline the flow of information on campus.
     The goal is to become an omnipresent virtual notice board for the campus. We hope it's a small start for a long way
     to come. We are currently featuring updates (live?) for Inter IIT. Check them out"/>
@@ -38,7 +40,7 @@
     <meta charset="utf-8">
     <link href="app.less" type="text/css" rel="stylesheet/less">
     <link
-        href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,100'
+        href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700,100'
         rel='stylesheet' type='text/css'>
 </head>
 
@@ -57,11 +59,11 @@
             <md-content
                 ng-controller="SidebarController as sidebarCtrl">
 
-                <div ng-click="sidebarCtrl.toggleCurrentMenu('home')">
+                <div ng-click="sidebarCtrl.updateCurrentMenu('home')">
                     <button
                         class="menu-item menu-title md-menu-item"
                         md-highlight="sidebarCtrl.isCurrentMenu('home')"
-                        ui-sref="home.all"
+                        ui-sref="tag.all({tag: 'interIIT'})"
                         ng-click="mainCtrl.closeLeftSidebar()"
                         md-ink-ripple="#bbb"
                         ng-bind="'Home'">
@@ -73,7 +75,7 @@
                         <button
                             class="menu-item menu-title md-menu-item"
                             md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
-                            ng-click="sidebarCtrl.toggleCurrentMenu(corner.tag)"
+                            ng-click="sidebarCtrl.updateCurrentMenu(corner.tag)"
                             ng-if="corner.tag.indexOf('interIIT-') > -1"
                             md-ink-ripple="#bbb"
                             vnb-link="corner.tag"

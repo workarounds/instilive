@@ -85,6 +85,9 @@
     <md-list class="vnb-notice-tags" layout="row">
         <md-item ng-repeat="corner in notice.corners">
             <a href vnb-link="corner.tag">{{corner.name}}</a>
+            <md-tooltip>
+                See corner: {{corner.name}}
+            </md-tooltip>
         </md-item>
     </md-list>
     <md-divider ng-show="notice.like_count + notice.comment_count + notice.updates_above + notice.updates_below > 0"

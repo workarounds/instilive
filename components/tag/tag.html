@@ -5,57 +5,61 @@
             md-swipe-right="mainCtrl.toggleLeftSidebar()"
             ng-if="mainCtrl.isDesktop"
             xmlns="http://www.w3.org/1999/html">
-    <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
-                ng-class="{'md-tall': tagsCtrl.header.image}">
-        <section layout="row"
-                 flex layout-align="start end"
-                 style="padding-bottom: 19px; z-index: 20"
-                 back-img="{{tagsCtrl.header.image.link}}">
-            <section layout="row"
-                     layout-align="start center"
-                     class="vnb-hamburger" hide-gt-md>
-                        <span ng-click="mainCtrl.toggleLeftSidebar()">
-                            <i class="fa fa-bars vnb-nav-icon"></i>
-                        </span>
-            </section>
-            <section layout="row" style="width: 12px" hide-sm>
-
-            </section>
-            <section layout="row" layout-align="start center" flex
-                     style="padding-bottom: 1px">
+    <md-toolbar
+        ng-class="{'md-tall': tagsCtrl.header.image}"
+        vnb-bg-color={{mainCtrl.headerColor}}>
+        <section flex
+            back-img="{{tagsCtrl.header.image.link}}">
+        <section layout="row" layout-align="start center" class="header-strip">
+            <section layout="row" flex
+                     layout-align="start center">
+                <section layout="row" layout-align="start center" flex class="vnb-page-title">
                 <span ng-if="tagsCtrl.home">
                     Home
                 </span>
                 <span>
                     {{tagsCtrl.corner}}
                 </span>
-            </section>
-            <section layout="row" ng-if="tagsCtrl.canEdit">
-                <span ng-click="tagsCtrl.updateHeaderImage()"
-                      style="cursor:pointer;">
-                    <i class="fa fa-plus vnb-nav-icon"></i>
-                </span>
-            </section>
-            <section layout="row" style="width: 12px" hide-sm>
+                </section>
 
             </section>
             <section layout="row"
                      layout-align="end center" class="vnb-hamburger">
                 <md-button ng-show="!mainCtrl.user"
-                           ng-click="mainCtrl.login()">
+                           ng-click="mainCtrl.login()"
+                            aria-label="login">
                     <i class="fa fa-facebook-square"></i>
+                    <md-tooltip>Login</md-tooltip>
                 </md-button>
-                <span class="vnb-text-link vnb-user-name">
-                    {{mainCtrl.user.name}}
-                </span>
+                <section class="dropdown" ng-if="mainCtrl.user">
+                    <img ng-src="{{'http://graph.facebook.com/' + mainCtrl.user.facebook_id + '/picture'}}"
+                         alt="user"
+                         class="header-face"/>
+                        <span class="dropdown-toggle caret-container"
+                              ng-show="(mainCtrl.user.positions.post_positions.length)">
+                            <i class="fa fa-caret-down"></i>
+                        </span>
+                    <ul class="dropdown-menu" style="margin-left: -100px; margin-top: -10px">
+                        <li ng-show="(mainCtrl.user.positions.post_positions.length)">
+                            <a href ui-sref="create">New Post</a>
+                        </li>
+                        <li ng-show="mainCtrl.user.positions.manage_positions.length">
+                            <a href ui-sref="manage">Manage</a>
+                        </li>
+                        <li ng-show="tagsCtrl.canEdit">
+                            <a href ng-click="tagsCtrl.updateHeaderImage()">Change image</a>
+                        </li>
+                    </ul>
+                </section>
+
             </section>
         </section>
-        <section class="vnb-toolbar-gradient"></section>
+        </section>
     </md-toolbar>
 
     <section layout="row" flex layout-align="center start"
              class="background-container">
-        <section layout="column" flex style="max-width:620px" >
+        <section layout="column" flex style="max-width:620px">
             <section layout="row"
                      layout-align="center center">
                 <md-button class="vnb-tab vnb-tab-left"
@@ -68,13 +72,14 @@
                 <md-button class="vnb-tab vnb-tab-right"
                            md-ink-ripple="#777"
                            id="dtab2" aria-controls="dtab2-content"
+
                            ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 1)}"
                            ng-click="mainCtrl.selectedIndex = 1">
                     What's new
                 </md-button>
             </section>
             <section layout="row"
-                class="md-padding main-content"
+                     class="md-padding main-content"
                      style="max-width: 620px">
                 <ng-switch on="mainCtrl.selectedIndex"
                            class="tabpanel-container"
@@ -108,10 +113,8 @@
             md-swipe-left="mainCtrl.toggleRightSidebar()"
             md-swipe-right="mainCtrl.toggleLeftSidebar()"
             ng-if="!mainCtrl.isDesktop">
-    <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75">
-        <section layout="row"
-                 flex layout-align="start end"
-                 style="padding-bottom: 19px; z-index: 20">
+    <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75" vnb-bg-color={{mainCtrl.headerColor}}>
+        <section layout="row" layout-align="start center" class="header-strip">
             <section layout="row"
                      layout-align="start center"
                      class="vnb-hamburger" hide-gt-md>
@@ -119,53 +122,66 @@
                             <i class="fa fa-bars vnb-nav-icon"></i>
                         </span>
             </section>
-            <section layout="row" style="width: 12px" hide-sm>
-
-            </section>
-            <section layout="row" layout-align="start center" flex
-                     style="padding-bottom: 1px">
+            <section layout="row" flex
+                     layout-align="start center">
+                <section layout="row" layout-align="start center" flex class="vnb-page-title">
                 <span ng-if="tagsCtrl.home">
                     Home
                 </span>
                 <span>
                     {{tagsCtrl.corner}}
                 </span>
-            </section>
-            <section layout="row" ng-if="tagsCtrl.canEdit">
-                <span ng-click="tagsCtrl.updateHeaderImage()"
-                      style="cursor:pointer;">
-                    <i class="fa fa-plus vnb-nav-icon"></i>
-                </span>
-            </section>
-            <section layout="row" style="width: 12px" hide-sm>
+                </section>
 
             </section>
             <section layout="row"
                      layout-align="end center" class="vnb-hamburger">
                 <md-button ng-show="!mainCtrl.user"
-                           ng-click="mainCtrl.login()">
+                           ng-click="mainCtrl.login()"
+                            aria-label="login">
                     <i class="fa fa-facebook-square"></i>
+                    <md-tooltip>Login</md-tooltip>
                 </md-button>
-                <span class="vnb-text-link vnb-user-name">
-                    {{mainCtrl.user.name}}
-                </span>
+                <section class="dropdown" ng-if="mainCtrl.user">
+                    <img ng-src="{{'http://graph.facebook.com/' + mainCtrl.user.facebook_id + '/picture'}}"
+                         alt="user"
+                         class="header-face"/>
+                        <span class="dropdown-toggle caret-container"
+                              ng-show="(mainCtrl.user.positions.post_positions.length)">
+                            <i class="fa fa-caret-down"></i>
+                        </span>
+                    <ul class="dropdown-menu" style="margin-left: -100px; margin-top: -10px">
+                        <li ng-show="(mainCtrl.user.positions.post_positions.length)">
+                            <a href ui-sref="create">New Post</a>
+                        </li>
+                        <li ng-show="mainCtrl.user.positions.manage_positions.length">
+                            <a href ui-sref="manage">Manage</a>
+                        </li>
+                        <li ng-show="tagsCtrl.canEdit">
+                            <a href ng-click="tagsCtrl.updateHeaderImage()">Change image</a>
+                        </li>
+                    </ul>
+                </section>
+
             </section>
         </section>
-        <section class="vnb-toolbar-gradient"></section>
     </md-toolbar>
 
     <md-content class="background-container">
         <md-tabs md-selected="data.selectedIndex">
             <md-tab id="tab1" aria-controls="tab1-content"
-                    md-ink-ripple="#D1E8FF">
+                    md-ink-ripple="#D1E8FF"
+                    vnb-bg-color={{mainCtrl.headerColor}}>
                 Coming up
             </md-tab>
             <md-tab id="tab2" aria-controls="tab2-content"
-                    md-ink-ripple="#D1E8FF">
+                    md-ink-ripple="#D1E8FF"
+                    vnb-bg-color={{mainCtrl.headerColor}}>
                 What's new
             </md-tab>
             <md-tab id="tab3" aria-controls="tab3-content"
-                    md-ink-ripple="#D1E8FF">
+                    md-ink-ripple="#D1E8FF"
+                    vnb-bg-color={{mainCtrl.headerColor}}>
                 Overview
             </md-tab>
         </md-tabs>
