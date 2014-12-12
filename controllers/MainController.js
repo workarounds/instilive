@@ -13,7 +13,8 @@
             var unregister = matchmedia.on('(min-width: 961px)', function(mediaQueryList){
                 mainCtrl.isDesktop = mediaQueryList.matches;
             }, $scope);
-
+            var defaultHeaderColor = '(33, 33, 33)';
+            mainCtrl.headerColor = defaultHeaderColor;
 
             mainCtrl.loading = 0;
 
@@ -71,6 +72,23 @@
 
             $scope.$on('userDataEvent', function (event, data) {
                 mainCtrl.user = data;
+            });
+
+            $rootScope.$on('GOT_TAG_DATA', function (event, data) {
+                console.log('got data');
+                if(data) {
+                    console.log(data);
+                    if(data.header) {
+                        var header = JSON.parse(data.header);
+                        if(header.color) {
+                            mainCtrl.headerColor = '('+header.color.r+','+header.color.g+','+header.color.b+')';
+                        } else {
+                            mainCtrl.headerColor = defaultHeaderColor;
+                        }
+                    } else {
+                        mainCtrl.headerColor = defaultHeaderColor;
+                    }
+                }
             });
 
             $rootScope.$on('vnbLoading', function(event, loading){

@@ -87,6 +87,7 @@
                     function(data) {
                         tagsCtrl.tag = data;
                         tagsCtrl.initTagMeta();
+                        $rootScope.$emit('GOT_TAG_DATA', data);
                     }, function (err) {
                         console.log(err);
                     }
