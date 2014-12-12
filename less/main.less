@@ -178,10 +178,15 @@ md-card{
     //transition: all .4s ease 0s;
 }
 
-md-toolbar.md-theme-indigo {
-    background-color: @toolbarColor;
-}
 
 .vnb-logo {
-    height: 48px;
+    height: 36px;
+    padding: 0px 16px;
+}
+
+@media screen and (max-width: 960px){
+    md-toolbar, md-tab{
+        transition: background-color 0ms linear !important;
+        -webkit-transition: background-color 0ms linear !important;
+    }
 }
