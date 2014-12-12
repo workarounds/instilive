@@ -15,6 +15,7 @@
             'ngMaterial',
             'ngImgur',
             'matchmedia-ng',
+            'ngSanitize'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
