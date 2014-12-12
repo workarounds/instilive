@@ -17,7 +17,7 @@
             mainCtrl.headerColor = defaultHeaderColor;
 
             mainCtrl.loading = 0;
-            mainCtrl.selectedIndex = 0;
+            mainCtrl.selectedIndex = 1;
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {

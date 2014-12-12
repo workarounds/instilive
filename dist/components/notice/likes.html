@@ -1,0 +1,20 @@
+<div class="modal-body">
+    <h3><i class="fa fa-heart"></i><i class="fa fa-heart"></i><i class="fa fa-heart"></i></h3>
+    <div layout="row" layout-sm="column" layout-align="space-around"
+         ng-show="likesCtrl.loading">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <md-list>
+        <md-item ng-repeat="user in likesCtrl.likes">
+            <md-item-content>
+                <div class="md-tile-left">
+                    <img class="face"
+                        ng-src="{{'http://graph.facebook.com/' + user.facebook_id + '/picture'}}" alt="DP"/>
+                </div>
+                <div class="md-tile-content">
+                    <a ng-href="user.profile_link">{{user.name}}</a>
+                </div>
+            </md-item-content>
+        </md-item>
+    </md-list>
+</div>

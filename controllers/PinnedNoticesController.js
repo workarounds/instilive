@@ -22,6 +22,7 @@
             }
 
             function getPinnedNotices(tag){
+                VnbRestangular.setJsonp(true);
                 VnbRestangular.all('corners')
                     .customGET('pinned', {tag: tag})
                     .then(function(data){
@@ -30,6 +31,7 @@
                     }, function(err){
                         console.log(err);
                     });
+                VnbRestangular.setJsonp(false);
             }
 
             pinnedNoticesCtrl.compress = function(){

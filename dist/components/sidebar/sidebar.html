@@ -1,0 +1,39 @@
+<ul class="sidebar">
+    <li class="sidebar-main">
+        <a href="#">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+        </a>
+    </li>
+
+    <div ng-repeat="board in sidebarCtrl.boards"
+        ng-click="sidebarCtrl.updateCurrentBoardId(board.id)"
+        class="sidebar-board">
+        <li class="sidebar-title">
+            <vnb-link data="board"></vnb-link>
+        </li>
+        <div collapse="sidebarCtrl.currentBoardId != board.id">
+            <li ng-repeat="corner in board.corners" class="sidebar-list">
+                <vnb-link data="corner"></vnb-link>
+            </li>
+        </div>
+    </div>
+</ul>
+
+<div class="sidebar-footer">
+    <div class="col-xs-4">
+        <a href ng-click="sidebarCtrl.login()" target="_blank">
+            Login
+        </a>
+    </div>
+    <div class="col-xs-4">
+        <a href="http://workarounds.in" target="_blank">
+            About
+        </a>
+    </div>
+    <div class="col-xs-4">
+        <a href="#">
+            Support
+        </a>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h3>{{commentsCtrl.notice.data.title}}</h3>
+</div>
+
+<div class="modal-body">
+    <div layout="row" layout-sm="column" layout-align="space-around"
+         ng-show="commentsCtrl.loading">
+        <md-progress-linear
+            md-mode="indeterminate"></md-progress-linear>
+    </div>
+    <md-list>
+        <md-item ng-repeat="comment in commentsCtrl.comments">
+            <md-item-content>
+                <div class="md-tile-left">
+                    <img class="face"
+                         ng-src="{{'http://graph.facebook.com/' + comment.user.facebook_id + '/picture'}}" alt="DP"/>
+                </div>
+                <div class="md-tile-content">
+                    <a ng-href="user.profile_link"><h3>{{comment.user.name}}</h3></a>
+                    <p class="comment-data">{{comment.data}}</p>
+                </div>
+            </md-item-content>
+        </md-item>
+    </md-list>
+    <div class="md-padding inline-comment-box">
+        <form layout="row" flex>
+            <md-text-float label="Comment"
+                           class="comment-box"
+                           ng-model="commentsCtrl.comment"
+                           flex></md-text-float>
+            <md-button
+                class="md-primary md-raised comment-button"
+                ng-click="commentsCtrl.postComment()">
+                Comment</md-button>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer">
+    {{commentsCtrl.user.name}}
+</div>
