@@ -68,6 +68,10 @@
                 }
             );
 
+            mainCtrl.changeTab = function(index){
+                mainCtrl.selectedIndex = index;
+            };
+
 
 
             $scope.$on('userDataEvent', function (event, data) {
