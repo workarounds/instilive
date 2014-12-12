@@ -33,6 +33,7 @@
             scheduleCtrl.nextDaySet = false;
             scheduleCtrl.showPrevious = false;
             scheduleCtrl.previousExists = false;
+            scheduleCtrl.dataLoaded = false;
 
             function generateEvents() {
                 var notices = scheduleCtrl.notices;
@@ -48,8 +49,12 @@
                         };
                     }
                     notices[i].start = start;
-                    notices[i].data = JSON.parse(notices[i].data);
-                    notices[i].corners = JSON.parse(notices[i].corners);
+                    if(typeof notices[i].data === "string") {
+                        notices[i].data = JSON.parse(notices[i].data);
+                    }
+                    if(typeof notices[i].data === "string") {
+                        notices[i].corners = JSON.parse(notices[i].corners);
+                    }
                     eventDays[toDateId(start)].events.push(notices[i]);
                     eventDays[toDateId(start)].next = isNextDay(start);
                     if(!scheduleCtrl.nextDaySet){
@@ -68,10 +73,11 @@
                 function (data) {
                     scheduleCtrl.notices = data.Notice;
                     generateEvents();
-                    console.log(scheduleCtrl.eventDays);
+                    scheduleCtrl.dataLoaded = true;
                 },
                 function (err) {
                     console.log(err);
+                    scheduleCtrl.dataLoaded = true;
                 }
             );
 

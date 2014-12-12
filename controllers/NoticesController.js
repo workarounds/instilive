@@ -35,7 +35,7 @@
                 var lastIndex = noticesCtrl.notices.length - 1;
                 var from = noticesCtrl.notices[lastIndex].modified;
                 var options = {from: from};
-                StateService.getData(false, options).then(
+                StateService.getData(false, options, true).then(
                     function (data) {
                         var extraNotices = data.Notice;
                         console.log(extraNotices);

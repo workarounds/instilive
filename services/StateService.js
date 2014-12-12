@@ -12,6 +12,19 @@
             var hashData = false;
             var processingRequest = false;
 
+            var mainData = {
+                request: false,
+                loading: false,
+                tag: false,
+                data: false
+            };
+
+            var schedule = {
+                request: false,
+                loading: false,
+                tag: false, data: false
+            };
+
             var stateService = {};
 
             stateService.startLoading = function(){
@@ -147,12 +160,15 @@
                 return currentState;
             };
 
-            stateService.getData = function (state, options) {
+            stateService.getData = function (state, options, force) {
                 if (!state) {
                     state = currentState;
                 }
                 if (!options) {
                     options = {};
+                }
+                if(!force){
+                    force = false;
                 }
 
                 var deferred = $q.defer();
@@ -165,12 +181,32 @@
                     VnbRestangular.setJsonp(false);
                 }
                 else {
-                    var params = {tag: state.tag};
-                    $.extend(params, options);
-                    request = VnbRestangular.all('notices');
-                    VnbRestangular.setJsonp(true);
-                    result = request.customGET('data', params);
-                    VnbRestangular.setJsonp(false);
+                    if((state.tag == mainData.tag) && !force){
+                        if(mainData.loading){
+                            return mainData.request;
+                        }
+                        deferred.resolve(mainData.data);
+                        return deferred.promise;
+                    }
+                    else {
+                        var params = {tag: state.tag};
+                        $.extend(params, options);
+                        request = VnbRestangular.all('notices');
+                        VnbRestangular.setJsonp(true);
+                        result = request.customGET('data', params);
+                        VnbRestangular.setJsonp(false);
+                        mainData.tag = state.tag;
+                        mainData.request = result;
+                        mainData.loading = true;
+                        result.then(function(data){
+                            mainData.data = data;
+                            mainData.loading = false;
+                        }, function(){
+                            mainData.tag = false;
+                            mainData.data = false;
+                            mainData.loading = false;
+                        })
+                    }
                 }
                 return result;
             };
@@ -254,21 +290,46 @@
             });
 
 
-            stateService.getSchedule = function (state, options) {
+            stateService.getSchedule = function (state, options, force) {
                 if (!state) {
                     state = currentState;
                 }
                 if (!options) {
                     options = {from: '2012-11-28 11:00:00'};
                 }
+                if(!force){
+                    force = false;
+                }
 
                 var result;
-                if (state.tag) {
-                    options.tag = state.tag;
+                var deferred = $q.defer();
+                if((state.tag == schedule.tag) && !force){
+                    if(schedule.loading){
+                        return schedule.request;
+                    }
+                    deferred.resolve(schedule.data);
+                    return deferred.promise;
                 }
-                VnbRestangular.setJsonp(true);
-                result = VnbRestangular.all('notices').customGET('schedule', options);
-                VnbRestangular.setJsonp(false);
+                else {
+                    if (state.tag) {
+                        options.tag = state.tag;
+                    }
+                    VnbRestangular.setJsonp(true);
+                    result = VnbRestangular.all('notices').customGET('schedule', options);
+                    VnbRestangular.setJsonp(false);
+                    schedule.tag = state.tag;
+                    schedule.request = result;
+                    schedule.loading = true;
+                    result.then(function(data){
+                        schedule.tag = state.tag;
+                        schedule.data = data;
+                        schedule.loading = false;
+                    }, function(){
+                        schedule.data = false;
+                        schedule.tag = false;
+                        schedule.loading = false;
+                    });
+                }
 
                 return result;
             };

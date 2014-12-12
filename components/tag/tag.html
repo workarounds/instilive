@@ -1,13 +1,16 @@
 <md-content class="background-container"
-            ng-controller="TagsController as tagsCtrl" layout="column" flex
+            ng-controller="TagsController as tagsCtrl" layout="column"
+            flex
             md-swipe-left="mainCtrl.toggleRightSidebar()"
-            md-swipe-right="mainCtrl.toggleLeftSidebar()" ng-if="mainCtrl.isDesktop"
+            md-swipe-right="mainCtrl.toggleLeftSidebar()"
+            ng-if="mainCtrl.isDesktop"
             xmlns="http://www.w3.org/1999/html">
     <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75"
                 ng-class="{'md-tall': tagsCtrl.header.image}">
         <section layout="row"
                  flex layout-align="start end"
-                 style="padding-bottom: 19px; z-index: 20" back-img="{{tagsCtrl.header.image.link}}">
+                 style="padding-bottom: 19px; z-index: 20"
+                 back-img="{{tagsCtrl.header.image.link}}">
             <section layout="row"
                      layout-align="start center"
                      class="vnb-hamburger" hide-gt-md>
@@ -18,7 +21,8 @@
             <section layout="row" style="width: 12px" hide-sm>
 
             </section>
-            <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
+            <section layout="row" layout-align="start center" flex
+                     style="padding-bottom: 1px">
                 <span ng-if="tagsCtrl.home">
                     Home
                 </span>
@@ -27,7 +31,8 @@
                 </span>
             </section>
             <section layout="row" ng-if="tagsCtrl.canEdit">
-                <span ng-click="tagsCtrl.updateHeaderImage()" style="cursor:pointer;">
+                <span ng-click="tagsCtrl.updateHeaderImage()"
+                      style="cursor:pointer;">
                     <i class="fa fa-plus vnb-nav-icon"></i>
                 </span>
             </section>
@@ -48,66 +53,61 @@
         <section class="vnb-toolbar-gradient"></section>
     </md-toolbar>
 
-    <section layout="row" flex layout-align="center start" class="background-container">
-        <section flex class="md-padding main-content"
-                 style="max-width: 620px">
-            <section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">
-                <section style="padding: 0px;" ng-if=
-                    "pinnedNoticesCtrl.notices.length">
-                    <h2 class="pinned-heading">Pinned</h2>
-                    <section ng-repeat="notice in pinnedNoticesCtrl.visibleNotices">
-                        <pinned-notice data="notice"></pinned-notice>
-                    </section>
-                    <md-button
-                        ng-click="pinnedNoticesCtrl.expand()"
-                        ng-show="pinnedNoticesCtrl.canExpand"
-                        >
-                        Expand
-                    </md-button>
-                    <md-button
-                        ng-click="pinnedNoticesCtrl.compress()"
-                        ng-show="pinnedNoticesCtrl.canCompress"
-                        >
-                        Compress
-                    </md-button>
-                </section>
+    <section layout="row" flex layout-align="center start"
+             class="background-container">
+        <section layout="column" flex style="max-width:620px" >
+            <section layout="row"
+                     layout-align="center center">
+                <md-button class="vnb-tab vnb-tab-left"
+                           md-ink-ripple="#777"
+                           id="dtab1" aria-controls="dtab1-content"
+                           ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 0)}"
+                           ng-click="mainCtrl.selectedIndex = 0">
+                    Coming up
+                </md-button>
+                <md-button class="vnb-tab vnb-tab-right"
+                           md-ink-ripple="#777"
+                           id="dtab2" aria-controls="dtab2-content"
+                           ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 1)}"
+                           ng-click="mainCtrl.selectedIndex = 1">
+                    What's new
+                </md-button>
             </section>
-            <md-divider></md-divider>
-            <div ng-controller="NoticesController as noticesCtrl">
-                <!--tabs(upcoming/recent)-->
-
-                <!--list of notices-->
-                <notice ng-repeat="notice in noticesCtrl.notices" data="notice" hide-update="false">
-
-                </notice>
-                <section flex layout="row" layout-align="center start" ng-show="noticesCtrl.notices.length">
-                    <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
-                </section>
-                <section layout="row" flex layout-align="center center" style="height: 400px;"
-                         ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
-                    <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
-                </section>
-                <section layout="row" flex layout-align="center center" style="height: 400px;"
-                         ng-hide="noticesCtrl.notices.length || noticesCtrl.dataLoaded">
-
-                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                </section>
-            </div>
+            <section layout="row"
+                class="md-padding main-content"
+                     style="max-width: 620px">
+                <ng-switch on="mainCtrl.selectedIndex"
+                           class="tabpanel-container"
+                           flex
+                           layout="row" layout-align="center start">
+                    <div role="tabpanel" id="dtab1-content" flex
+                         aria-labelledby="dtab1" ng-switch-when="0">
+                        <section
+                            ng-include="'components/tag/coming_up.html'"></section>
+                    </div>
+                    <div role="tabpanel" id="dtab2-content" flex
+                         aria-labelledby="dtab2" ng-switch-when="1">
+                        <section
+                            ng-include="'components/tag/whats_new.html'"></section>
+                    </div>
+                </ng-switch>
+            </section>
         </section>
-        <md-sidenav class="md-sidenav-right"
-                    md-component-id="right"
-                    md-is-locked-open="$media('md')">
+        <section layout="column">
             <md-content class="background-container">
-                <section ui-view="right"></section>
+                <section ui-view="right"
+                         style="margin-top: 12px"></section>
             </md-content>
-        </md-sidenav>
+        </section>
     </section>
 </md-content>
 
 <md-content class="background-container"
-            ng-controller="TagsController as tagsCtrl" layout="column" flex
+            ng-controller="TagsController as tagsCtrl" layout="column"
+            flex
             md-swipe-left="mainCtrl.toggleRightSidebar()"
-            md-swipe-right="mainCtrl.toggleLeftSidebar()" ng-if="!mainCtrl.isDesktop">
+            md-swipe-right="mainCtrl.toggleLeftSidebar()"
+            ng-if="!mainCtrl.isDesktop">
     <md-toolbar md-scroll-shrink md-shrink-speed-factor="0.75">
         <section layout="row"
                  flex layout-align="start end"
@@ -122,7 +122,8 @@
             <section layout="row" style="width: 12px" hide-sm>
 
             </section>
-            <section layout="row" layout-align="start center" flex style="padding-bottom: 1px">
+            <section layout="row" layout-align="start center" flex
+                     style="padding-bottom: 1px">
                 <span ng-if="tagsCtrl.home">
                     Home
                 </span>
@@ -131,7 +132,8 @@
                 </span>
             </section>
             <section layout="row" ng-if="tagsCtrl.canEdit">
-                <span ng-click="tagsCtrl.updateHeaderImage()" style="cursor:pointer;">
+                <span ng-click="tagsCtrl.updateHeaderImage()"
+                      style="cursor:pointer;">
                     <i class="fa fa-plus vnb-nav-icon"></i>
                 </span>
             </section>
@@ -154,51 +156,50 @@
 
     <md-content class="background-container">
         <md-tabs md-selected="data.selectedIndex">
-            <md-tab id="tab1" aria-controls="tab1-content" md-ink-ripple="#D1E8FF">
-                New Posts
+            <md-tab id="tab1" aria-controls="tab1-content"
+                    md-ink-ripple="#D1E8FF">
+                Coming up
             </md-tab>
-            <md-tab id="tab2" aria-controls="tab2-content" ng-disabled="data.secondLocked" md-ink-ripple="#FFF">
-                Schedule
+            <md-tab id="tab2" aria-controls="tab2-content"
+                    md-ink-ripple="#D1E8FF">
+                What's new
+            </md-tab>
+            <md-tab id="tab3" aria-controls="tab3-content"
+                    md-ink-ripple="#D1E8FF">
+                Overview
             </md-tab>
         </md-tabs>
 
-        <ng-switch on="data.selectedIndex" class="tabpanel-container" layout="row" layout-align="center start">
-            <div role="tabpanel" id="tab1-content" aria-labelledby="tab1" ng-switch-when="0" md-swipe-left="next()"
+        <ng-switch on="data.selectedIndex" class="tabpanel-container"
+                   layout="row" layout-align="center start">
+            <div role="tabpanel" id="tab1-content"
+                 aria-labelledby="tab1" ng-switch-when="0"
+                 md-swipe-left="next()"
                  md-swipe-right="previous()">
                 <section flex class="md-padding main-content"
                          style="max-width: 620px">
-                    <section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">
-                        <section style="padding: 0px;" ng-if=
-                            "pinnedNoticesCtrl.notices.length">
-                            <h2 class="pinned-heading">Pinned</h2>
-                            <section ng-repeat="notice in pinnedNoticesCtrl.notices">
-                                <pinned-notice data="notice"></pinned-notice>
-                            </section>
-                        </section>
-                    </section>
-                    <div ng-controller="NoticesController as noticesCtrl">
-                        <notice ng-repeat="notice in noticesCtrl.notices" data="notice" hide-update="false">
-
-                        </notice>
-                        <section flex layout="row" layout-align="center start" ng-show="noticesCtrl.notices.length">
-                            <md-button ng-click="noticesCtrl.loadMore()" flex class="md-primary">Load more</md-button>
-                        </section>
-                        <section layout="row" flex layout-align="center center" style="height: 400px;"
-                                 ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
-
-                            <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
-                        </section>
-                        <section layout="row" flex layout-align="center center" style="height: 400px;"
-                                 ng-hide="noticesCtrl.notices.length || noticesCtrl.dataLoaded">
-
-                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                        </section>
-                    </div>
+                    <section
+                        ng-include="'components/tag/coming_up.html'"></section>
                 </section>
             </div>
-            <div flex layout="row" layout-align="center start" role="tabpanel" id="tab2-content" aria-labelledby="tab2"
-                 ng-switch-when="1" md-swipe-left="next()" md-swipe-right="previous()">
-                <section ui-view="right" style="padding-top: 6px; max-width: 620px" flex></section>
+            <div role="tabpanel" id="tab2-content"
+                 aria-labelledby="tab2" ng-switch-when="1"
+                 md-swipe-left="next()"
+                 md-swipe-right="previous()">
+                <section flex class="md-padding main-content"
+                         style="max-width: 620px">
+                    <section
+                        ng-include="'components/tag/whats_new.html'"></section>
+                </section>
+            </div>
+            <div flex layout="row" layout-align="center start"
+                 role="tabpanel" id="tab3-content"
+                 aria-labelledby="tab3"
+                 ng-switch-when="2" md-swipe-left="next()"
+                 md-swipe-right="previous()">
+                <section ui-view="right"
+                         style="padding-top: 6px; max-width: 620px"
+                         flex></section>
             </div>
         </ng-switch>
     </md-content>

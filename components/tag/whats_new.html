@@ -1,0 +1,49 @@
+<section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">
+    <section style="padding: 0px;" ng-if=
+        "pinnedNoticesCtrl.notices.length">
+        <h2 class="pinned-heading">Pinned</h2>
+        <section ng-repeat="notice in pinnedNoticesCtrl.visibleNotices">
+            <pinned-notice data="notice"></pinned-notice>
+        </section>
+        <md-button
+            ng-click="pinnedNoticesCtrl.expand()"
+            ng-show="pinnedNoticesCtrl.canExpand"
+            >
+            Expand
+        </md-button>
+        <md-button
+            ng-click="pinnedNoticesCtrl.compress()"
+            ng-show="pinnedNoticesCtrl.canCompress"
+            >
+            Compress
+        </md-button>
+        <md-divider></md-divider>
+    </section>
+</section>
+<div ng-controller="NoticesController as noticesCtrl">
+    <!--tabs(upcoming/recent)-->
+
+    <!--list of notices-->
+    <notice ng-repeat="notice in noticesCtrl.notices" data="notice"
+            hide-update="false">
+
+    </notice>
+    <section flex layout="row" layout-align="center start"
+             ng-show="noticesCtrl.notices.length">
+        <md-button ng-click="noticesCtrl.loadMore()" flex
+                   class="md-primary">Load more
+        </md-button>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="height: 400px;"
+             ng-hide="noticesCtrl.notices.length || !noticesCtrl.dataLoaded">
+        <h1 style="color: #ccc; padding-left: 48px">Nothing Here</h1>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="height: 400px;"
+             ng-hide="noticesCtrl.notices.length || noticesCtrl.dataLoaded">
+
+        <md-progress-circular
+            md-mode="indeterminate"></md-progress-circular>
+    </section>
+</div>

@@ -16,6 +16,7 @@
 
 
             mainCtrl.loading = 0;
+            mainCtrl.selectedIndex = 0;
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {
