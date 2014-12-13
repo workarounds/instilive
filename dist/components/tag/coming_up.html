@@ -26,6 +26,16 @@
         <md-progress-circular
             md-mode="indeterminate"></md-progress-circular>
     </section>
+    <span class="vnb-text-link"
+          style="padding: 8px"
+          ng-show="(!scheduleCtrl.showPrevious) && scheduleCtrl.previousExists"
+          ng-click="scheduleCtrl.showPrevious = true">
+        <i class="fa fa-caret-up"></i> previous
+    </span>
+    <md-divider style="margin-top: 8px;"
+        ng-show="(!scheduleCtrl.showPrevious) && scheduleCtrl.previousExists"
+        >
+    </md-divider>
     <notice ng-repeat="notice in scheduleCtrl.notices | limitTo:scheduleLimit"
             data="notice" hide-update="false" ng-if="notice.next || scheduleCtrl.showPrevious">
 

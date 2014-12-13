@@ -1,0 +1,135 @@
+<section layout="column" flex style="max-width: 720px;">
+
+    <section layout="row" flex layout-align="start center"
+             style="margin: 8px 0px">
+        <section class="form-left">
+            Position
+        </section>
+        <section class="form-right" flex>
+            <select id="postas" ng-model="bulkCtrl.position"
+                    class="form-control"
+                    ng-change="changePos()"
+                    ng-options="pos.name for pos in bulkCtrl.positions"></select>
+        </section>
+    </section>
+
+    <section layout="row" flex layout-align="start center"
+             style="margin: 8px 0px">
+        <section class="form-left">
+            Common Tags
+        </section>
+        <section class="form-right" flex>
+            <vnb-tag-input data="bulkCtrl.corners"
+                           model="bulkCtrl.commonCorners"></vnb-tag-input>
+        </section>
+    </section>
+
+    <section layout="row" flex layout-align="start center"
+             style="margin: 8px 0px">
+        <section class="form-left">
+            Date
+        </section>
+        <section class="form-right" flex>
+            <input type="text" id="from" class="form-control"
+                   datepicker-popup="{{'dd/MM/yyyy'}}"
+                   ng-model="bulkCtrl.from" is-open="fromOpen"
+                   ng-required="true" close-text="Close"
+                   ng-change="changeInCommon()"
+                />
+        </section>
+    </section>
+
+    <section layout="row" flex layout-align="start center"
+             style="margin: 8px 0px">
+        <section class="form-left">
+            Duration in Minutes
+        </section>
+        <section class="form-right" flex>
+            <input class="form-control" type="number"
+                   ng-model="bulkCtrl.duration"/>
+        </section>
+    </section>
+
+    <section layout="row" flex layout-align="start center"
+             style="margin: 8px 0px">
+        <section class="form-left">
+            Number of Events
+        </section>
+        <section class="form-right" flex>
+            <input class="form-control" type="number"
+                   ng-model="bulkCtrl.number"
+                   ng-change="initNotices()"/>
+        </section>
+    </section>
+
+    <section class="bulk"
+             layout="column"
+             ng-repeat="notice in bulkCtrl.notices | limitTo: bulkCtrl.limitTo"
+             flex layout-align="start center">
+        <section layout="row"
+                 style="margin: 16px 0px; max-width: 640px; width: 100%"
+                 layout-align="center start">
+            <notice data="notice" hide-update="true"
+                    flex
+                    style="margin: 16px 0px;"></notice>
+        </section>
+
+        <section layout="row" flex layout-align="start center"
+                 style="margin: 8px 0px">
+            <section class="form-left">
+                Title
+            </section>
+            <section class="form-right" flex>
+                <input class="form-control" type="text"
+                       ng-model="notice.data.title"/>
+            </section>
+        </section>
+
+        <section layout="row" flex layout-align="start center"
+                 style="margin: 8px 0px">
+            <section class="form-left">
+                Tags
+            </section>
+            <section class="form-right" flex>
+                <vnb-tag-input data="bulkCtrl.corners"
+                               model="notice.corners"></vnb-tag-input>
+            </section>
+        </section>
+
+        <section layout="row" flex layout-align="start center"
+                 style="margin: 8px 0px">
+            <section class="form-left">
+                Venue
+            </section>
+            <section class="form-right" flex>
+                <input class="form-control" type="text"
+                       ng-model="notice.data.venue"/>
+            </section>
+        </section>
+
+        <div class="form-group">
+            <label style="margin-top: 34px;"
+                   class="col-sm-2 control-label">
+                From
+            </label>
+
+            <div class="col-sm-6">
+                <timepicker ng-model="notice.from">
+                </timepicker>
+            </div>
+        </div>
+
+        <section layout="row" flex layout-align="start center"
+                 style="margin: 8px 0px">
+            <section class="form-left">
+                Description
+            </section>
+            <section class="form-right" flex>
+                <input class="form-control" type="text"
+                       ng-model="notice.data.blocks[0].content.text"/>
+            </section>
+        </section>
+    </section>
+
+    <md-button ng-click="bulkCtrl.postAll()">Add</md-button>
+</section>

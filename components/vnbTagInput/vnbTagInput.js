@@ -18,23 +18,29 @@
                     $scope.selectedCorners.splice(index, 1);
                     $scope.selectableCorners.push(tag);
                 };
-
-                function init() {
-                    $scope.selectableCorners = [];
-                    for (var i = 0; i < $scope.allCorners.length; i++) {
-                        if ($scope.selectedCorners.indexOf($scope.allCorners[i]) === -1) {
-                            $scope.selectableCorners.push($scope.allCorners[i]);
-                        }
-                    }
-                }
-
-                $scope.$watch($scope.allCorners, init);
-                $scope.$watch($scope.selectedCorners, init);
             }],
             scope: {
                 selectedCorners: "=model",
                 allCorners: "=data",
                 label: "=label"
+            },
+            link: function(scope){
+                function init() {
+                    scope.selectableCorners = [];
+                    for (var i = 0; i < scope.allCorners.length; i++) {
+                        if (scope.selectedCorners.indexOf(scope.allCorners[i]) === -1) {
+                            scope.selectableCorners.push(scope.allCorners[i]);
+                        }
+                    }
+                }
+
+                scope.$watch(function(){return scope.allCorners;}, function(){
+                    init();
+                });
+
+                scope.$watch(function(){return scope.selectedCorners;}, function(){
+                    init();
+                });
             },
             restrict: 'E',
             templateUrl: 'components/vnbTagInput/vnb-tag-input.html'

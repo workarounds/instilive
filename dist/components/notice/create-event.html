@@ -75,22 +75,11 @@
 
                 <section class="create-option-buttons" layout="row"
                          layout-align="start center">
-                    <md-button class="md-raised"
-                               style="margin-right: 16px"
-                               ng-disabled="createEventCtrl.hasImage"
-                               ng-click="createEventCtrl.addImage()">
-                        Insert Image
-                    </md-button>
-                    <md-button class="md-raised"
-                               style="margin-right: 16px"
-                               ng-disabled="createEventCtrl.hasTable"
-                               ng-click="createEventCtrl.addTable()">
-                        Insert Table
-                    </md-button>
-                    <md-button class="md-raised"
-                               style="margin-right: 16px"
-                               ng-click="createEventCtrl.addText()">
-                        Insert Text
+                    <md-button class="md-raised" style="margin-right: 16px"
+                               ng-repeat="inputBlock in createEventCtrl.block_types"
+                               ng-disabled="createEventCtrl.isButtonDisabled(inputBlock.type)"
+                        ng-click="createEventCtrl.addBlock(inputBlock.type)">
+                        Insert {{inputBlock.type}}
                     </md-button>
                 </section>
 
