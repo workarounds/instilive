@@ -15,7 +15,8 @@
             'ngMaterial',
             'ngImgur',
             'matchmedia-ng',
-            'ngSanitize'
+            'ngSanitize',
+            'youtube-embed'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
