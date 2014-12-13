@@ -91,7 +91,7 @@
                 <md-button md-ink-ripple="#777"
                            ng-click="tagsCtrl.reloadData()"
                            style="margin: 16px 8px 0px 8px; padding: 8px 16px"
-                           ng-hide="tagsCtrl.showTabs"
+                           ng-hide="tagsCtrl.showTabs || !tagsCtrl.scheduleLoaded || !tagsCtrl.noticesLoaded"
                     >
                     <i class="fa fa-repeat"></i> Refresh
                 </md-button>
@@ -118,7 +118,7 @@
         </section>
         <section layout="column" flex style="margin-right:8px;
         max-width: 320px;"
-             ng-if="!(tagsCtrl.scheduleLoaded && (tagsCtrl.schedule.length == 0))">
+             ng-hide="(tagsCtrl.schedule.length == 0)">
             <md-content class="background-container">
                 <section ui-view="right"
                          style="margin-top: 20px; max-width: 320px; min-width:240px">
