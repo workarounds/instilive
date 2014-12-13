@@ -6,32 +6,26 @@
 
     app.controller('PinnedNoticesController', [
         'StateService',
-        'VnbRestangular',
-        function(StateService, VnbRestangular){
+        '$rootScope',
+        function(StateService, $rootScope){
             var pinnedNoticesCtrl = this;
             function initialise() {
                 pinnedNoticesCtrl.notices = [];
                 pinnedNoticesCtrl.visibleNotices = [];
                 pinnedNoticesCtrl.canExpand = false;
                 pinnedNoticesCtrl.canCompress = false;
-                var state = StateService.getState();
 
-                if (state.tag) {
-                    getPinnedNotices(state.tag);
-                }
+                getPinnedNotices(false);
             }
 
-            function getPinnedNotices(tag){
-                VnbRestangular.setJsonp(true);
-                VnbRestangular.all('corners')
-                    .customGET('pinned', {tag: tag})
+            function getPinnedNotices(forceReload){
+                StateService.getPinned(false, forceReload)
                     .then(function(data){
                         pinnedNoticesCtrl.notices = data.Notice;
                         pinnedNoticesCtrl.compress();
                     }, function(err){
                         console.log(err);
                     });
-                VnbRestangular.setJsonp(false);
             }
 
             pinnedNoticesCtrl.compress = function(){
@@ -54,6 +48,10 @@
                     pinnedNoticesCtrl.canCompress = true;
                 }
             };
+
+            $rootScope.$on('VnbReloadData', function(){
+                getPinnedNotices(true);
+            });
 
             initialise();
         }

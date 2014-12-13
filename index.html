@@ -46,8 +46,7 @@
 
 <body ng-controller="MainController as mainCtrl" layout="row"
       md-theme="indigo" class="background-container">
-<div layout="column" layout-fill>
-    <section layout="row" flex style="background: #F7F7F7">
+    <section id="page-wrapper" layout="row" flex style="background: #F7F7F7">
         <md-sidenav class="md-sidenav-left md-whiteframe-z1"
                     md-component-id="left"
                     md-is-locked-open="$media('md')">
@@ -129,14 +128,12 @@
             </md-content>
         </md-sidenav>
         <section layout="column" flex>
-            <section ui-view="main" flex layout="row"></section>
+            <section ui-view="main" flex layout="row" style="max-height: 100%"></section>
             <md-progress-linear class="vnb-progress-bar"
                                 ng-if="mainCtrl.loading > 0"
                                 md-mode="indeterminate"></md-progress-linear>
         </section>
     </section>
-</div>
-
 
 <!-- Livereload script for development only (stripped during dist build) -->
 <script src="http://localhost:35729/livereload.js"

@@ -1,8 +1,8 @@
 var FB_LOADED = false;
 var FB_APP_ID = 977826648899435;
-console.log = function () {
-
-};
+//console.log = function () {
+//
+//};
 window.fbAsyncInit = function() {
     FB.init({
         appId: FB_APP_ID, // App ID
