@@ -40,6 +40,7 @@
             $scope.scheduleLimit = 2;
 
             function generateEvents() {
+                scheduleCtrl.eventDays = {};
                 var notices = scheduleCtrl.notices;
                 var eventDays = scheduleCtrl.eventDays;
                 for (var i = 0; i < notices.length; i++) {

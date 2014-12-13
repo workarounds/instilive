@@ -77,9 +77,9 @@
                     "main@" : {
                         templateUrl: 'components/layout/plain-header.html'
                     },
-                    "content@create": {
-                        templateUrl: 'components/notice/create-event.html',
-                        controller: 'BulkUploadController as bulkCtrl'
+                    "content@bulk": {
+                        templateUrl: 'components/notice/bulk-event.html',
+                        controller: 'BulkEventController as bulkCtrl'
                     }
                 },
                 resolve: commonResolve

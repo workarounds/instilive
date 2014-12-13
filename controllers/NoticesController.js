@@ -21,7 +21,6 @@
 
             function increaseLimit(){
                 if($scope.dataLimit < noticesCtrl.notices.length){
-                    console.log(Date.now());
                     $scope.$apply(function(){
                         $scope.dataLimit = $scope.dataLimit + 1;
                     });

@@ -341,7 +341,7 @@
                     state = currentState;
                 }
                 if (!options) {
-                    options = {from: '2012-11-28 11:00:00'};
+                    
                 }
                 if(!force){
                     force = false;
