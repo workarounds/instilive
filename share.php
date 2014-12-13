@@ -72,6 +72,8 @@ if(isset($_GET['notice'])) {
 <meta property="og:type" content="article" />
 <meta property="og:url" content=<?php echo 'http://instilive.com/share.php?notice='.$notice_id ?> />
 <meta property="og:image" content=<?php echo '"'.$result['image_url'].'"'?> />
+<meta property="og:video" content=<?php echo '"'.$result['video_url'].'"'?> />
+?>
 <meta property="og:description" content=<?php echo '"'.$result['description'].'"'?> />
 <meta property="og:site_name" content=<?php echo '"' .$name.'"' ?> />
 <meta property="article:published_time" content=<?php echo '"' .$result['created'].'"' ?> />

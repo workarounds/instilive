@@ -15,8 +15,27 @@
                 var createEventCtrl = this;
                 var initialise = function () {
                     // initialising the booleans
-                    createEventCtrl.hasImage = false;
-                    createEventCtrl.hasTable = false;
+                    createEventCtrl.block_types = {
+                        image : {
+                            type: 'image',
+                            limit: true,
+                            present: false
+                        },
+                        table : {
+                            type: 'table',
+                            limit : true,
+                            present : false
+                        },
+                        video : {
+                            type: 'video',
+                            limit: true,
+                            present: false
+                        },
+                        text : {
+                            type: 'text',
+                            limit : false
+                        }
+                    };
 
                     createEventCtrl.lastUploadImage = null;
                     createEventCtrl.uploading = false;
@@ -76,53 +95,31 @@
                     });
                 };
 
-                createEventCtrl.addImage = function () {
-                    var ImageObj = {
-                        type: 'image',
+                createEventCtrl.addBlock = function (type) {
+                    var blockObj = {
+                        type: type,
                         content: {}
                     };
-                    if (createEventCtrl.hasImage) {
-                        var index = createEventCtrl.findIndexOf(ImageObj);
-                        $scope.notice.data.blocks.splice(index, true);
-                        createEventCtrl.hasImage = false;
-                    } else {
-                        $scope.notice.data.blocks.push(ImageObj);
-                        createEventCtrl.hasImage = true;
+                    $scope.notice.data.blocks.push(blockObj);
+                    if(createEventCtrl.block_types[type].limit) {
+                        createEventCtrl.block_types[type].present = true;
                     }
-                };
-                createEventCtrl.addTable = function () {
-                    var TableObj = {
-                        type: 'table',
-                        content: {}
-                    };
-                    if (createEventCtrl.hasTable) {
-                        var index = createEventCtrl.findIndexOf(TableObj);
-                        $scope.notice.data.blocks.splice(index, 1);
-                        createEventCtrl.hasTable = false;
-
-                    } else {
-                        $scope.notice.data.blocks.push(TableObj);
-                        createEventCtrl.hasTable = true;
-
-                    }
-                };
-                createEventCtrl.addText = function () {
-                    var TextObj = {
-                        type: 'text',
-                        content: {}
-                    };
-                    $scope.notice.data.blocks.push(TextObj);
                 };
 
                 createEventCtrl.deleteBlock = function (index) {
                     var block = $scope.notice.data.blocks[index];
-                    if (block.type == 'image') {
-                        createEventCtrl.hasImage = false;
-                    }
-                    if (block.type == 'table') {
-                        createEventCtrl.hasTable = false;
-                    }
                     $scope.notice.data.blocks.splice(index, 1);
+                    if(createEventCtrl.block_types[block.type].limit) {
+                        createEventCtrl.block_types[block.type].present = false;
+                    }
+                };
+
+                createEventCtrl.isButtonDisabled = function(type) {
+                    if(createEventCtrl.block_types[type].limit) {
+                        return createEventCtrl.block_types[type].present;
+                    } else {
+                        return false;
+                    }
                 };
 
                 createEventCtrl.findIndexOf = function (TypeObj) {
@@ -248,13 +245,24 @@
                     var hasCorners = $scope.notice.corners.length > 0;
                     var hasBlocks = $scope.notice.data.blocks.length > 0;
                     var isEvent = $scope.notice.is_event;
-                    if (createEventCtrl.hasImage) {
+                    if (createEventCtrl.block_types['image'].present) {
                         if (!createEventCtrl.image) {
                             return false;
                         }
                     }
                     if (createEventCtrl.uploading) {
                         return false;
+                    }
+                    if(createEventCtrl.block_types['video'].present) {
+                        for (var i in $scope.notice.data.blocks) {
+                            var block = $scope.notice.data.blocks[i];
+                            if(block.type == 'video') {
+                                if(block.content.video_url) {
+                                    //console.log(block.type.content.video_url);
+                                    return block.content.video_url.match(/(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/);
+                                }
+                            }
+                        }
                     }
                     return (hasCorners) && ((hasBlocks) || (isEvent));
                 };
@@ -269,7 +277,7 @@
                 };
 
                 createEventCtrl.add = function () {
-                    if (createEventCtrl.hasImage) {
+                    if (createEventCtrl.block_types['image'].present) {
                         createEventCtrl.upload().then(createEventCtrl.post);
                     }
                     else {
