@@ -31,6 +31,7 @@
             var scheduleCtrl = this;
 
             scheduleCtrl.notices = [];
+            scheduleCtrl.displayNotices = [];
             scheduleCtrl.eventDays = {};
             scheduleCtrl.nextDaySet = false;
             scheduleCtrl.showPrevious = false;
@@ -69,6 +70,9 @@
                         else{
                             scheduleCtrl.previousExists = true;
                         }
+                    }
+                    if(notices[i].next){
+                        scheduleCtrl.displayNotices.push(notices[i]);
                     }
                 }
             }
