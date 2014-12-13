@@ -17,7 +17,7 @@
                 tagsCtrl.selectedIndex = 1;
                 tagsCtrl.schedule = [];
                 tagsCtrl.notices = [];
-                tagsCtrl.showTabs = true;
+                tagsCtrl.showTabs = false;
                 tagsCtrl.hashData = StateService.getHashData();
                 if(tagsCtrl.hashData) {
                     tagsCtrl.getTagData();
