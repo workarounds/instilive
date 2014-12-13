@@ -1,25 +1,22 @@
-<section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">
-    <section style="padding: 0px;" ng-if=
-        "pinnedNoticesCtrl.notices.length">
-        <h2 class="pinned-heading">Pinned</h2>
-        <section ng-repeat="notice in pinnedNoticesCtrl.visibleNotices">
-            <pinned-notice data="notice"></pinned-notice>
-        </section>
-        <md-button
-            ng-click="pinnedNoticesCtrl.expand()"
-            ng-show="pinnedNoticesCtrl.canExpand"
-            >
-            Expand
-        </md-button>
-        <md-button
-            ng-click="pinnedNoticesCtrl.compress()"
-            ng-show="pinnedNoticesCtrl.canCompress"
-            >
-            Compress
-        </md-button>
-        <md-divider></md-divider>
-    </section>
-</section>
+<!--<section ng-controller="PinnedNoticesController as pinnedNoticesCtrl">-->
+    <!--<section style="padding: 0px;" ng-if="pinnedNoticesCtrl.notices.length">-->
+        <!--<h2 class="pinned-heading">Pinned</h2>-->
+        <!--<section ng-repeat="notice in pinnedNoticesCtrl.visibleNotices">-->
+            <!--<pinned-notice data="notice"></pinned-notice>-->
+        <!--</section>-->
+        <!--<md-button-->
+            <!--ng-click="pinnedNoticesCtrl.expand()"-->
+            <!--ng-show="pinnedNoticesCtrl.canExpand">-->
+            <!--Expand-->
+        <!--</md-button>-->
+        <!--<md-button-->
+            <!--ng-click="pinnedNoticesCtrl.compress()"-->
+            <!--ng-show="pinnedNoticesCtrl.canCompress">-->
+            <!--Compress-->
+        <!--</md-button>-->
+        <!--<md-divider></md-divider>-->
+    <!--</section>-->
+<!--</section>-->
 <div ng-controller="NoticesController as noticesCtrl">
     <!--tabs(upcoming/recent)-->
     <section layout="row" flex layout-align="center center"
@@ -30,8 +27,10 @@
             md-mode="indeterminate"></md-progress-circular>
     </section>
     <!--list of notices-->
-    <notice ng-repeat="notice in noticesCtrl.notices | limitTo: noticesCtrl.limitTo" data="notice"
-            hide-update="false">
+    <notice
+        ng-repeat="notice in noticesCtrl.notices | limitTo: dataLimit"
+        data="notice"
+        hide-update="false">
 
     </notice>
     <section flex layout="row" layout-align="center start"

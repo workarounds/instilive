@@ -12,6 +12,12 @@
 
             var initialise = function () {
                 tagsCtrl.canEdit = false;
+                tagsCtrl.scheduleLoaded = false;
+                tagsCtrl.noticesLoaded = false;
+                tagsCtrl.selectedIndex = 1;
+                tagsCtrl.schedule = [];
+                tagsCtrl.notices = [];
+                tagsCtrl.showTabs = true;
                 tagsCtrl.hashData = StateService.getHashData();
                 if(tagsCtrl.hashData) {
                     tagsCtrl.getTagData();
@@ -25,6 +31,59 @@
                     };
                     tagsCtrl.home = true;
                 }
+
+                loadNotices();
+                loadSchedule();
+            };
+
+            function loadNotices(force) {
+                StateService.getData(false, false, force).then(
+                    function(data){
+                        tagsCtrl.noticesLoaded = true;
+                        tagsCtrl.notices = data.Notice;
+                        setTabs();
+                    },
+                    function(){
+                        tagsCtrl.noticesLoaded = false;
+                    }
+                );
+            }
+
+            function loadSchedule(force){
+                StateService.getSchedule(false, false, force).then(
+                    function(data){
+                        tagsCtrl.scheduleLoaded = true;
+                        tagsCtrl.schedule = data.Notice;
+                        setTabs();
+                    },
+                    function(){
+                        tagsCtrl.scheduleLoaded = true;
+                    }
+                );
+            }
+
+            function setTabs(){
+                var noticesEmpty = tagsCtrl.noticesLoaded && (tagsCtrl.notices.length == 0);
+                var scheduleEmpty = tagsCtrl.scheduleLoaded && (tagsCtrl.schedule.length == 0);
+
+                tagsCtrl.showTabs = !noticesEmpty && !scheduleEmpty;
+
+                if(noticesEmpty){
+                    tagsCtrl.selectedIndex = 1;
+                }
+                else if(scheduleEmpty){
+                    tagsCtrl.selectedIndex = 2;
+                }
+            }
+
+            tagsCtrl.changeTab = function(index){
+                tagsCtrl.selectedIndex = index;
+            };
+
+            tagsCtrl.reloadData = function(){
+                loadNotices(true);
+                loadNotices(true);
+                $rootScope.$emit('VnbReloadData');
             };
 
             tagsCtrl.getBoardFromCtag= function(cTag) {

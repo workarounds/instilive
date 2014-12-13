@@ -5,12 +5,13 @@
         'StateService',
         '$state',
         '$scope',
-        function (StateService, $state, $scope) {
+        '$rootScope',
+        function (StateService, $state, $scope, $rootScope) {
             //intialize
             var noticesCtrl = this;
             noticesCtrl.notices = [];
             noticesCtrl.dataLoaded = false;
-            noticesCtrl.limitTo = 10;
+            $scope.dataLimit = 1;
 
             // check for redirect
             var currentState = StateService.getState();
@@ -18,14 +19,22 @@
                 $state.go('home.direct', {notice: currentState.notice});
             }
 
+            function increaseLimit(){
+                if($scope.dataLimit < noticesCtrl.notices.length){
+                    console.log(Date.now());
+                    $scope.$apply(function(){
+                        $scope.dataLimit = $scope.dataLimit + 1;
+                    });
+                    setTimeout(increaseLimit, 200);
+                }
+            }
+
             function fillData(data){
                 console.log(data);
                 var notices = data.Notice;
                 noticesCtrl.notices = notices;
                 noticesCtrl.dataLoaded = true;
-                setTimeout(function(){
-                    noticesCtrl.limitTo = 20
-                }, 500);
+                setTimeout(increaseLimit, 200);
             }
 
             function loadingFailded(){
@@ -60,7 +69,7 @@
                 );
             };
 
-            $scope.$on('VnbReloadData', function(){
+            $rootScope.$on('VnbReloadData', function(){
                 noticesCtrl.dataLoaded = false;
                 StateService.getData(false, false, true).then(
                     function(data){

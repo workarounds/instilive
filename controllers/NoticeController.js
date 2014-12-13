@@ -186,7 +186,7 @@
                     .then(
                     function (data) {
                         console.log('pinned');
-                        $state.go($state.current, {}, {reload: true});
+                        $rootScope.$emit('VnbReloadData');
                     },
                     function (err) {
                         console.log(err.data);
@@ -200,7 +200,7 @@
                     .then(
                     function (data) {
                         console.log('unpinned');
-                        $state.go($state.current, {}, {reload: true});
+                        $rootScope.$emit('VnbReloadData');
                     },
                     function (err) {
                         console.log(err.data);

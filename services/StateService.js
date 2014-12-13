@@ -25,6 +25,13 @@
                 tag: false, data: false
             };
 
+            var pinned = {
+                request : false,
+                loading: false,
+                tag: false,
+                data: false
+            };
+
             var stateService = {};
 
             stateService.startLoading = function(){
@@ -158,6 +165,45 @@
 
             stateService.getState = function () {
                 return currentState;
+            };
+
+            stateService.getPinned = function(state, force){
+                if(!state){
+                    state = currentState;
+                }
+                if(!force){
+                    force = false;
+                }
+
+                var deferred = $q.defer();
+                var result = deferred.promise;
+                var request;
+
+                if((state.tag == pinned.tag) && !force){
+                    if(pinned.loading){
+                        return pinned.request;
+                    }
+                    deferred.resolve(pinned.data);
+                    return deferred.promise;
+                }
+                else{
+                    VnbRestangular.setJsonp(true);
+                    request = VnbRestangular.all('corners').customGET('pinned', {tag: state.tag});
+                    VnbRestangular.setJsonp(false);
+                    pinned.tag = state.tag;
+                    pinned.request = request;
+                    result = request;
+                    pinned.loading = true;
+                    request.then(function(data){
+                        pinned.data = data;
+                        pinned.loading = false;
+                    }, function(){
+                        pinned.data = false;
+                        pinned.tag = false;
+                        pinned.loading = false;
+                    });
+                    return result;
+                }
             };
 
             stateService.getData = function (state, options, force) {

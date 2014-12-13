@@ -1,4 +1,5 @@
 <md-content class="background-container"
+            style="max-height: 100%"
             ng-controller="TagsController as tagsCtrl" layout="column"
             flex
             md-swipe-left="mainCtrl.toggleRightSidebar()"
@@ -64,32 +65,41 @@
             <section layout="row"
                      layout-align="center center">
                 <md-button class="vnb-tab vnb-tab-left"
+                           ng-show="tagsCtrl.showTabs"
                            md-ink-ripple="#777"
                            id="dtab1" aria-controls="dtab1-content"
-                           ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 1)}"
-                           ng-click="mainCtrl.changeTab(1)">
+                           ng-class="{'vnb-tab-current': (tagsCtrl.selectedIndex == 1)}"
+                           ng-click="tagsCtrl.changeTab(1)">
                     Coming up
                 </md-button>
                 <md-button class="vnb-tab vnb-tab-right"
                            md-ink-ripple="#777"
                            id="dtab2" aria-controls="dtab2-content"
-
-                           ng-class="{'vnb-tab-current': (mainCtrl.selectedIndex == 2)}"
-                           ng-click="mainCtrl.changeTab(2)">
+                           ng-show="tagsCtrl.showTabs"
+                           ng-class="{'vnb-tab-current': (tagsCtrl.selectedIndex == 2)}"
+                           ng-click="tagsCtrl.changeTab(2)">
                     What's new
                 </md-button>
                 <md-button class="vnb-button-round"
                            md-ink-ripple="#777"
-                           ng-click="mainCtrl.reloadData()"
+                           ng-show="tagsCtrl.showTabs"
+                           ng-click="tagsCtrl.reloadData()"
                            style="margin: 16px 8px 0px 8px"
                     >
                     <i class="fa fa-repeat"></i>
+                </md-button>
+                <md-button md-ink-ripple="#777"
+                           ng-click="tagsCtrl.reloadData()"
+                           style="margin: 16px 8px 0px 8px; padding: 8px 16px"
+                           ng-hide="tagsCtrl.showTabs"
+                    >
+                    <i class="fa fa-repeat"></i> Refresh
                 </md-button>
             </section>
             <section layout="row"
                      class="md-padding main-content"
                      style="max-width: 620px">
-                <ng-switch on="mainCtrl.selectedIndex"
+                <ng-switch on="tagsCtrl.selectedIndex"
                            class="tabpanel-container"
                            flex
                            layout="row" layout-align="center start">
@@ -107,7 +117,8 @@
             </section>
         </section>
         <section layout="column" flex style="margin-right:8px;
-        max-width: 320px;">
+        max-width: 320px;"
+             ng-if="!(tagsCtrl.scheduleLoaded && (tagsCtrl.schedule.length == 0))">
             <md-content class="background-container">
                 <section ui-view="right"
                          style="margin-top: 20px; max-width: 320px; min-width:240px">

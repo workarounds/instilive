@@ -17,7 +17,6 @@
             mainCtrl.headerColor = defaultHeaderColor;
 
             mainCtrl.loading = 0;
-            mainCtrl.selectedIndex = 1;
 
             // function to toggle sidebar
             mainCtrl.toggleLeftSidebar = function () {
@@ -68,14 +67,6 @@
                     console.log(err);
                 }
             );
-
-            mainCtrl.changeTab = function(index){
-                mainCtrl.selectedIndex = index;
-            };
-
-            mainCtrl.reloadData = function(){
-                $scope.$broadcast('VnbReloadData');
-            };
 
             $scope.$on('userDataEvent', function (event, data) {
                 mainCtrl.user = data;

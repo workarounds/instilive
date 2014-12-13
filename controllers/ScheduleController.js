@@ -26,7 +26,8 @@
         'StateService',
         'VnbModal',
         '$scope',
-        function (StateService, VnbModal, $scope) {
+        '$rootScope',
+        function (StateService, VnbModal, $scope, $rootScope) {
             var scheduleCtrl = this;
 
             scheduleCtrl.notices = [];
@@ -35,7 +36,7 @@
             scheduleCtrl.showPrevious = false;
             scheduleCtrl.previousExists = false;
             scheduleCtrl.dataLoaded = false;
-            scheduleCtrl.limitTo = 10;
+            $scope.scheduleLimit = 2;
 
             function generateEvents() {
                 var notices = scheduleCtrl.notices;
@@ -58,7 +59,8 @@
                         notices[i].corners = JSON.parse(notices[i].corners);
                     }
                     eventDays[toDateId(start)].events.push(notices[i]);
-                    eventDays[toDateId(start)].next = isNextDay(start);
+                    notices[i].next = isNextDay(start);
+                    eventDays[toDateId(start)].next = notices[i].next;
                     if(!scheduleCtrl.nextDaySet){
                         if(isNextDay(start)){
                             eventDays[toDateId(start)].anchor = 'vnb-schedule-next-day';
@@ -71,14 +73,22 @@
                 }
             }
 
+            function increaseLimit(){
+                if($scope.scheduleLimit < scheduleCtrl.notices.length){
+                    console.log(Date.now());
+                    $scope.$apply(function(){
+                        $scope.scheduleLimit = $scope.scheduleLimit + 2;
+                    });
+                    setTimeout(increaseLimit, 200);
+                }
+            }
+
             function fillData(data){
                 console.log(data);
                 scheduleCtrl.notices = data.Notice;
                 generateEvents();
                 scheduleCtrl.dataLoaded = true;
-                setTimeout(function(){
-                    scheduleCtrl.limitTo = 20
-                }, 500);
+                setTimeout(increaseLimit, 250);
             }
 
             function loadingFailed(){
@@ -96,7 +106,7 @@
                 }
             );
 
-            $scope.$on('VnbReloadData', function(){
+            $rootScope.$on('VnbReloadData', function(){
                 scheduleCtrl.dataLoaded = false;
                 StateService.getSchedule(false, false, true).then(
                     function(data){
