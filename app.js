@@ -69,6 +69,19 @@
                     }
                 }
             })
+            .state('bulk', {
+                url: '/bulk',
+                views: {
+                    "main@" : {
+                        templateUrl: 'components/layout/plain-header.html'
+                    },
+                    "content@create": {
+                        templateUrl: 'components/notice/create-event.html',
+                        controller: 'BulkUploadController as bulkCtrl'
+                    }
+                },
+                resolve: commonResolve
+            })
             ;
         $urlRouterProvider.when('/home', '/interIIT/all');
         $urlRouterProvider.when('/home/', '/interIIT/all');
