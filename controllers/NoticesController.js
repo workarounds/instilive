@@ -11,6 +11,7 @@
             var noticesCtrl = this;
             noticesCtrl.notices = [];
             noticesCtrl.dataLoaded = false;
+            noticesCtrl.loadingMore = false;
             $scope.dataLimit = 1;
 
             // check for redirect
@@ -57,14 +58,23 @@
                 var lastIndex = noticesCtrl.notices.length - 1;
                 var from = noticesCtrl.notices[lastIndex].modified;
                 var options = {from: from};
+                noticesCtrl.loadingMore = true;
                 StateService.getData(false, options, true).then(
                     function (data) {
                         var extraNotices = data.Notice;
-                        console.log(extraNotices);
+                        noticesCtrl.loadingMore = false;
+                        if(extraNotices.length == 0){
+                            StateService.showToast('Nothing more actually :P');
+                            return;
+                        }
                         noticesCtrl.notices = noticesCtrl.notices.concat(extraNotices);
-                        console.log(noticesCtrl.notices);
+                        setTimeout(increaseLimit, 200);
                     },
-                    console.log
+                    function(err){
+                        noticesCtrl.loadingMore = false;
+                        console.log(err);
+                        StateService.showToast('Sorry some error occured');
+                    }
                 );
             };
 

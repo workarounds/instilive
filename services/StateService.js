@@ -337,11 +337,15 @@
 
 
             stateService.getSchedule = function (state, options, force) {
+                var dontKeep  = false;
                 if (!state) {
                     state = currentState;
                 }
                 if (!options) {
-                    
+                    options = {from: new Date().getTime()/1000};
+                }
+                else{
+                    dontKeep = true;
                 }
                 if(!force){
                     force = false;
@@ -369,8 +373,10 @@
                     schedule.request = result;
                     schedule.loading = true;
                     result.then(function(data){
-                        schedule.tag = state.tag;
-                        schedule.data = data;
+                        if(!dontKeep) {
+                            schedule.tag = state.tag;
+                            schedule.data = data;
+                        }
                         schedule.loading = false;
                     }, function(){
                         schedule.data = false;

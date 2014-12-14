@@ -4,7 +4,7 @@
             >Overview</h2>
         <span class="font-small text-muted vnb-text-link"
               style="margin-right: 8px;"
-              ng-show="(!scheduleCtrl.showPrevious) && scheduleCtrl.previousExists"
+              ng-show="(!scheduleCtrl.showPrevious)"
               ng-click="scheduleCtrl.showPrevious = true"
             >
             <i class="fa fa-caret-up"></i> previous
@@ -41,6 +41,19 @@
                         </md-item>
                     </md-list>
                     <md-divider></md-divider>
+                </section>
+                <section layout="row" flex layout-align="center center"
+                         style="padding: 8px;"
+                         ng-show="scheduleCtrl.loadingMore">
+
+                    <md-progress-circular
+                        md-mode="indeterminate"></md-progress-circular>
+                </section>
+                <section flex layout="row" layout-align="center start"
+                         ng-show="scheduleCtrl.notices.length">
+                    <md-button ng-click="scheduleCtrl.loadMore()" flex
+                               class="md-primary">Load more
+                    </md-button>
                 </section>
                 <!--<section layout="row" flex layout-align="center center" style="height: 300px;" ng-hide="scheduleCtrl.eventDays.length > 0">-->
                 <!--<p> No events </p>-->

@@ -35,8 +35,8 @@
             scheduleCtrl.eventDays = {};
             scheduleCtrl.nextDaySet = false;
             scheduleCtrl.showPrevious = false;
-            scheduleCtrl.previousExists = false;
             scheduleCtrl.dataLoaded = false;
+            scheduleCtrl.loadingMore = false;
             $scope.scheduleLimit = 2;
 
             function generateEvents() {
@@ -68,9 +68,6 @@
                             eventDays[toDateId(start)].anchor = 'vnb-schedule-next-day';
                             scheduleCtrl.nextDaySet = true;
                         }
-                        else{
-                            scheduleCtrl.previousExists = true;
-                        }
                     }
                     if(notices[i].next){
                         scheduleCtrl.displayNotices.push(notices[i]);
@@ -78,9 +75,95 @@
                 }
             }
 
+            scheduleCtrl.getPrevious = function(){
+                if(scheduleCtrl.notices.length>0) {
+                    var to = getDateObj(scheduleCtrl.notices[0].start_time);
+                    var from = '2014-12-11 23:59:59';
+                    var limit = 1000;
+                    var options = {
+                        from: from,
+                        to: to,
+                        limit: limit
+                    };
+                }
+                else{
+                    var from = '2014-12-11 23:59:59';
+                    var limit = 1000;
+                    var options = {
+                        from: from,
+                        limit: limit
+                    };
+                }
+
+                scheduleCtrl.showPrevious = true;
+                scheduleCtrl.dataLoaded = false;
+                StateService.getSchedule(false, options, true).then(
+                    function(data){
+                        fillPrevious(data);
+                    },
+                    function(err){
+                        console.log(err);
+                        scheduleCtrl.dataLoaded = true;
+                        scheduleCtrl.showPrevious = false;
+                        StateService.showToast('Some error occurred. Please try again');
+                    }
+                )
+            };
+
+            scheduleCtrl.loadMore = function(){
+                var last = scheduleCtrl.notices.length - 1;
+                var from = getDateObj(scheduleCtrl.notices[last].start_time);
+                var options = {
+                    from: from+1
+                };
+
+                scheduleCtrl.loadingMore = true;
+                StateService.getSchedule(false, options, true).then(
+                    function(data){
+                        fillMore(data);
+                    },
+                    function(err){
+                        console.log(err);
+                        scheduleCtrl.loadingMore = false;
+                        StateService.showToast('Some error occurred. Please try again');
+                    }
+                )
+            };
+
+            function fillMore(data){
+                var current = angular.copy(scheduleCtrl.notices);
+                var more = data.Notice;
+                if(more.length == 0){
+                    scheduleCtrl.loadingMore = false;
+                    StateService.showToast('Nothing more actually :P');
+                    return;
+                }
+                scheduleCtrl.notices = [];
+                scheduleCtrl.notices = current.concat(more);
+                generateEvents();
+                scheduleCtrl.loadingMore = false;
+                setTimeout(increaseLimit, 200);
+            }
+
+            function fillPrevious(data){
+                var previous = data.Notice;
+                if(previous.length == 0){
+                    scheduleCtrl.dataLoaded = true;
+                    scheduleCtrl.showPrevious = true;
+                    StateService.showToast('Nothing there as well :P');
+                    return;
+                }
+                var current = angular.copy(scheduleCtrl.notices);
+                scheduleCtrl.notices = [];
+                scheduleCtrl.notices = previous.concat(current);
+                generateEvents();
+                scheduleCtrl.scheduleLimit = 2;
+                scheduleCtrl.dataLoaded = true;
+                setTimeout(increaseLimit, 200);
+            }
+
             function increaseLimit(){
                 if($scope.scheduleLimit < scheduleCtrl.notices.length){
-                    console.log(Date.now());
                     $scope.$apply(function(){
                         $scope.scheduleLimit = $scope.scheduleLimit + 2;
                     });
@@ -89,7 +172,6 @@
             }
 
             function fillData(data){
-                console.log(data);
                 scheduleCtrl.notices = data.Notice;
                 generateEvents();
                 scheduleCtrl.dataLoaded = true;
