@@ -17,7 +17,10 @@
             'matchmedia-ng',
             'ngSanitize',
             'youtube-embed',
-            'ui.bootstrap.datetimepicker'
+            'ui.bootstrap.datetimepicker',
+            'angulartics',
+            'angulartics.google.analytics'
+
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
