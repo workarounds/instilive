@@ -79,7 +79,7 @@
                         class="menu-item menu-title md-menu-item"
                         md-highlight="sidebarCtrl.isCurrentMenu(corner.tag)"
                         ng-click="sidebarCtrl.updateCurrentMenu(corner.tag)"
-                        ng-if="corner.tag.indexOf('interIIT-') > -1"
+                        ng-if="(corner.tag.indexOf('interIIT-') > -1) && (corner.tag.indexOf('schedule') == -1)"
                         md-ink-ripple="#bbb"
                         vnb-link="corner.tag"
                         ng-bind="corner.name">
