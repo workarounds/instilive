@@ -4,94 +4,77 @@
                ng-click="createEventCtrl.login()">Login
     </md-button>
 </section>
-<section layout="row" ng-if="user && createEventCtrl.position"
-         flex layout-align="center start" class="background-container">
-    <section flex layout="column" style="max-width: 620px">
-        <section>
-            <notice data="notice" hide-update="true"></notice>
-        </section>
-        <section layout="column">
-            <h1>Create new post</h1>
-            <section ng-if="createEventCtrl.parent">
-                <h2>Update to {{createEventCtrl.parent.data.title}}</h2>
+<form layout="column" ng-if="user && createEventCtrl.position"
+         flex layout-align="start center" class="background-container event-editor" name="form" novalidate>
+    <notice data="notice" hide-update="true" class="full-width">
 
-                <p>Do not reload</p>
-            </section>
-            <form name="form" class="form-horizontal" novalidate>
+    </notice>
 
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">
-                        Title
-                    </label>
-
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control"
-                               id="title" ng-model="notice.data.title"
-                               placeholder="Swimming Finals" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="postas">
-                        Post as
-                    </label>
-
-                    <div class="col-sm-8">
-                        <select id="postas" ng-model="createEventCtrl.position"
-                                class="form-control"
-                                ng-change="changePos()"
-                                ng-options="pos.name for pos in createEventCtrl.positions"></select>
-                    </div>
-                </div>
-
-                <vnb-tag-input ng-if="createEventCtrl.corners.length"
-                               model="notice.corners"
-                               data="createEventCtrl.corners"
-                               label="'Corners'">
-
-                </vnb-tag-input>
-
-                <section class="create-event-container" layout="column">
-                    <md-checkbox ng-model="notice.is_event"
-                                 aria-label="Event">
-                        Event
-                    </md-checkbox>
-                    <section class="create-event-inputs"
-                             ng-if="notice.is_event">
-                        <div
-                            ng-include="'/components/notice/event-inputs.html'"></div>
-                    </section>
-                </section>
-
-                <section class="create-others-container"
-                         ng-repeat="data in notice.data.blocks">
-                    <div
-                        ng-include="'/components/notice/'+data.type+'-inputs.html'"></div>
-                    <md-button ng-click="createEventCtrl.deleteBlock($index)">
-                        Delete
-                    </md-button>
-                </section>
-
-
-                <section class="create-option-buttons" layout="row"
-                         layout-align="start center">
-                    <md-button class="md-raised" style="margin-right: 16px"
-                               ng-repeat="inputBlock in createEventCtrl.block_types"
-                               ng-disabled="createEventCtrl.isButtonDisabled(inputBlock.type)"
-                        ng-click="createEventCtrl.addBlock(inputBlock.type)">
-                        Insert {{inputBlock.type}}
-                    </md-button>
-                </section>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-6">
-                        <md-button class="md-primary"
-                                   ng-disabled="!(createEventCtrl.isDataValid() && form.$valid)"
-                                   ng-click="createEventCtrl.add()">Add
-                        </md-button>
-                    </div>
-                </div>
-            </form>
-        </section>
+    <h3 ng-if="!createEventCtrl.parent">Create new post</h3>
+    <section ng-if="createEventCtrl.parent">
+        <h3>Update to {{createEventCtrl.parent.data.title}}</h3>
+        <span>Do not reload</span>
     </section>
-</section>
+
+    <section class="create-event-group" layout="column">
+        <b class="create-event-title">Title : </b>
+        <input type="text" flex
+               id="title" ng-model="notice.data.title"
+               placeholder="Swimming Finals" required>
+    </section>
+    <section class="create-event-group" layout="column">
+        <b class="create-event-title">Post as : </b>
+        <select id="postas" ng-model="createEventCtrl.position"
+                ng-change="changePos()"
+                ng-options="pos.name for pos in createEventCtrl.positions"></select>
+    </section>
+    <section class="create-event-group" layout="column">
+        <vnb-tag-input ng-if="createEventCtrl.corners.length"
+                       model="notice.corners"
+                       data="createEventCtrl.corners"
+                       label="'Corners'">
+
+        </vnb-tag-input>
+    </section>
+    <section class="create-event-group" layout="column">
+        <md-checkbox ng-model="notice.is_event"
+                     aria-label="Event">
+            Event
+        </md-checkbox>
+        <div ng-if="notice.is_event"
+            ng-include="'/components/notice/event-inputs.html'"></div>
+    </section>
+    <section class="create-event-group"
+             layout="column"
+             ng-repeat="data in notice.data.blocks" >
+        <div class="create-event-block"
+            ng-include="'/components/notice/'+data.type+'-inputs.html'">
+
+            </div>
+        <md-button ng-click="createEventCtrl.deleteBlock($index)">
+            Delete
+        </md-button>
+    </section>
+
+    <section class="create-event-group" layout="row"
+             layout-align="center center">
+        <md-button class="md-raised" style="margin-right: 16px"
+                   ng-repeat="inputBlock in createEventCtrl.block_types"
+                   ng-disabled="createEventCtrl.isButtonDisabled(inputBlock.type)"
+                   ng-click="createEventCtrl.addBlock(inputBlock.type)">
+            + {{inputBlock.type}}
+        </md-button>
+    </section>
+
+    <section layout="row" layout-align="center center" class="create-event-group">
+        <md-button class="md-primary"
+                   ng-disabled="!(createEventCtrl.isDataValid() && form.$valid)"
+                   ng-click="createEventCtrl.add()">Add
+        </md-button>
+        <md-button class="md-primary"
+                   ng-if="createEventCtrl.showModalClose"
+                   ng-click="createEventCtrl.closeModal()">Close
+        </md-button>
+    </section>
+</form>
+

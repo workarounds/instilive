@@ -352,24 +352,23 @@
                 });
             };
             $scope.addUpdate = function () {
-                //var modalInstance = $modal.open({
-                //    templateUrl: 'components/notice/create-event.html',
-                //    controller: 'UpdateEventController as createEventCtrl',
-                //    size: 'lg',
-                //    resolve: {
-                //        parentData: function () {
-                //            return $scope.notice;
-                //        }
-                //    }
-                //});
-                //
-                //modalInstance.result.then(function () {
-                //    console.log('modal closed with success');
-                //}, function () {
-                //    console.log('Modal dismissed at: ' + new Date());
-                //});
                 $rootScope.parentNotice = $scope.notice;
-                $state.go('create', {parentNotice: $scope.notice});
+                var modalInstance = $modal.open({
+                    templateUrl: 'components/notice/create-event.html',
+                    controller: 'CreateEventController as createEventCtrl',
+                    size: 'lg',
+                    resolve: {
+                        noticeData: function () {
+                            return null;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+                    console.log('modal closed with success');
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
             };
             $scope.showUpdates = function() {
                 var modalParams = {

@@ -16,7 +16,8 @@
             'ngImgur',
             'matchmedia-ng',
             'ngSanitize',
-            'youtube-embed'
+            'youtube-embed',
+            'ui.bootstrap.datetimepicker'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
