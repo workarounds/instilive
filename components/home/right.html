@@ -1,7 +1,7 @@
 <section ng-controller="ScheduleController as scheduleCtrl">
     <section layout="row" layout-align="center end" ng-if="scheduleCtrl.notices.length">
         <h2 flex class="pinned-heading" ng-if="mainCtrl.isDesktop"
-            >Overview</h2>
+            >Schedule</h2>
         <span class="font-small text-muted vnb-text-link"
               style="margin-right: 8px;"
               ng-show="(!scheduleCtrl.showPrevious)"
@@ -23,7 +23,7 @@
         <div
             layout="column" flex layout-fill
             style="position: relative; overflow: hidden">
-            <md-content style="width: 100%; max-height: 640px;">
+            <md-content ng-class="{'limit-height':mainCtrl.isDesktop}" style="width: 100%;">
                 <section ng-repeat="day in scheduleCtrl.eventDays"
                          id="{{day.anchor}}">
                     <md-subheader class="schedule-day">
