@@ -88,6 +88,7 @@
                             $scope.notice.parent = createEventCtrl.parent.id;
                             $scope.notice.data.parent_title = createEventCtrl.parent.data.title;
                         }
+                        $scope.notice.corners = createEventCtrl.parent.corners;
                     }
                     console.log(createEventCtrl.parent);
 
@@ -208,14 +209,13 @@
                             var tempPosition = createEventCtrl.positions[tempPositionId];
                             if (tempPosition['id'] === $scope.notice.position_id) {
                                 createEventCtrl.position = tempPosition;
-                                initSelection();
                                 break;
                             }
                         }
                     } else {
                         createEventCtrl.position = createEventCtrl.positions[0];
-                        $scope.changePos();
                     }
+                    $scope.changePos();
                 };
 
                 var initSelection = function () {
@@ -224,7 +224,15 @@
 
                 $scope.changePos = function () {
                     createEventCtrl.corners = createEventCtrl.position.corners;
+                    var currentCorners = angular.copy($scope.notice.corners);
                     $scope.notice.corners = [];
+                    for(var i = 0; i < currentCorners.length; i++){
+                        for(var j = 0; j < createEventCtrl.corners.length; j++) {
+                            if (createEventCtrl.corners[j].tag == currentCorners[i].tag) {
+                                $scope.notice.corners.push(currentCorners[i]);
+                            }
+                        }
+                    }
                     $scope.notice.data.position_name = createEventCtrl.position.name;
                     $scope.notice.position_id = createEventCtrl.position.id;
                 };

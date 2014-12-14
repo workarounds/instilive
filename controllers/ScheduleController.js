@@ -78,7 +78,8 @@
             scheduleCtrl.getPrevious = function(){
                 if(scheduleCtrl.notices.length>0) {
                     var to = getDateObj(scheduleCtrl.notices[0].start_time);
-                    var from = '2014-12-11 23:59:59';
+                    var from = angular.copy(to);
+                    from.setDate(from.getDate() -3);
                     var limit = 1000;
                     var options = {
                         from: from,
@@ -113,8 +114,9 @@
             scheduleCtrl.loadMore = function(){
                 var last = scheduleCtrl.notices.length - 1;
                 var from = getDateObj(scheduleCtrl.notices[last].start_time);
+                from.setMinutes(from.getMinutes() + 1);
                 var options = {
-                    from: from+1
+                    from: from
                 };
 
                 scheduleCtrl.loadingMore = true;
@@ -157,6 +159,7 @@
                 scheduleCtrl.notices = [];
                 scheduleCtrl.notices = previous.concat(current);
                 generateEvents();
+                scheduleCtrl.showPrevious = false;
                 scheduleCtrl.scheduleLimit = 2;
                 scheduleCtrl.dataLoaded = true;
                 setTimeout(increaseLimit, 200);
@@ -197,6 +200,7 @@
                 scheduleCtrl.dataLoaded = false;
                 StateService.getSchedule(false, false, true).then(
                     function(data){
+                        scheduleCtrl.showPrevious = false;
                         fillData(data);
                     },
                     function(){
