@@ -57,6 +57,8 @@
                     layout-align="start center"
                     vnb-bg-color={{mainCtrl.headerColor}}>
             <img src="/images/logo.png" alt="instilive"
+                 ui-sref="tag.all({tag: 'interIIT'})"
+                 ng-click="mainCtrl.closeLeftSidebar()"
                  class="vnb-logo"/>
         </md-toolbar>
         <md-content
@@ -97,6 +99,11 @@
                     <span class="vnb-sidebar-small"
                           ng-if="parent.subtitle"
                           ng-bind="parent.subtitle"></span>
+                    <span class="pull-right vnb-dropdown">
+                        <i class="fa"
+                           ng-class="{'fa-caret-down': !sidebarCtrl.isCurrentMenu(parent.prefix), 'fa-caret-up': sidebarCtrl.isCurrentMenu(parent.prefix)}">
+                        </i>
+                    </span>
                 </button>
 
                 <a class="menu-item menu-sub-item md-menu-item"
@@ -111,7 +118,13 @@
                         ng-bind="corner.name | removeTextInBrackets"></span>
                 </a>
             </div>
+            <md-divider></md-divider>
+            <a class="menu-item menu-title md-menu-item"
+               ng-bind="'Instimap'"
+               target="_blank"
+                href="https://play.google.com/store/apps/details?id=in.designlabs.instimap">
 
+            </a>
             <!-- div>
                 <button
                     class="menu-item menu-title md-menu-item"

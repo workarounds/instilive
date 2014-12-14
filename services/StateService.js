@@ -342,7 +342,9 @@
                     state = currentState;
                 }
                 if (!options) {
-                    options = {from: new Date().getTime()/1000};
+                    var from = new Date();
+                    from.setMinutes(from.getMinutes() - 8*60);
+                    options = {from: from.getTime()/1000};
                 }
                 else{
                     dontKeep = true;
