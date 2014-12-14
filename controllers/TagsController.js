@@ -17,7 +17,6 @@
                 tagsCtrl.selectedIndex = 1;
                 tagsCtrl.schedule = [];
                 tagsCtrl.notices = [];
-                tagsCtrl.showTabs = false;
                 tagsCtrl.hashData = StateService.getHashData();
                 if(tagsCtrl.hashData) {
                     tagsCtrl.getTagData();
@@ -54,26 +53,11 @@
                     function(data){
                         tagsCtrl.scheduleLoaded = true;
                         tagsCtrl.schedule = data.Notice;
-                        setTabs();
                     },
                     function(){
                         tagsCtrl.scheduleLoaded = true;
                     }
                 );
-            }
-
-            function setTabs(){
-                var noticesEmpty = tagsCtrl.noticesLoaded && (tagsCtrl.notices.length == 0);
-                var scheduleEmpty = tagsCtrl.scheduleLoaded && (tagsCtrl.schedule.length == 0);
-
-                tagsCtrl.showTabs = !noticesEmpty && !scheduleEmpty;
-
-                if(noticesEmpty){
-                    tagsCtrl.selectedIndex = 1;
-                }
-                else if(scheduleEmpty){
-                    tagsCtrl.selectedIndex = 2;
-                }
             }
 
             tagsCtrl.changeTab = function(index){

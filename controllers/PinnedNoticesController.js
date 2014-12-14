@@ -50,6 +50,7 @@
             };
 
             $rootScope.$on('VnbReloadData', function(){
+                pinnedNoticesCtrl.notices = [];
                 getPinnedNotices(true);
             });
 
