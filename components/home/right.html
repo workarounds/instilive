@@ -23,7 +23,7 @@
         <div
             layout="column" flex layout-fill
             style="position: relative; overflow: hidden">
-            <md-content style="width: 100%; max-height: 640px;">
+            <md-content ng-class="{'limit-height':mainCtrl.isDesktop}" style="width: 100%;">
                 <section ng-repeat="day in scheduleCtrl.eventDays"
                          id="{{day.anchor}}">
                     <md-subheader class="schedule-day">
