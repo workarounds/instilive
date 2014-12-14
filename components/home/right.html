@@ -5,10 +5,17 @@
         <span class="font-small text-muted vnb-text-link"
               style="margin-right: 8px;"
               ng-show="(!scheduleCtrl.showPrevious)"
-              ng-click="scheduleCtrl.showPrevious = true"
+              ng-click="scheduleCtrl.getPrevious()"
             >
             <i class="fa fa-caret-up"></i> previous
         </span>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="padding: 32px;"
+             ng-show="!scheduleCtrl.dataLoaded">
+
+        <md-progress-circular
+            md-mode="indeterminate"></md-progress-circular>
     </section>
     <section style="padding: 0px" class="vnb-schedule"
              ng-if="scheduleCtrl.notices.length">
@@ -18,7 +25,7 @@
             style="position: relative; overflow: hidden">
             <md-content style="width: 100%; max-height: 640px;">
                 <section ng-repeat="day in scheduleCtrl.eventDays"
-                         id="{{day.anchor}}" ng-show="scheduleCtrl.showPrevious || day.next">
+                         id="{{day.anchor}}">
                     <md-subheader class="schedule-day">
                         {{day.date | date:'MMMM d'}}
                     </md-subheader>

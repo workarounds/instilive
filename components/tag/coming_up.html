@@ -37,7 +37,7 @@
         >
     </md-divider>
     <notice ng-repeat="notice in scheduleCtrl.notices | limitTo:scheduleLimit"
-            data="notice" hide-update="false" ng-if="notice.next || scheduleCtrl.showPrevious">
+            data="notice" hide-update="false">
 
     </notice>
     <section layout="row" flex layout-align="center center"

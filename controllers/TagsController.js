@@ -40,7 +40,6 @@
                     function(data){
                         tagsCtrl.noticesLoaded = true;
                         tagsCtrl.notices = data.Notice;
-                        setTabs();
                     },
                     function(){
                         tagsCtrl.noticesLoaded = false;
