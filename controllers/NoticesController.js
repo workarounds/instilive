@@ -25,7 +25,7 @@
                     $scope.$apply(function(){
                         $scope.dataLimit = $scope.dataLimit + 1;
                     });
-                    setTimeout(increaseLimit, 200);
+                    setTimeout(increaseLimit, 400);
                 }
             }
 
@@ -34,7 +34,7 @@
                 var notices = data.Notice;
                 noticesCtrl.notices = notices;
                 noticesCtrl.dataLoaded = true;
-                setTimeout(increaseLimit, 200);
+                setTimeout(increaseLimit, 400);
             }
 
             function loadingFailded(){

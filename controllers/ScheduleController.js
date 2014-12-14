@@ -37,7 +37,7 @@
             scheduleCtrl.showPrevious = false;
             scheduleCtrl.dataLoaded = false;
             scheduleCtrl.loadingMore = false;
-            $scope.scheduleLimit = 2;
+            $scope.scheduleLimit = 1;
 
             function generateEvents() {
                 scheduleCtrl.eventDays = {};
@@ -160,17 +160,17 @@
                 scheduleCtrl.notices = previous.concat(current);
                 generateEvents();
                 scheduleCtrl.showPrevious = false;
-                scheduleCtrl.scheduleLimit = 2;
+                scheduleCtrl.scheduleLimit = 1;
                 scheduleCtrl.dataLoaded = true;
-                setTimeout(increaseLimit, 200);
+                setTimeout(increaseLimit, 400);
             }
 
             function increaseLimit(){
                 if($scope.scheduleLimit < scheduleCtrl.notices.length){
                     $scope.$apply(function(){
-                        $scope.scheduleLimit = $scope.scheduleLimit + 2;
+                        $scope.scheduleLimit = $scope.scheduleLimit + 1;
                     });
-                    setTimeout(increaseLimit, 200);
+                    setTimeout(increaseLimit, 400);
                 }
             }
 
