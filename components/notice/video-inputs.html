@@ -1,14 +1,8 @@
-<section layout="column">
-    <div class="form-group">
-        <label for="desc" class="col-sm-2 control-label">
-            Youtube link
-        </label>
-
-        <div class="col-sm-8">
-            <textarea class="form-control"
-                      id="desc" ng-model="data.content.video_url"
-                      placeholder="Paste link here" required>
-            </textarea>
-        </div>
-    </div>
+<section class="full-width" layout="column">
+    <b class="create-event-title">Youtube link : </b>
+    <textarea class="form-control"
+              id="video" ng-model="data.content.video_url"
+              placeholder="Paste youtube link here" required>
+    </textarea>
 </section>
+

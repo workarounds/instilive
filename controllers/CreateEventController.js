@@ -37,6 +37,18 @@
                         }
                     };
 
+                    createEventCtrl.showModalClose = false;
+                    if($modalInstance) {
+                        createEventCtrl.showModalClose = true;
+                    }
+                    createEventCtrl.closeModal = function () {
+                        if($modalInstance) {
+                            $modalInstance.dismiss();
+                        }
+                    };
+
+                    createEventCtrl.duration = 60;
+
                     createEventCtrl.lastUploadImage = null;
                     createEventCtrl.uploading = false;
 
@@ -225,11 +237,8 @@
                 };
 
                 createEventCtrl.adjustToDate = function () {
-                    var to = $scope.notice.to;
-                    var from = $scope.notice.from;
-                    if (to < from) {
-                        $scope.notice.to = from;
-                    }
+                    $scope.notice.to = $scope.notice.from;
+                    $scope.notice.to.setMinutes($scope.notice.to.getMinutes() + createEventCtrl.duration);
                 };
 
                 createEventCtrl.adjustFromDate = function () {
@@ -264,16 +273,19 @@
                             }
                         }
                     }
+                    if(isEvent) {
+                        var diff = ($scope.notice.to.getTime() - $scope.notice.from.getTime());
+                        if(diff <= 0) {
+                            return false;
+                        }
+                    };
+                    console.log((hasCorners) && ((hasBlocks) || (isEvent)));
                     return (hasCorners) && ((hasBlocks) || (isEvent));
                 };
 
                 createEventCtrl.test = function () {
-                    var result = StateService.getLoginStatus();
-                    result.then(function (data) {
-                        console.log(data);
-                    }, function (err) {
-                        console.log(err);
-                    });
+                    console.log($scope.notice);
+                    console.log($scope.notice.from);
                 };
 
                 createEventCtrl.add = function () {
