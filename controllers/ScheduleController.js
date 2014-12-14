@@ -79,11 +79,12 @@
                 if(scheduleCtrl.notices.length>0) {
                     var to = getDateObj(scheduleCtrl.notices[0].start_time);
                     var from = angular.copy(to);
+                    to.setMinutes(to.getMinutes() -1);
                     from.setDate(from.getDate() -3);
                     var limit = 1000;
                     var options = {
-                        from: from,
-                        to: to,
+                        from: from.getTime()/1000,
+                        to: to.getTime()/1000,
                         limit: limit
                     };
                 }
@@ -91,7 +92,7 @@
                     var from = '2014-12-11 23:59:59';
                     var limit = 1000;
                     var options = {
-                        from: from,
+                        from: from.getTime()/1000,
                         limit: limit
                     };
                 }
@@ -116,7 +117,7 @@
                 var from = getDateObj(scheduleCtrl.notices[last].start_time);
                 from.setMinutes(from.getMinutes() + 1);
                 var options = {
-                    from: from
+                    from: from.getTime()/1000
                 };
 
                 scheduleCtrl.loadingMore = true;
@@ -152,7 +153,7 @@
                 if(previous.length == 0){
                     scheduleCtrl.dataLoaded = true;
                     scheduleCtrl.showPrevious = true;
-                    StateService.showToast('Nothing there as well :P');
+                    StateService.showToast('We don\'t remember anything before that :P');
                     return;
                 }
                 var current = angular.copy(scheduleCtrl.notices);
