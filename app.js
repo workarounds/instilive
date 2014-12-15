@@ -100,8 +100,7 @@
                         templateUrl: 'components/tag/tag.html'
                     },
                     "right@home": {
-                        templateUrl: 'components/home/right.html',
-                        controller: 'HomeNavController as rightnavCtrl'
+                        templateUrl: 'components/home/right.html'
                     }
                 },
                 resolve: commonResolve
@@ -110,7 +109,7 @@
                 url: '/direct/:notice',
                 views: {
                     "main@": {
-                        templateUrl: 'components/layout/plain-header.html',
+                        templateUrl: 'components/layout/plain-header.html'
                     },
                     "content@home.direct": {
                         templateUrl: 'components/notice/updates.html',
