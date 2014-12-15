@@ -157,8 +157,9 @@
             </section>
         </section>
         <section ng-show="showCopyBox">
-            <input class="vnb-text-box vnb-notice-copy-box" type="text"
-                   ng-value="getShareLink()"/>
+            <p class="vnb-text-box vnb-notice-copy-box">
+                   {{getShareLink()}}
+            </p>
         </section>
         <section class="vnb-notice-comments"
                  ng-controller="CommentsController as commentsCtrl">
