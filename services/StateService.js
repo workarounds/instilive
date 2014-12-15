@@ -25,6 +25,13 @@
                 tag: false, data: false
             };
 
+            var results = {
+                request: false,
+                loading: false,
+                tag: false,
+                data: false
+            };
+
             var pinned = {
                 request : false,
                 loading: false,
@@ -165,6 +172,22 @@
 
             stateService.getState = function () {
                 return currentState;
+            };
+
+            stateService.setSchedule = function(data, state){
+                if(!state){
+                    state = currentState;
+                }
+                schedule.tag = state.tag;
+                schedule.data = data;
+            };
+
+            stateService.setResults = function(data, state){
+                if(!state){
+                    state = currentState;
+                }
+                results.tag = state.tag;
+                schedule.data = data;
             };
 
             stateService.getPinned = function(state, force){
@@ -384,6 +407,59 @@
                         schedule.data = false;
                         schedule.tag = false;
                         schedule.loading = false;
+                    });
+                }
+
+                return result;
+            };
+
+            stateService.getResults = function(state, options, force){
+                var dontKeep  = false;
+                if (!state) {
+                    state = currentState;
+                }
+                if (!options) {
+                    options = {};
+                }
+                else{
+                    dontKeep = true;
+                }
+                if(!force){
+                    force = false;
+                }
+
+                var result;
+                var deferred = $q.defer();
+                result = deferred.promise;
+
+                if((state.tag == results.tag) && !force){
+                    if(results.loading){
+                        return results.request;
+                    }
+                    console.log('here');
+                    deferred.resolve(results.data);
+                    return deferred.promise;
+                }
+                else {
+                    if (state.tag) {
+                        options.tag = state.tag;
+                    }
+                    VnbRestangular.setJsonp(true);
+                    result = VnbRestangular.all('notices').customGET('results', options);
+                    VnbRestangular.setJsonp(false);
+                    results.tag = state.tag;
+                    results.request = result;
+                    results.loading = true;
+                    result.then(function(data){
+                        if(!dontKeep) {
+                            results.tag = state.tag;
+                            results.data = data;
+                        }
+                        results.loading = false;
+                    }, function(){
+                        results.data = false;
+                        results.tag = false;
+                        results.loading = false;
                     });
                 }
 

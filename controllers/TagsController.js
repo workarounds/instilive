@@ -114,6 +114,7 @@
                     tagsCtrl.is_board = tagsCtrl.hashData[tagsCtrl.tag.tag].is_board;
                     if (tagsCtrl.is_board) {
                         tagsCtrl.board = tagsCtrl.tag.title;
+                        tagsCtrl.corner = tagsCtrl.tag.title;
                     } else {
                         tagsCtrl.corner = tagsCtrl.tag.name;
                         tagsCtrl.board = tagsCtrl.getBoardFromCtag(tagsCtrl.tag.tag);

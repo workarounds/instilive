@@ -1,32 +1,30 @@
-<section ng-controller="ScheduleController as scheduleCtrl">
-    <section layout="row" layout-align="center end">
+<section ng-controller="ResultsController as resultsCtrl">
+    <section layout="row" layout-align="center end" ng-if="resultsCtrl.matches.length">
         <h2 flex class="pinned-heading" ng-if="mainCtrl.isDesktop"
-            >Schedule</h2>
+            >Results</h2>
         <span class="vnb-text-link"
               style="margin-right: 8px;"
-              ng-show="(!scheduleCtrl.showPrevious)"
-              ng-click="scheduleCtrl.getPrevious()"
+              ng-show="(!resultsCtrl.showPrevious)"
+              ng-click="resultsCtrl.getPrevious()"
             >
             <i class="fa fa-caret-up"></i> previous
         </span>
     </section>
     <section layout="row" flex layout-align="center center"
              style="padding: 32px;"
-             ng-show="!scheduleCtrl.dataLoaded">
+             ng-show="!resultsCtrl.dataLoaded">
 
         <md-progress-circular
             md-mode="indeterminate"></md-progress-circular>
     </section>
     <section style="padding: 0px" class="vnb-schedule"
-             ng-if="scheduleCtrl.notices.length">
+             ng-if="resultsCtrl.matches.length">
         <md-divider></md-divider>
         <div
             layout="column" flex layout-fill
             style="position: relative; overflow: hidden">
-            <md-content ng-class="{'limit-height':mainCtrl.isDesktop}"
-                        style="width: 100%;">
-                <section ng-repeat="day in scheduleCtrl.eventDays"
-                         id="{{day.anchor}}">
+            <md-content ng-class="{'limit-height':mainCtrl.isDesktop}" style="width: 100%;">
+                <section ng-repeat="day in resultsCtrl.eventDays">
                     <md-subheader class="schedule-day">
                         {{day.date | date:'MMMM d'}}
                     </md-subheader>
@@ -34,34 +32,30 @@
                     <md-list layout="column" class="schedule-list">
                         <md-item class="event-item"
                                  ng-repeat="event in day.events"
-                                 layout="column"
-                                 ng-click="scheduleCtrl.showEvent(event)">
-                            <div layout="row" layout-align="start center">
-                                <span class="event-title" flex>
-                                    {{event.data.title}}
-                                </span>
-                                <span class="vnb-badge" ng-show="event.updates_below > 0"><i class="fa fa-check"></i></span>
+                                 layout="column" ng-click="resultsCtrl.showEvent(event)">
+                            <div>
+                            <span class="event-title">
+                                {{event.Result.data.title}}
+                            </span>
                             </div>
                             <div class="event-meta">
-                            <span class="event-time">
-                                {{event.start | date:'hh:mm a'}},
-                            </span>
-                                <span class="event-venue">at {{event.data.venue}}</span>
+                                {{event.Notice.data.title}}
                             </div>
+
                         </md-item>
                     </md-list>
                     <md-divider></md-divider>
                 </section>
                 <section layout="row" flex layout-align="center center"
                          style="padding: 8px;"
-                         ng-show="scheduleCtrl.loadingMore">
+                         ng-show="resultsCtrl.loadingMore">
 
                     <md-progress-circular
                         md-mode="indeterminate"></md-progress-circular>
                 </section>
                 <section flex layout="row" layout-align="center start"
-                         ng-show="scheduleCtrl.notices.length">
-                    <md-button ng-click="scheduleCtrl.loadMore()" flex
+                         ng-show="resultsCtrl.notices.length">
+                    <md-button ng-click="resultsCtrl.loadMore()" flex
                                class="md-primary">Load more
                     </md-button>
                 </section>
@@ -72,4 +66,3 @@
         </div>
     </section>
 </section>
-<section ng-if="mainCtrl.isDesktop" ng-include="'components/results/results.html'"></section>

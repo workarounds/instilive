@@ -109,8 +109,7 @@
             </section>
         </section>
         <section layout="column" flex style="margin-right:8px;
-        max-width: 320px;"
-             ng-hide="(tagsCtrl.schedule.length == 0)">
+        max-width: 320px;">
             <md-content class="background-container">
                 <section ui-view="right"
                          style="margin-top: 20px; max-width: 320px; min-width:240px">
@@ -183,62 +182,45 @@
 
     <md-content class="background-container">
         <md-tabs md-selected="data.selectedIndex">
-            <md-tab id="tab2" aria-controls="tab2-content"
-                    md-ink-ripple="#D1E8FF"
-                    vnb-bg-color="{{mainCtrl.headerColor}}"
-                >
-                Updates
-            </md-tab>
             <md-tab id="tab1" aria-controls="tab1-content"
                     md-ink-ripple="#D1E8FF"
                     vnb-bg-color="{{mainCtrl.headerColor}}"
                 >
-                Coming up
+                Schedule
             </md-tab>
-            <md-tab id="tab3" aria-controls="tab3-content"
+            <md-tab id="tab2" aria-controls="tab2-content"
                     md-ink-ripple="#D1E8FF"
                     vnb-bg-color="{{mainCtrl.headerColor}}"
                 >
-                Schedule
+                Results
             </md-tab>
         </md-tabs>
 
         <ng-switch on="data.selectedIndex" class="tabpanel-container"
                    layout="row" layout-align="center start" flex>
             <div layout="row" layout-align="center start"
-                 role="tabpanel" id="tab2-content"
-                 aria-labelledby="tab2" ng-switch-when="0"
-                 md-swipe-left="next()"
+                 role="tabpanel" id="tab1-content"
+                 aria-labelledby="tab1"
+                 ng-switch-when="0" md-swipe-left="next()"
                  md-swipe-right="previous()"
                  flex>
-                <section flex class="md-padding main-content"
-                         style="max-width: 620px">
-                    <section
-                        ng-include="'components/tag/whats_new.html'"></section>
-                </section>
-            </div>
-            <div layout="row" layout-align="center start"
-                role="tabpanel" id="tab1-content"
-                 aria-labelledby="tab1" ng-switch-when="1"
-                 md-swipe-left="next()"
-                 md-swipe-right="previous()"
-                flex>
-                <section flex class="md-padding main-content"
-                         style="max-width: 620px">
-                    <section
-                        ng-include="'components/tag/coming_up.html'"></section>
-                </section>
-            </div>
-            <div layout="row" layout-align="center start"
-                 role="tabpanel" id="tab3-content"
-                 aria-labelledby="tab3"
-                 ng-switch-when="2" md-swipe-left="next()"
-                 md-swipe-right="previous()"
-                flex>
                 <section ui-view="right"
                          style="padding-top: 6px; max-width: 620px"
                          flex></section>
             </div>
+            <div layout="row" layout-align="center start"
+                 role="tabpanel" id="tab2-content"
+                 aria-labelledby="tab2"
+                 ng-switch-when="1" md-swipe-left="next()"
+                 md-swipe-right="previous()"
+                 flex>
+                <section style="padding-top: 6px; max-width: 620px" flex
+                         ng-include="'components/results/results.html'"
+                    >
+                </section>
+            </div>
+
+
         </ng-switch>
     </md-content>
 </md-content>

@@ -92,7 +92,7 @@
                     var from = '2014-12-11 23:59:59';
                     var limit = 1000;
                     var options = {
-                        from: from.getTime()/1000,
+                        from: from,
                         limit: limit
                     };
                 }
@@ -114,7 +114,13 @@
 
             scheduleCtrl.loadMore = function(){
                 var last = scheduleCtrl.notices.length - 1;
-                var from = getDateObj(scheduleCtrl.notices[last].start_time);
+                var from;
+                if(last>=0) {
+                    from = getDateObj(scheduleCtrl.notices[last].start_time);
+                }
+                else{
+                    from = new Date();
+                }
                 from.setMinutes(from.getMinutes() + 1);
                 var options = {
                     from: from.getTime()/1000
@@ -146,6 +152,8 @@
                 generateEvents();
                 scheduleCtrl.loadingMore = false;
                 setTimeout(increaseLimit, 200);
+
+                StateService.setSchedule({Notice: scheduleCtrl.notices});
             }
 
             function fillPrevious(data){
@@ -164,6 +172,8 @@
                 scheduleCtrl.scheduleLimit = 1;
                 scheduleCtrl.dataLoaded = true;
                 setTimeout(increaseLimit, 400);
+
+                StateService.setSchedule({Notice: scheduleCtrl.notices});
             }
 
             function increaseLimit(){
