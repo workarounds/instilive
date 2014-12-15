@@ -39,7 +39,7 @@ gulp.task('css', ['clean'], function() {
     return gulp.src('app.less')
         .pipe(less())
         .pipe(cssmin({keepSpecialComments: 0}))
-        .pipe(rename('app.full.min.css'))
+        .pipe(rename('app-v1.full.min.css'))
         .pipe(gulp.dest('dist/'));
 });
 
@@ -59,7 +59,7 @@ gulp.task('js', ['clean'], function() {
     combined.queue(templateStream);
 
     return combined.done()
-        .pipe(concat('app.full.min.js'))
+        .pipe(concat('app-v1.full.min.js'))
         .pipe(ngmin())
         .pipe(uglify())
         .pipe(gulp.dest('dist/'));
@@ -85,8 +85,8 @@ gulp.task('indexHtml', ['clean'], function() {
         .pipe(gCheerio(function ($) {
             $('script[data-remove!="exclude"]').remove();
             $('link').remove();
-            $('body').append('<script src="app.full.min.js"></script>');
-            $('head').append('<link rel="stylesheet" href="app.full.min.css">');
+            $('body').append('<script src="app-v1.full.min.js"></script>');
+            $('head').append('<link rel="stylesheet" href="app-v1.full.min.css">');
         }))
         .pipe(htmlmin(htmlminOptions))
         .pipe(gulp.dest('dist/'));
