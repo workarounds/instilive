@@ -209,8 +209,6 @@
             };
             /* End pin functions */
 
-            /* Function to copy direct link of the notice to clipboard*/
-
             //Funtion to share the notice to facebook
             $scope.share = function(){
                 if(FB_LOADED){
