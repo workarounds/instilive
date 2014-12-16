@@ -187,7 +187,7 @@
                     state = currentState;
                 }
                 results.tag = state.tag;
-                schedule.data = data;
+                results.data = data;
             };
 
             stateService.getPinned = function(state, force){

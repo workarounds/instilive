@@ -40,7 +40,7 @@
                 resultsCtrl.eventDays = {};
                 var matches = resultsCtrl.matches;
                 var eventDays = resultsCtrl.eventDays;
-                for(var i = 0; i < matches.length; i++){
+                for(var i = matches.length-1; i >=0 ; i--){
                     var start = getDateObj(matches[i].Notice.start_time);
                     if (eventDays[toDateId(start)] === undefined) {
                         eventDays[toDateId(start)] = {
@@ -77,7 +77,7 @@
                 }
                 var current = angular.copy(resultsCtrl.matches);
                 resultsCtrl.matches = [];
-                resultsCtrl.matches = previous.concat(current);
+                resultsCtrl.matches = current.concat(previous);
                 generateResults();
                 resultsCtrl.showPrevious = false;
                 resultsCtrl.dataLoaded = true;
@@ -87,9 +87,10 @@
 
             resultsCtrl.getPrevious = function(){
                 if(resultsCtrl.matches.length>0){
-                    var to = getDateObj(resultsCtrl.matches[0].Notice.start_time);
+                    var last = resultsCtrl.matches.length -1;
+                    var to = getDateObj(resultsCtrl.matches[last].Notice.start_time);
                     var from = angular.copy(to);
-                    to.setMinutes = (to.getMinutes() - 1);
+                    to.setMinutes(to.getMinutes() - 1);
                     from.setDate(from.getDate() - 3);
                     var limit = 50;
                     var options = {
@@ -123,10 +124,9 @@
             };
 
             resultsCtrl.loadMore = function(){
-                var last = resultsCtrl.matches.length - 1;
                 var from;
-                if(last>=0) {
-                    from = getDateObj(resultsCtrl.matches[last].Notice.start_time);
+                if(resultsCtrl.matches.length>0) {
+                    from = getDateObj(resultsCtrl.matches[0].Notice.start_time);
                 }
                 else{
                     from = new Date();
@@ -159,7 +159,7 @@
                 }
 
                 resultsCtrl.matches = [];
-                resultsCtrl.matches = current.concat(more);
+                resultsCtrl.matches = more.concat(current);
                 generateResults();
                 resultsCtrl.loadingMore = false;
 
