@@ -33,7 +33,7 @@
             resultsCtrl.matches = [];
             resultsCtrl.eventDays = {};
             resultsCtrl.showPrevious = false;
-            resultsCtrl.dataLoaded = false;
+            resultsCtrl.dataLoaded = true;
             resultsCtrl.loadingMore = false;
 
             function generateResults(){
@@ -109,12 +109,14 @@
                 }
 
                 resultsCtrl.showPrevious = true;
-                resultsCtrl.dataLoaded = false;
+                StateService.startLoading();
                 StateService.getResults(false, options, true).then(
                     function(data){
                         fillPrevious(data);
+                        StateService.stopLoading();
                     },
                     function(err){
+                        StateService.stopLoading();
                         console.log(err);
                         resultsCtrl.dataLoaded = true;
                         resultsCtrl.showPrevious = false;
