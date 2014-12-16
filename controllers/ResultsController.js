@@ -193,7 +193,7 @@
 
             $rootScope.$on('VnbReloadData', function(){
                 resultsCtrl.dataLoaded = false;
-                StateService.getSchedule(false, false, true).then(
+                StateService.getResults(false, false, true).then(
                     function(data){
                         resultsCtrl.showPrevious = false;
                         fillData(data);

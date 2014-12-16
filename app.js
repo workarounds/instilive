@@ -189,6 +189,10 @@
 
         $templateCache.get('components/home/right.html');
         $templateCache.get('components/results/results.html');
+        $templateCache.get('components/notice/notice.html');
+        $templateCache.get('components/notice/text-block.html');
+        $templateCache.get('components/notice/image-block.html');
+        $templateCache.get('components/notice/table-block.html');
     }]);
 
 })();

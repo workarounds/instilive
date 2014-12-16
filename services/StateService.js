@@ -9,6 +9,7 @@
         function ($rootScope, $q, VnbRestangular, $mdToast) {
             var currentState = {};
             var userDetails = false;
+            var userRequest = false;
             var hashData = false;
             var processingRequest = false;
 
@@ -322,6 +323,7 @@
                         function () {
                             if (!processingRequest) {
                                 processingRequest = true;
+                                userRequest = deferred.promise;
                                 fetchUserData().then(
                                     function (data) {
                                         processingRequest = false;
@@ -334,6 +336,9 @@
                                         console.log(err);
                                     }
                                 );
+                            }
+                            else{
+                                return userRequest;
                             }
                         },
                         function (err) {
