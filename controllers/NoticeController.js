@@ -214,13 +214,15 @@
             //Funtion to share the notice to facebook
             $scope.share = function(){
                 if(FB_LOADED){
-                    var winHeight = 360;
-                    var winWidth = 560;
-                    var winTop = (screen.height / 2) - (winHeight / 2);
-                    var winLeft = (screen.width / 2) - (winWidth / 2);
-                    var title = $scope.notice.data.title;
-                    var url = $scope.getShareLink();
-                    window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[url]=' + url, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                    //var title = $scope.notice.data.title;
+                    //var url = $scope.getShareLink();
+                    //window.open('http://www.facebook.com/dialog/share?app_id='+FB_APP_ID+'&display=popup&href='+url+'&redirect_uri='+url);
+                    FB.ui({
+                        method: 'share',
+                        href: $scope.getShareLink()
+                    }, function(response){
+                        console.log(response);
+                    });
                 }
                 else{
                     StateService.showToast('Could not connect facebook. Try relaoding the page');
