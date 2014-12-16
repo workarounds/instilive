@@ -173,7 +173,7 @@
         $urlRouterProvider.otherwise('/home');
     });
 
-    app.run(['$rootScope','$state', function ($rootScope, $state) {
+    app.run(['$rootScope','$state', '$templateCache', function ($rootScope, $state, $templateCache) {
         $rootScope.safeApply = function (fn) {
             var phase = $rootScope.$$phase;
             if (phase === '$apply' || phase === '$digest') {
@@ -186,6 +186,9 @@
         };
 
         $rootScope.$state = $state;
+
+        $templateCache.get('components/home/right.html');
+        $templateCache.get('components/results/results.html');
     }]);
 
 })();
