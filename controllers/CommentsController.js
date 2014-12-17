@@ -62,7 +62,7 @@
                 );
             };
 
-            $scope.$parent.getComments = getComments;
+            $scope.$parent.$parent.getComments = getComments;
         }
     ]);
 })();
