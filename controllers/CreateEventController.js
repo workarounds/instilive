@@ -54,6 +54,7 @@
 
                     createEventCtrl.corners = [];
                     createEventCtrl.format = "dd.MM.yyyy";
+                    createEventCtrl.venues = [];
 
                     if (!noticeData) {
                         var emptyNotice = {
@@ -106,6 +107,15 @@
                         $scope.user = data;
                         setUserData(data);
                     });
+
+                    VnbRestangular.all('venues').get('index').then(
+                        function(data){
+                            createEventCtrl.venues = data;
+                        },
+                        function(){
+                            StateService.showToast('Couldn\'t load venues');
+                        }
+                    );
                 };
 
                 createEventCtrl.addBlock = function (type) {
@@ -286,7 +296,18 @@
                         if(diff <= 0) {
                             return false;
                         }
-                    };
+
+                        var venue = $scope.notice.data.venue;
+                        if(!venue){
+                            return false;
+                        }
+                        if(!venue.id){
+                            return false;
+                        }
+                        if(!venue.name){
+                            return false;
+                        }
+                    }
                     console.log((hasCorners) && ((hasBlocks) || (isEvent)));
                     return (hasCorners) && ((hasBlocks) || (isEvent));
                 };

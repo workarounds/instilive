@@ -1,8 +1,16 @@
 <section class="full-width" layout="column">
-    <b class="create-event-title">Venue : </b>
+    <b class="create-event-title">Room(optional) : </b>
+    <input type="text"
+           id="room" ng-model="notice.data.room"
+           placeholder="LCH 11">
+</section>
+
+<section class="full-width" layout="column">
+    <b class="create-event-title">Building : <span class="font-thin">{{notice.data.venue.name}}</span></b>
     <input type="text"
            id="venue" ng-model="notice.data.venue"
-           placeholder="New Swimming Pool" required>
+           typeahead="venue as venue.name for venue in createEventCtrl.venues | filter:{name:$viewValue}"
+           placeholder="Lecture Complex 1&2" required>
 </section>
 
 <section class="full-width" layout="column">
