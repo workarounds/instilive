@@ -46,7 +46,11 @@
                             <span class="event-time">
                                 {{event.start | date:'hh:mm a'}},
                             </span>
-                                <span class="event-venue">at {{event.data.venue.name}}</span>
+                                <span class="event-venue">
+                                    at
+                                    <span ng-if="event.data.venue.name">{{event.data.venue.name}}</span>
+                                    <span ng-if="!event.data.venue.name">{{event.data.venue}}</span>
+                                </span>
                             </div>
                         </md-item>
                     </md-list>

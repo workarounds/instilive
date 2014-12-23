@@ -68,7 +68,8 @@
                 </span>
                 <span class="vnb-notice-venue">
                     <span class="right-align">Venue : </span>
-                    {{notice.data.venue.name}}
+                    <span ng-if="notice.data.venue.name">{{notice.data.venue.name}}</span>
+                    <span ng-if="!notice.data.venue.name">{{notice.data.venue}}</span>
                 </span>
             </section>
         </section>
