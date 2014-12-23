@@ -9,7 +9,7 @@
     <b class="create-event-title">Building : <span class="font-thin">{{notice.data.venue.name}}</span></b>
     <input type="text"
            id="venue" ng-model="notice.data.venue"
-           typeahead="venue as venue.name for venue in createEventCtrl.venues | filter:{name:$viewValue}"
+           typeahead="venue as venue.name for venue in createEventCtrl.venues | filter:{$:$viewValue}"
            placeholder="Lecture Complex 1&2" required>
 </section>
 

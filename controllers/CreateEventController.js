@@ -335,6 +335,7 @@
                     if ($scope.notice.is_event) {
                         data.notice.start_time = parseInt(data.notice.from.getTime() / 1000);
                         data.notice.end_time = parseInt(data.notice.to.getTime() / 1000);
+                        data.notice.venue_id = data.notice.data.venue.id;
                     }
 
                     console.log(data);
