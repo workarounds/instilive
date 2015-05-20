@@ -1,6 +1,6 @@
 <?php
 $front_root = 'http://instilive.com/#/';
-$back_root = 'http://128.199.251.79/vnb/api/';
+$back_root = 'http://workarounds.in/vnb/api/';
 $content_type = 'article';
 $has_video = false;
 $name = 'Instilive';
