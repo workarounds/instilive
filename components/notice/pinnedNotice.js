@@ -7,7 +7,7 @@
     app.directive('pinnedNotice', [function () {
         return {
             restrict: 'E',
-            templateUrl: '/components/notice/pinned-notice.html',
+            templateUrl: 'components/notice/pinned-notice.html',
             scope: {
                 notice: "=data"
             },

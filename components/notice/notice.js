@@ -4,7 +4,7 @@
     app.directive('notice', [function () {
         return {
             restrict: 'E',
-            templateUrl: '/components/notice/notice.html',
+            templateUrl: 'components/notice/notice.html',
             scope: {
                 notice: "=data",
                 hideUpdate: "="
