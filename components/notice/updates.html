@@ -1,0 +1,10 @@
+<div layout="column" flex layout-align="start center">
+    <div layout="row" style="max-width: 620px; width: 100%" flex
+         layout-align="center start"
+         ng-repeat="update in updatesCtrl.updates">
+        <notice data="update" hide-update="true" flex
+                ng-class="{'vnb-current-notice': updatesCtrl.highlightNotice(update)}">
+
+        </notice>
+    </div>
+</div>
