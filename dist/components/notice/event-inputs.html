@@ -1,0 +1,48 @@
+<section class="full-width" layout="column">
+    <b class="create-event-title">Room(optional) : </b>
+    <input type="text"
+           id="room" ng-model="notice.data.room"
+           placeholder="LCH 11">
+</section>
+
+<section class="full-width" layout="column">
+    <b class="create-event-title">Building : <span class="font-thin">{{notice.data.venue.name}}</span></b>
+    <input type="text"
+           id="venue" ng-model="notice.data.venue"
+           typeahead="venue as venue.name for venue in createEventCtrl.venues | filter:{$:$viewValue}"
+           placeholder="Lecture Complex 1&2" required>
+</section>
+
+<section class="full-width" layout="column">
+    <b class="create-event-title">From : </b>
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="" href="">
+            <div class="input-group">
+                <input type="text" class="form-control" data-ng-model="notice.from">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i>
+                </span>
+            </div>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="notice.from" data-datetimepicker-config="{ dropdownSelector: '#dropdown1' }"/>
+        </ul>
+    </div>
+</section>
+
+<section class="full-width" layout="column">
+    <b class="create-event-title">To : </b>
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="" href="">
+            <div class="input-group">
+                <input type="text" class="form-control" data-ng-model="notice.to">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i>
+                </span>
+            </div>
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="notice.to" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+        </ul>
+    </div>
+</section>
+
+

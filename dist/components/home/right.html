@@ -1,0 +1,79 @@
+<section ng-controller="ScheduleController as scheduleCtrl">
+    <section layout="row" layout-align="center end">
+        <h2 flex class="pinned-heading" ng-if="mainCtrl.isDesktop"
+            >Schedule</h2>
+        <span class="vnb-text-link"
+              style="margin-right: 8px;"
+              ng-show="(!scheduleCtrl.showPrevious)"
+              ng-click="scheduleCtrl.getPrevious()"
+            >
+            <i class="fa fa-caret-up"></i> previous
+        </span>
+    </section>
+    <section layout="row" flex layout-align="center center"
+             style="padding: 32px;"
+             ng-show="!scheduleCtrl.dataLoaded">
+
+        <md-progress-circular
+            md-mode="indeterminate"></md-progress-circular>
+    </section>
+    <section style="padding: 0px" class="vnb-schedule"
+             ng-if="scheduleCtrl.notices.length">
+        <md-divider></md-divider>
+        <div
+            layout="column" flex layout-fill
+            style="position: relative; overflow: hidden">
+            <md-content ng-class="{'limit-height':mainCtrl.isDesktop}"
+                        style="width: 100%;">
+                <section ng-repeat="day in scheduleCtrl.eventDays"
+                         id="{{day.anchor}}">
+                    <md-subheader class="schedule-day">
+                        {{day.date | date:'MMMM d'}}
+                    </md-subheader>
+                    <!--<md-divider></md-divider>-->
+                    <md-list layout="column" class="schedule-list">
+                        <md-item class="event-item"
+                                 ng-repeat="event in day.events"
+                                 layout="column"
+                                 ng-click="scheduleCtrl.showEvent(event)">
+                            <div layout="row" layout-align="start center">
+                                <span class="event-title" flex>
+                                    {{event.data.title}}
+                                </span>
+                                <span class="vnb-badge" ng-show="event.updates_below > 0"><i class="fa fa-check"></i></span>
+                            </div>
+                            <div class="event-meta">
+                            <span class="event-time">
+                                {{event.start | date:'hh:mm a'}},
+                            </span>
+                                <span class="event-venue">
+                                    at
+                                    <span ng-if="event.data.venue.name">{{event.data.venue.name}}</span>
+                                    <span ng-if="!event.data.venue.name">{{event.data.venue}}</span>
+                                </span>
+                            </div>
+                        </md-item>
+                    </md-list>
+                    <md-divider></md-divider>
+                </section>
+                <section layout="row" flex layout-align="center center"
+                         style="padding: 8px;"
+                         ng-show="scheduleCtrl.loadingMore">
+
+                    <md-progress-circular
+                        md-mode="indeterminate"></md-progress-circular>
+                </section>
+                <section flex layout="row" layout-align="center start"
+                         ng-show="scheduleCtrl.notices.length">
+                    <md-button ng-click="scheduleCtrl.loadMore()" flex
+                               class="md-primary">Load more
+                    </md-button>
+                </section>
+                <!--<section layout="row" flex layout-align="center center" style="height: 300px;" ng-hide="scheduleCtrl.eventDays.length > 0">-->
+                <!--<p> No events </p>-->
+                <!--</section>-->
+            </md-content>
+        </div>
+    </section>
+</section>
+<section ng-if="mainCtrl.isDesktop" ng-include="'components/results/results.html'"></section>

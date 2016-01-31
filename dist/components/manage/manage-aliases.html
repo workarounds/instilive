@@ -1,0 +1,74 @@
+<section layout="row" ng-hide="manageCtrl.loggedIn" flex
+         layout-align="center center">
+    <md-button class="md-raised md-primary"
+               ng-click="manageCtrl.login()">
+        Login
+    </md-button>
+</section>
+
+<section layout="row" ng-if="manageCtrl.positions.length"
+         flex layout-align="center start" class="background-container md-padding">
+    <section flex layout="column" style="max-width: 620px" class="md-padding">
+        <h1>Manager's page</h1>
+        <select id="postas" ng-model="manageCtrl.position"
+                class="form-control"
+                ng-change="manageCtrl.changePos()"
+                ng-options="pos.name for pos in manageCtrl.positions"></select>
+
+        <p>Manager for
+        <span
+            ng-repeat="corner in manageCtrl.position.corners"
+            ng-class="{'board': corner.is_board}">
+        {{corner.name}} </span>
+        </p>
+
+        <h3>Users
+    <span class="pull-right">
+        <button class="btn btn-default small"
+                ng-click="manageCtrl.showAddUser()"
+            >
+            <i class="fa fa-plus"></i>
+        </button>
+    </span>
+        </h3>
+        <div collapse="manageCtrl.addUserCollapsed">
+            <vnb-add-user
+                callback="manageCtrl.addUser(user)"></vnb-add-user>
+        </div>
+        <table class="table">
+            <tr ng-repeat="user in manageCtrl.position.users">
+                <td>
+                    <vnb-user data="user"></vnb-user>
+                </td>
+                <td>
+                    <button class="btn btn-link"
+                            ng-hide="manageCtrl.userData.facebook_id == user.facebook_id"
+                            ng-click="manageCtrl.removeUser(user)">remove
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <h3>Positions
+    <span class="pull-right">
+        <button class="btn btn-default small" ng-click="manageCtrl.openPosition(false)">
+            <i class="fa fa-plus"></i>
+        </button>
+    </span>
+        </h3>
+        <table class="table table-hover"
+               ng-show="manageCtrl.position.sub_positions.length">
+            <tr ng-repeat="position in manageCtrl.position.sub_positions"
+                ng-click="manageCtrl.openPosition(position)">
+                <td>{{position.name}}</td>
+                <td>
+                <span ng-repeat="corner in position.corners"
+                      ng-class="{'board':corner.is_board}">
+                    {{corner.name}}
+                </span>
+                </td>
+            </tr>
+
+        </table>
+    </section>
+</section>
