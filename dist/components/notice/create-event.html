@@ -42,13 +42,13 @@
             Event
         </md-checkbox>
         <div ng-if="notice.is_event"
-            ng-include="'/components/notice/event-inputs.html'"></div>
+            ng-include="'components/notice/event-inputs.html'"></div>
     </section>
     <section class="create-event-group"
              layout="column"
              ng-repeat="data in notice.data.blocks" >
         <div class="create-event-block"
-            ng-include="'/components/notice/'+data.type+'-inputs.html'">
+            ng-include="'components/notice/'+data.type+'-inputs.html'">
 
             </div>
         <md-button ng-click="createEventCtrl.deleteBlock($index)">

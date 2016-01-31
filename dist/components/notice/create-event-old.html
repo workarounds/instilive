@@ -59,14 +59,14 @@
                     <section class="create-event-inputs"
                              ng-if="notice.is_event">
                         <div
-                            ng-include="'/components/notice/event-inputs.html'"></div>
+                            ng-include="'components/notice/event-inputs.html'"></div>
                     </section>
                 </section>
 
                 <section class="create-others-container"
                          ng-repeat="data in notice.data.blocks">
                     <div
-                        ng-include="'/components/notice/'+data.type+'-inputs.html'"></div>
+                        ng-include="'components/notice/'+data.type+'-inputs.html'"></div>
                     <md-button ng-click="createEventCtrl.deleteBlock($index)">
                         Delete
                     </md-button>
