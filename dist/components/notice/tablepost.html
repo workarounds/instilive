@@ -1,0 +1,11 @@
+<h1> {{notice.data.title}} </h1>
+<table>
+	<th>
+		<td ng-repeat="heading in notice.data.table.headers">
+			{{heading}}
+		</td>
+	</th>
+	<tr ng-repeat="row in notice.table.data.rows">
+		<td ng-repeat="item in row"> {{item}} </td>
+	</tr>
+</table>

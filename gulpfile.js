@@ -119,7 +119,7 @@ gulp.task('jshint', function(){
         .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('build', ['clean', 'css', 'js', 'indexHtml', 'images', 'fonts', 'components', 'phpmove']);
+gulp.task('build', ['clean', 'css', 'js', 'indexHtml', 'images', 'fonts', 'components']);
 
 /*
 

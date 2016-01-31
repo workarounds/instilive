@@ -1,0 +1,15 @@
+<section class="full-width" layout="column">
+    <b class="create-event-title">{{label}} : </b>
+
+    <section layout="row" class="full-width">
+        <span class="create-event-badge"
+              ng-repeat="corner in selectedCorners"
+              ng-click="onTagRemove($index)">{{corner.name}}
+                    <i class="fa fa-times"></i></span>
+    </section>
+    <input
+           ng-model="text"
+           placeholder="Cricket"
+           typeahead="tag.name for tag in selectableCorners | filter:{name:$viewValue}"
+           typeahead-on-select="onTagSelect($item, $model, $label)"/>
+</section>
